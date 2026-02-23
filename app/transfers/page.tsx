@@ -3,11 +3,14 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
+import Navigation from '@/components/Navigation'
+import Footer from '@/components/Footer'
+import FloatingWhatsApp from '@/components/FloatingWhatsApp'
+import BackToTop from '@/components/BackToTop'
 import TransferHero from '@/components/TransferHero'
 import RouteCalculator from '@/components/RouteCalculator'
+import BookingForm from '@/components/BookingForm'
 import PricingTable from '@/components/PricingTable'
-import ThemeToggle from '@/components/ThemeToggle'
-import { LogoIcon } from '@/components/Logo'
 
 // ============================================
 // CONTENT
@@ -63,63 +66,6 @@ const content = {
 // ============================================
 // COMPONENTS
 // ============================================
-
-// Adventure Bold Style - Language Switcher
-function LanguageSwitcher({ lang, setLang }: { lang: string, setLang: (l: string) => void }) {
-  const langs = [
-    { code: 'en', label: 'EN' },
-    { code: 'he', label: 'עב' },
-    { code: 'ru', label: 'RU' },
-  ]
-
-  return (
-    <div className="flex gap-1 bg-ivory/50 dark:bg-black/50 backdrop-blur-md p-1 border border-espresso/10 dark:border-white/10 transition-colors duration-300">
-      {langs.map(l => (
-        <button
-          key={l.code}
-          onClick={() => setLang(l.code)}
-          className={`px-3 py-1.5 text-xs font-bold tracking-wider transition-all duration-200 ${
-            lang === l.code
-              ? 'bg-terracotta dark:bg-gold-400 text-white dark:text-black'
-              : 'text-espresso/60 dark:text-white/60 hover:text-terracotta dark:hover:text-gold-400'
-          }`}
-        >
-          {l.label}
-        </button>
-      ))}
-    </div>
-  )
-}
-
-// Adventure Bold Style - Navigation
-function Navigation({ lang, setLang }: { lang: string, setLang: (l: string) => void }) {
-  return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-ivory/80 dark:bg-black/80 backdrop-blur-lg border-b border-espresso/5 dark:border-white/5 transition-colors duration-300">
-      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-3 group">
-          <div className="relative">
-            <div className="absolute inset-0 rounded-full bg-gold-aged blur-md opacity-0 group-hover:opacity-40 transition-opacity duration-300" />
-            <LogoIcon size={40} color="#c9a84c" className="relative transition-transform duration-300 group-hover:scale-105" />
-          </div>
-          <div className="flex flex-col">
-            <span className="text-lg font-bold text-espresso dark:text-white tracking-widest transition-colors duration-300">
-              RATI
-            </span>
-            <span className="text-xs font-semibold text-terracotta dark:text-gold-aged tracking-[0.2em] -mt-1 transition-colors duration-300">
-              TOURS
-            </span>
-          </div>
-        </Link>
-
-        <div className="flex items-center gap-4">
-          <LanguageSwitcher lang={lang} setLang={setLang} />
-          <div className="w-px h-6 bg-espresso/20 dark:bg-white/20 transition-colors duration-300" />
-          <ThemeToggle />
-        </div>
-      </div>
-    </nav>
-  )
-}
 
 // Adventure Bold Style - Why Section
 function WhySection({ lang }: { lang: string }) {
@@ -218,30 +164,6 @@ function CTASection({ lang }: { lang: string }) {
   )
 }
 
-// Adventure Bold Style - Footer
-function Footer({ lang }: { lang: string }) {
-  const t = content[lang as keyof typeof content] || content.en
-
-  return (
-    <footer className="py-12 bg-cream dark:bg-black border-t border-terracotta/10 dark:border-gold-400/10 transition-colors duration-500">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-          <Link
-            href="/"
-            className="text-espresso/50 dark:text-white/50 hover:text-terracotta dark:hover:text-gold-400 transition-colors text-sm font-medium tracking-wide"
-          >
-            {t.backHome}
-          </Link>
-
-          <p className="text-espresso/30 dark:text-white/30 text-sm transition-colors duration-300">
-            © 2025 Rati Tours. All rights reserved.
-          </p>
-        </div>
-      </div>
-    </footer>
-  )
-}
-
 // ============================================
 // MAIN PAGE
 // ============================================
@@ -254,9 +176,10 @@ export default function TransfersPage() {
     if (saved) setLang(saved)
   }, [])
 
-  // Save language
+  // Save language and set RTL
   useEffect(() => {
     localStorage.setItem('visitGeorgia_lang', lang)
+    document.documentElement.setAttribute('dir', lang === 'he' ? 'rtl' : 'ltr')
   }, [lang])
 
   return (
@@ -264,10 +187,13 @@ export default function TransfersPage() {
       <Navigation lang={lang} setLang={setLang} />
       <TransferHero lang={lang} />
       <RouteCalculator lang={lang} />
+      <BookingForm lang={lang} />
       <WhySection lang={lang} />
       <PricingTable lang={lang} />
       <CTASection lang={lang} />
       <Footer lang={lang} />
+      <FloatingWhatsApp />
+      <BackToTop />
     </main>
   )
 }

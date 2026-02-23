@@ -1,7 +1,9 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import CurrencyToggle from './CurrencyToggle'
+import { Currency, convertPrice, formatPrice, getSavedCurrency, saveCurrency } from '@/lib/currency'
 
 interface RouteCalculatorProps {
   lang: string
@@ -270,19 +272,32 @@ const vehicleNamesEN: Record<string, string> = {
 export default function RouteCalculator({ lang }: RouteCalculatorProps) {
   const t = content[lang as keyof typeof content] || content.en
   const isRTL = lang === 'he'
-  
+
   const [from, setFrom] = useState('')
   const [to, setTo] = useState('')
   const [vehicle, setVehicle] = useState('sedan')
+  const [currency, setCurrency] = useState<Currency>('EUR')
+
+  // Load saved currency on mount
+  useEffect(() => {
+    setCurrency(getSavedCurrency())
+  }, [])
+
+  // Save currency when changed
+  const handleCurrencyChange = (newCurrency: Currency) => {
+    setCurrency(newCurrency)
+    saveCurrency(newCurrency)
+  }
 
   // Get all locations for "From" dropdown
   const allLocations = Object.keys(routes)
-  
+
   // Get available destinations based on selected "from"
   const availableDestinations = from ? Object.keys(routes[from] || {}) : []
-  
+
   const routeData = from && to ? routes[from]?.[to] : null
-  const price = routeData ? routeData[vehicle as keyof typeof routeData] : null
+  const priceEUR = routeData ? routeData[vehicle as keyof typeof routeData] : null
+  const price = priceEUR ? convertPrice(priceEUR, currency) : null
 
   // WhatsApp message ALWAYS in English
   const generateWhatsAppLink = () => {
@@ -294,7 +309,7 @@ export default function RouteCalculator({ lang }: RouteCalculatorProps) {
 From: ${fromName}
 To: ${toName}
 Vehicle: ${vehicleName}
-Price: €${price}
+Price: ${formatPrice(price!, currency)}
 
 Please confirm availability. Thank you!`
     return `https://wa.me/995514048822?text=${encodeURIComponent(message)}`
@@ -319,6 +334,11 @@ Please confirm availability. Thank you!`
           transition={{ delay: 0.2 }}
           className="glass rounded-3xl p-8 md:p-10"
         >
+          {/* Currency Toggle */}
+          <div className="flex justify-center mb-8">
+            <CurrencyToggle currency={currency} onChange={handleCurrencyChange} />
+          </div>
+
           {/* Selectors */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             {/* From */}
@@ -398,7 +418,7 @@ Please confirm availability. Thank you!`
 
                   <div className="text-center md:text-right">
                     <p className="text-espresso/50 dark:text-white/50 text-sm mb-1 transition-colors duration-300">{t.price}</p>
-                    <p className="text-terracotta dark:text-amber-400 text-5xl font-bold font-display transition-colors duration-300">€{price}</p>
+                    <p className="text-terracotta dark:text-amber-400 text-5xl font-bold font-display transition-colors duration-300">{formatPrice(price, currency)}</p>
                   </div>
                 </div>
 

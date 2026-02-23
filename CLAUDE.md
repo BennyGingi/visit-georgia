@@ -15,12 +15,17 @@ npm start        # Start production server
 
 This is a **Next.js 16** tourism website for Georgia (the country) using the App Router, built with TypeScript, Tailwind CSS, and Framer Motion for animations.
 
+### Images Configuration
+- External images are configured to load from `images.unsplash.com` using `remotePatterns` in `next.config.js`
+- All image URLs are centralized in page files under an `IMAGES` constant object
+
 ### Multi-Language Support (i18n)
 - Supports English (`en`), Hebrew (`he`), and Russian (`ru`)
-- RTL support for Hebrew via `dir` attribute on `<html>`
-- Language state is managed in page components and passed down to child components
-- Translations are defined inline in each page file under a `content` or `translations` object
+- RTL support for Hebrew via `dir` attribute on `<html>` (set in Navigation component's useEffect)
+- Language state is managed in page components via `useState` and passed down to child components as props
+- Translations are defined inline in each page/component file under a `content` or `translations` object
 - Language preference is persisted to `localStorage` under key `visitGeorgia_lang`
+- Components requiring language must receive `lang` and `setLang` props from parent pages
 
 ### Page Structure
 - `/` - Main cinematic homepage with full-screen parallax sections
@@ -38,6 +43,8 @@ Components in `/components` are reusable across pages:
 - `RouteCalculator` - Interactive transfer price calculator
 - `PricingTable` - Transfer pricing display
 - `TransferHero` - Hero section for transfers page
+- `ThemeToggle` - Dark/light mode toggle component
+- `Logo` - Brand logo icon component
 
 ### Animation Patterns
 Uses Framer Motion extensively with consistent patterns:
@@ -48,10 +55,32 @@ Uses Framer Motion extensively with consistent patterns:
 
 ### Styling
 - Tailwind CSS with custom theme extensions in `tailwind.config.js`
-- Custom font families: `font-display` (Playfair Display), `font-body` (Inter), `font-georgian` (Noto Serif Georgian)
-- Custom gold color palette for brand accents
-- CSS utilities in `app/globals.css`: `.noise`, `.glass`, `.mesh-gradient`, `.gradient-text`
-- Dark theme by default (`bg-[#0a0a0a]`)
+- Custom font families:
+  - `font-display` (Playfair Display) - for headlines
+  - `font-serif` (Cormorant Garamond) - alternative serif
+  - `font-body` (Inter) - body text
+  - `font-georgian` (Noto Serif Georgian) - Georgian text
+- **Three Color Palettes**:
+  - **Cinematic Dark**: `cinema.black`, `cinema.dark`, `cinema.mid`, `cinema.soft`, `gold-aged`, `gold-bright`, `gold-dim`
+  - **Luxury Elegant**: `ivory`, `cream`, `linen`, `stone`, `umber`, `espresso`, `ink`, `terracotta`, `forest`
+  - **Adventure Bold**: `gold-glow` (rgba)
+- **Custom Animations** (defined in `tailwind.config.js`):
+  - `fade-in`, `slide-up`, `float`, `ken-burns`, `fade-in-down`, `reveal-up`, `glow-pulse`
+- **CSS Utilities** in `app/globals.css`:
+  - Basic effects: `.noise`, `.gradient-text`, `.text-stroke`, `.glass`, `.mesh-gradient`
+  - Cinematic theme: `.noise-grain`, `.vignette`, `.vignette-strong`, `.gold-glow`, `.gold-box-glow`, `.cinema-border`
+  - Elegant theme: `.elegant-link`, `.luxury-image`, `.cream-glass`, `.ornamental-divider`
+  - Adventure theme: `.glow-button`, `.diagonal-clip`, `.stat-large`, `.adventure-badge`
+  - Easing utilities: `.ease-cinematic`, `.ease-elegant`
+  - Animations: `.ken-burns`, `.scroll-indicator`, `.img-zoom`
+- Dark theme by default (`bg-[#0a0a0a]`), supports light mode via `darkMode: 'class'`
+- RTL support built into CSS with `[dir="rtl"]` selectors
 
 ### Path Aliases
 - `@/*` maps to project root (e.g., `@/components/Navigation`)
+
+### Client-Side Rendering
+- All pages and most components use `'use client'` directive due to:
+  - Framer Motion animations requiring browser APIs
+  - `localStorage` for language persistence
+  - Interactive state management (scroll, hover, click handlers)

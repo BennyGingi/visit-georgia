@@ -214,9 +214,9 @@ const stagger = {
 // Luxury Elegant Style - Hero Section
 function HeroSection({ t, isRTL }: any) {
     return (
-        <section className="relative pt-32 pb-16 md:pt-40 md:pb-24 bg-ivory overflow-hidden">
+        <section className="relative pt-32 pb-16 md:pt-40 md:pb-24 bg-ivory dark:bg-cinema-black overflow-hidden transition-colors duration-500">
             {/* Subtle pattern */}
-            <div className="absolute inset-0 opacity-30">
+            <div className="absolute inset-0 opacity-30 dark:opacity-20">
                 <div className="absolute inset-0" style={{
                     backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(184,146,58,0.1) 1px, transparent 0)',
                     backgroundSize: '32px 32px'
@@ -234,20 +234,20 @@ function HeroSection({ t, isRTL }: any) {
                         variants={fadeUp}
                         className="flex items-center justify-center gap-4 mb-8"
                     >
-                        <div className="w-12 h-px bg-terracotta/40" />
-                        <span className="text-terracotta text-xs tracking-[0.3em] uppercase font-medium">Destinations</span>
-                        <div className="w-12 h-px bg-terracotta/40" />
+                        <div className="w-12 h-px bg-terracotta/40 dark:bg-gold-400/40 transition-colors duration-300" />
+                        <span className="text-terracotta dark:text-gold-400 text-xs tracking-[0.3em] uppercase font-medium transition-colors duration-300">Destinations</span>
+                        <div className="w-12 h-px bg-terracotta/40 dark:bg-gold-400/40 transition-colors duration-300" />
                     </motion.div>
 
                     <motion.h1
                         variants={fadeUp}
-                        className="font-display text-5xl sm:text-6xl md:text-7xl font-bold text-espresso mb-6 leading-tight"
+                        className="font-display text-5xl sm:text-6xl md:text-7xl font-bold text-espresso dark:text-white mb-6 leading-tight transition-colors duration-300"
                     >
                         {t.hero.title}
                     </motion.h1>
                     <motion.p
                         variants={fadeUp}
-                        className="text-lg sm:text-xl text-umber/70 max-w-2xl mx-auto font-serif font-light italic leading-relaxed"
+                        className="text-lg sm:text-xl text-umber/70 dark:text-white/60 max-w-2xl mx-auto font-serif font-light italic leading-relaxed transition-colors duration-300"
                     >
                         {t.hero.subtitle}
                     </motion.p>
@@ -255,7 +255,7 @@ function HeroSection({ t, isRTL }: any) {
                     {/* Ornamental divider */}
                     <motion.div
                         variants={fadeUp}
-                        className="w-16 h-px bg-terracotta/30 mx-auto mt-10"
+                        className="w-16 h-px bg-terracotta/30 dark:bg-gold-400/30 mx-auto mt-10 transition-colors duration-300"
                     />
                 </motion.div>
             </div>
@@ -278,36 +278,36 @@ function DestinationCard({ destination, image, readMore, index, isRTL }: any) {
         >
             <Link
                 href={`/destinations/${destination.slug}`}
-                className="group block relative overflow-hidden bg-cream shadow-sm hover:shadow-xl transition-all duration-500"
+                className="group block relative overflow-hidden bg-cream dark:bg-white/5 shadow-sm hover:shadow-xl dark:hover:shadow-gold-400/10 transition-all duration-500 border border-transparent dark:border-white/10"
             >
                 {/* Image with luxury filter */}
                 <div className="relative aspect-[4/3] overflow-hidden">
-                    <div className="absolute inset-0 bg-linen" />
+                    <div className="absolute inset-0 bg-linen dark:bg-cinema-dark transition-colors duration-300" />
                     <img
                         src={image}
                         alt={destination.name}
                         className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 luxury-image"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-espresso/60 via-transparent to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-espresso/60 dark:from-cinema-black/80 via-transparent to-transparent transition-colors duration-300" />
                 </div>
 
                 {/* Content - Luxury Elegant styling */}
-                <div className="relative p-6 md:p-8 bg-cream" dir={isRTL ? 'rtl' : 'ltr'}>
+                <div className="relative p-6 md:p-8 bg-cream dark:bg-white/5 transition-colors duration-300" dir={isRTL ? 'rtl' : 'ltr'}>
                     {/* Small ornamental line */}
-                    <div className="w-8 h-px bg-terracotta/40 mb-4" />
+                    <div className="w-8 h-px bg-terracotta/40 dark:bg-gold-400/40 mb-4 transition-colors duration-300" />
 
-                    <h3 className="font-display text-2xl md:text-3xl font-bold text-espresso mb-2 group-hover:text-terracotta transition-colors duration-300">
+                    <h3 className="font-display text-2xl md:text-3xl font-bold text-espresso dark:text-white mb-2 group-hover:text-terracotta dark:group-hover:text-gold-400 transition-colors duration-300">
                         {destination.name}
                     </h3>
-                    <p className="text-terracotta/80 text-sm font-serif italic mb-3">
+                    <p className="text-terracotta/80 dark:text-gold-400/80 text-sm font-serif italic mb-3 transition-colors duration-300">
                         {destination.tagline}
                     </p>
-                    <p className="text-umber/60 text-sm leading-relaxed mb-5 line-clamp-3 font-light">
+                    <p className="text-umber/60 dark:text-white/60 text-sm leading-relaxed mb-5 line-clamp-3 font-light transition-colors duration-300">
                         {destination.description}
                     </p>
 
                     {/* Elegant Read More Link */}
-                    <div className="flex items-center gap-2 text-espresso text-sm font-medium elegant-link">
+                    <div className="flex items-center gap-2 text-espresso dark:text-white text-sm font-medium elegant-link transition-colors duration-300">
                         <span>{readMore}</span>
                         <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={isRTL ? "M15 19l-7-7 7-7" : "M9 5l7 7-7 7"} />
@@ -316,7 +316,7 @@ function DestinationCard({ destination, image, readMore, index, isRTL }: any) {
                 </div>
 
                 {/* Bottom accent line on hover */}
-                <div className="absolute bottom-0 left-0 w-full h-0.5 bg-terracotta transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+                <div className="absolute bottom-0 left-0 w-full h-0.5 bg-terracotta dark:bg-gold-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
             </Link>
         </motion.div>
     );
@@ -336,20 +336,22 @@ export default function DestinationsPage() {
         }
     }, []);
 
+    // Save language and set RTL
     useEffect(() => {
-        document.documentElement.dir = isRTL ? 'rtl' : 'ltr';
-    }, [isRTL]);
+        localStorage.setItem('visitGeorgia_lang', lang)
+        document.documentElement.setAttribute('dir', isRTL ? 'rtl' : 'ltr')
+    }, [lang]);
 
     return (
-        <main className="bg-ivory min-h-screen">
-            {/* Navigation - will need theme-aware styling */}
+        <main className="bg-ivory dark:bg-cinema-black min-h-screen transition-colors duration-500">
+            {/* Navigation */}
             <Navigation lang={lang} setLang={setLang} />
 
             {/* Hero Section */}
             <HeroSection t={t} isRTL={isRTL} />
 
             {/* Destinations Grid - Luxury Elegant Style */}
-            <section className="relative py-16 md:py-24 bg-ivory">
+            <section className="relative py-16 md:py-24 bg-ivory dark:bg-cinema-black transition-colors duration-500">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     {/* Section intro */}
                     <motion.div
@@ -357,7 +359,7 @@ export default function DestinationsPage() {
                         animate={{ opacity: 1, y: 0 }}
                         className="text-center mb-12"
                     >
-                        <p className="text-umber/50 text-sm font-serif italic">
+                        <p className="text-umber/50 dark:text-white/40 text-sm font-serif italic transition-colors duration-300">
                             Explore our curated collection of Georgia's finest destinations
                         </p>
                     </motion.div>
@@ -383,19 +385,19 @@ export default function DestinationsPage() {
             </section>
 
             {/* CTA Section - Luxury style */}
-            <section className="py-20 bg-espresso">
+            <section className="py-20 bg-espresso dark:bg-cinema-dark transition-colors duration-500">
                 <div className="max-w-3xl mx-auto px-6 text-center">
-                    <h2 className="font-display text-ivory text-3xl md:text-4xl font-bold mb-4">
+                    <h2 className="font-display text-ivory dark:text-white text-3xl md:text-4xl font-bold mb-4 transition-colors duration-300">
                         Plan Your Journey
                     </h2>
-                    <p className="text-ivory/60 text-lg font-serif italic mb-8">
+                    <p className="text-ivory/60 dark:text-white/60 text-lg font-serif italic mb-8 transition-colors duration-300">
                         Let us craft your perfect Georgian experience
                     </p>
                     <a
-                        href="https://wa.me/+995514048822"
+                        href="https://wa.me/995514048822"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-3 px-8 py-4 bg-terracotta text-ivory text-lg font-medium hover:bg-terracotta/90 transition-colors"
+                        className="inline-flex items-center gap-3 px-8 py-4 bg-terracotta dark:bg-gold-400 text-ivory dark:text-black text-lg font-medium hover:bg-terracotta/90 dark:hover:bg-gold-400/90 transition-colors"
                     >
                         Contact Rati Tours
                     </a>
