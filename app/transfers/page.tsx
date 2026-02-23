@@ -168,12 +168,14 @@ function CTASection({ lang }: { lang: string }) {
 // MAIN PAGE
 // ============================================
 export default function TransfersPage() {
-  const [lang, setLang] = useState('en')
+  const [lang, setLang] = useState<'en' | 'he' | 'ru'>('en')
 
   // Load saved language
   useEffect(() => {
     const saved = localStorage.getItem('visitGeorgia_lang')
-    if (saved) setLang(saved)
+    if (saved && (saved === 'en' || saved === 'he' || saved === 'ru')) {
+      setLang(saved)
+    }
   }, [])
 
   // Save language and set RTL

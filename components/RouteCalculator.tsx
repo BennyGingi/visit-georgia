@@ -297,7 +297,7 @@ export default function RouteCalculator({ lang }: RouteCalculatorProps) {
 
   const routeData = from && to ? routes[from]?.[to] : null
   const priceEUR = routeData ? routeData[vehicle as keyof typeof routeData] : null
-  const price = priceEUR ? convertPrice(priceEUR, currency) : null
+  const price = priceEUR && typeof priceEUR === 'number' ? convertPrice(priceEUR, currency) : null
 
   // WhatsApp message ALWAYS in English
   const generateWhatsAppLink = () => {

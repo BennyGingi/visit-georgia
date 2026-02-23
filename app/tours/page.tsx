@@ -464,7 +464,7 @@ function ToursHero({ t, isRTL }: any) {
 }
 
 // Tour Card
-function TourCard({ tour, t, isRTL, onSelect }: any) {
+function TourCard({ tour, t, isRTL, onSelect, lang }: any) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-50px' })
 
