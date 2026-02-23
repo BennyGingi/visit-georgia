@@ -1,0 +1,2355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Visit Georgia — an editorial guide to the Caucasus crossroads of ancient wine, soaring peaks, and living culture. Discover Tbilisi, Kazbegi, Kakheti, and beyond." />
+  <title>Visit Georgia — The Traveller's Edit</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,900;1,400;1,600;1,900&family=Inter:wght@300;400;500;600&family=Noto+Serif+Georgian:wght@400;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    /* =============================================
+       DESIGN TOKENS
+    ============================================= */
+    :root {
+      --c-ink:         #0d0c0a;
+      --c-paper:       #f7f4ef;
+      --c-paper-warm:  #ede8df;
+      --c-cream:       #faf8f4;
+      --c-gold:        #b8862e;
+      --c-gold-light:  #d4a84b;
+      --c-gold-pale:   #f5e9cc;
+      --c-charcoal:    #2a2520;
+      --c-mid:         #5c574f;
+      --c-muted:       #9b9490;
+      --c-rule:        #d6cfc3;
+      --c-accent-red:  #8b1a1a;
+
+      --ff-display:  'Playfair Display', Georgia, serif;
+      --ff-body:     'Inter', system-ui, sans-serif;
+      --ff-georgian: 'Noto Serif Georgian', serif;
+
+      --fs-micro:   0.6875rem;  /* 11px */
+      --fs-caption: 0.75rem;    /* 12px */
+      --fs-small:   0.875rem;   /* 14px */
+      --fs-body:    1rem;       /* 16px */
+      --fs-lead:    1.125rem;   /* 18px */
+      --fs-xl:      1.375rem;   /* 22px */
+      --fs-2xl:     1.75rem;    /* 28px */
+      --fs-3xl:     2.5rem;     /* 40px */
+      --fs-4xl:     3.5rem;     /* 56px */
+      --fs-5xl:     5rem;       /* 80px */
+      --fs-hero:    clamp(3rem, 8vw, 7.5rem);
+
+      --lh-tight:   1.1;
+      --lh-snug:    1.3;
+      --lh-normal:  1.6;
+      --lh-loose:   1.85;
+
+      --ls-wide:    0.08em;
+      --ls-wider:   0.14em;
+
+      --space-1:  0.25rem;
+      --space-2:  0.5rem;
+      --space-3:  0.75rem;
+      --space-4:  1rem;
+      --space-5:  1.25rem;
+      --space-6:  1.5rem;
+      --space-8:  2rem;
+      --space-10: 2.5rem;
+      --space-12: 3rem;
+      --space-16: 4rem;
+      --space-20: 5rem;
+      --space-24: 6rem;
+      --space-32: 8rem;
+
+      --col-gutter: clamp(1.5rem, 4vw, 3rem);
+      --col-max:    1280px;
+      --col-text:   720px;
+
+      --shadow-card: 0 2px 8px rgba(0,0,0,0.08), 0 12px 32px rgba(0,0,0,0.06);
+      --shadow-deep: 0 8px 32px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.1);
+
+      --transition: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* =============================================
+       RESET & BASE
+    ============================================= */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      background-color: var(--c-paper);
+      color: var(--c-charcoal);
+      font-family: var(--ff-body);
+      font-size: var(--fs-body);
+      line-height: var(--lh-normal);
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* =============================================
+       LAYOUT UTILITIES
+    ============================================= */
+    .container {
+      width: 100%;
+      max-width: var(--col-max);
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: var(--col-gutter);
+      padding-right: var(--col-gutter);
+    }
+
+    .container--narrow {
+      max-width: calc(var(--col-text) + 2 * var(--col-gutter));
+    }
+
+    .container--wide {
+      max-width: 1440px;
+    }
+
+    /* Horizontal rule */
+    .rule {
+      border: none;
+      border-top: 1px solid var(--c-rule);
+    }
+
+    .rule--gold {
+      border-top-color: var(--c-gold);
+      border-top-width: 2px;
+    }
+
+    /* Section label */
+    .section-label {
+      display: inline-block;
+      font-family: var(--ff-body);
+      font-size: var(--fs-micro);
+      font-weight: 600;
+      letter-spacing: var(--ls-wider);
+      text-transform: uppercase;
+      color: var(--c-gold);
+    }
+
+    /* =============================================
+       NAVIGATION
+    ============================================= */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background-color: var(--c-ink);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      transition: background-color var(--transition), box-shadow var(--transition);
+    }
+
+    .nav.scrolled {
+      box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+    }
+
+    .nav__inner {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      height: 64px;
+      padding: 0 var(--col-gutter);
+      max-width: var(--col-max);
+      margin: 0 auto;
+    }
+
+    .nav__links {
+      display: flex;
+      align-items: center;
+      gap: var(--space-6);
+      list-style: none;
+    }
+
+    .nav__links a {
+      font-size: var(--fs-caption);
+      font-weight: 500;
+      letter-spacing: var(--ls-wide);
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      transition: color var(--transition);
+    }
+
+    .nav__links a:hover {
+      color: var(--c-gold-light);
+    }
+
+    .nav__brand {
+      text-align: center;
+    }
+
+    .nav__brand-name {
+      font-family: var(--ff-display);
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.02em;
+    }
+
+    .nav__brand-sub {
+      display: block;
+      font-family: var(--ff-georgian);
+      font-size: 0.625rem;
+      color: var(--c-gold-light);
+      letter-spacing: 0.1em;
+      margin-top: 1px;
+    }
+
+    .nav__actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: var(--space-4);
+    }
+
+    .nav__cta {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      background-color: var(--c-gold);
+      color: #fff;
+      font-size: var(--fs-caption);
+      font-weight: 600;
+      letter-spacing: var(--ls-wide);
+      text-transform: uppercase;
+      padding: 0.5rem 1rem;
+      border-radius: 2px;
+      transition: background-color var(--transition);
+    }
+
+    .nav__cta:hover {
+      background-color: var(--c-gold-light);
+    }
+
+    .nav__hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: var(--space-2);
+      background: none;
+      border: none;
+    }
+
+    .nav__hamburger span {
+      display: block;
+      width: 24px;
+      height: 1.5px;
+      background-color: rgba(255,255,255,0.85);
+      transition: transform var(--transition), opacity var(--transition);
+    }
+
+    /* Mobile nav overlay */
+    .nav__mobile {
+      display: none;
+      position: fixed;
+      inset: 64px 0 0 0;
+      background-color: var(--c-ink);
+      z-index: 99;
+      padding: var(--space-8) var(--col-gutter);
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+
+    .nav__mobile.open {
+      display: flex;
+    }
+
+    .nav__mobile a {
+      font-family: var(--ff-display);
+      font-size: var(--fs-2xl);
+      color: rgba(255,255,255,0.9);
+      transition: color var(--transition);
+    }
+
+    .nav__mobile a:hover {
+      color: var(--c-gold-light);
+    }
+
+    /* =============================================
+       HERO — MAGAZINE COVER STYLE
+    ============================================= */
+    .hero {
+      position: relative;
+      height: 100svh;
+      min-height: 600px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      overflow: hidden;
+      background-color: var(--c-ink);
+    }
+
+    .hero__bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1565008576549-57569a49371d?w=1600&q=85&auto=format&fit=crop');
+      background-size: cover;
+      background-position: center 30%;
+      transform: scale(1.04);
+      transition: transform 12s ease-out;
+    }
+
+    .hero__bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(13,12,10,0.15) 0%,
+        rgba(13,12,10,0.1) 35%,
+        rgba(13,12,10,0.55) 65%,
+        rgba(13,12,10,0.92) 100%
+      );
+    }
+
+    .hero__top-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-20) var(--col-gutter) 0;
+      max-width: var(--col-max);
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .hero__issue-label {
+      font-size: var(--fs-micro);
+      font-weight: 600;
+      letter-spacing: var(--ls-wider);
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+    }
+
+    .hero__content {
+      position: relative;
+      z-index: 2;
+      padding: 0 var(--col-gutter) var(--space-16);
+      max-width: var(--col-max);
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .hero__eyebrow {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      margin-bottom: var(--space-5);
+    }
+
+    .hero__eyebrow-line {
+      width: 32px;
+      height: 1px;
+      background-color: var(--c-gold);
+    }
+
+    .hero__eyebrow-text {
+      font-size: var(--fs-micro);
+      font-weight: 600;
+      letter-spacing: var(--ls-wider);
+      text-transform: uppercase;
+      color: var(--c-gold-light);
+    }
+
+    .hero__headline {
+      font-family: var(--ff-display);
+      font-size: var(--fs-hero);
+      font-weight: 900;
+      line-height: var(--lh-tight);
+      color: #fff;
+      max-width: 14ch;
+      margin-bottom: var(--space-6);
+      text-shadow: 0 2px 24px rgba(0,0,0,0.3);
+    }
+
+    .hero__headline em {
+      font-style: italic;
+      color: var(--c-gold-light);
+    }
+
+    .hero__deck {
+      font-size: var(--fs-lead);
+      font-weight: 300;
+      line-height: var(--lh-loose);
+      color: rgba(255,255,255,0.8);
+      max-width: 52ch;
+      margin-bottom: var(--space-8);
+    }
+
+    .hero__actions {
+      display: flex;
+      align-items: center;
+      gap: var(--space-5);
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: var(--fs-small);
+      font-weight: 600;
+      letter-spacing: var(--ls-wide);
+      text-transform: uppercase;
+      padding: 0.875rem 1.75rem;
+      border-radius: 2px;
+      transition: all var(--transition);
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn--gold {
+      background-color: var(--c-gold);
+      color: #fff;
+    }
+
+    .btn--gold:hover {
+      background-color: var(--c-gold-light);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(184,134,46,0.35);
+    }
+
+    .btn--outline-white {
+      background-color: transparent;
+      color: rgba(255,255,255,0.9);
+      border: 1px solid rgba(255,255,255,0.35);
+    }
+
+    .btn--outline-white:hover {
+      background-color: rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.65);
+    }
+
+    .hero__scroll-cue {
+      position: absolute;
+      bottom: var(--space-8);
+      right: var(--col-gutter);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-2);
+      color: rgba(255,255,255,0.4);
+    }
+
+    .hero__scroll-cue span {
+      font-size: var(--fs-micro);
+      letter-spacing: var(--ls-wider);
+      text-transform: uppercase;
+      writing-mode: vertical-rl;
+    }
+
+    .hero__scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.35));
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 1; }
+    }
+
+    /* =============================================
+       ISSUE INTRO BAND
+    ============================================= */
+    .intro-band {
+      background-color: var(--c-ink);
+      padding: var(--space-10) var(--col-gutter);
+    }
+
+    .intro-band__inner {
+      max-width: var(--col-max);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: var(--space-8);
+    }
+
+    .intro-band__text {
+      font-size: var(--fs-small);
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 0.02em;
+    }
+
+    .intro-band__divider {
+      width: 1px;
+      height: 40px;
+      background-color: rgba(255,255,255,0.15);
+    }
+
+    .intro-band__georgian {
+      font-family: var(--ff-georgian);
+      font-size: var(--fs-3xl);
+      color: var(--c-gold);
+      text-align: right;
+      line-height: 1;
+    }
+
+    /* =============================================
+       FEATURE ARTICLE — GEORGIAN WINE
+    ============================================= */
+    .feature {
+      padding: var(--space-24) var(--col-gutter);
+      background-color: var(--c-cream);
+    }
+
+    .feature__inner {
+      max-width: var(--col-max);
+      margin: 0 auto;
+    }
+
+    /* Header row: label + title + image */
+    .feature__header {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: clamp(2rem, 5vw, 5rem);
+      align-items: start;
+      margin-bottom: var(--space-16);
+    }
+
+    .feature__meta {
+      padding-top: var(--space-2);
+    }
+
+    .feature__category {
+      font-size: var(--fs-micro);
+      font-weight: 600;
+      letter-spacing: var(--ls-wider);
+      text-transform: uppercase;
+      color: var(--c-gold);
+      margin-bottom: var(--space-4);
+    }
+
+    .feature__number {
+      font-family: var(--ff-display);
+      font-size: clamp(5rem, 12vw, 10rem);
+      font-weight: 900;
+      line-height: 0.85;
+      color: var(--c-rule);
+      margin-bottom: var(--space-6);
+    }
+
+    .feature__meta-list {
+      list-style: none;
+      border-top: 1px solid var(--c-rule);
+    }
+
+    .feature__meta-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: var(--space-3) 0;
+      border-bottom: 1px solid var(--c-rule);
+      font-size: var(--fs-caption);
+    }
+
+    .feature__meta-key {
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--c-muted);
+    }
+
+    .feature__meta-val {
+      color: var(--c-charcoal);
+      text-align: right;
+    }
+
+    .feature__title-block {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-5);
+    }
+
+    .feature__title {
+      font-family: var(--ff-display);
+      font-size: clamp(2.25rem, 5vw, 4rem);
+      font-weight: 700;
+      line-height: var(--lh-tight);
+      color: var(--c-ink);
+    }
+
+    .feature__title em {
+      font-style: italic;
+      color: var(--c-gold);
+    }
+
+    .feature__standfirst {
+      font-size: var(--fs-lead);
+      line-height: var(--lh-loose);
+      color: var(--c-mid);
+      border-left: 3px solid var(--c-gold);
+      padding-left: var(--space-5);
+    }
+
+    .feature__hero-img {
+      width: 100%;
+      aspect-ratio: 3/2;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Body copy in two columns */
+    .feature__body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(2rem, 5vw, 5rem);
+      align-items: start;
+      margin-bottom: var(--space-16);
+    }
+
+    .feature__copy p {
+      font-size: var(--fs-body);
+      line-height: var(--lh-loose);
+      color: var(--c-charcoal);
+      margin-bottom: var(--space-5);
+    }
+
+    .feature__copy p:first-child::first-letter {
+      font-family: var(--ff-display);
+      font-size: 4.5em;
+      font-weight: 900;
+      float: left;
+      line-height: 0.75;
+      margin-right: 0.08em;
+      margin-top: 0.1em;
+      color: var(--c-gold);
+    }
+
+    /* Pull quote */
+    .pull-quote {
+      position: relative;
+      padding: var(--space-8) var(--space-8) var(--space-8) calc(var(--space-8) + 3px);
+      border-left: 3px solid var(--c-gold);
+      background-color: var(--c-paper-warm);
+    }
+
+    .pull-quote__mark {
+      font-family: var(--ff-display);
+      font-size: 5rem;
+      line-height: 0.5;
+      color: var(--c-gold-pale);
+      display: block;
+      margin-bottom: var(--space-4);
+      user-select: none;
+    }
+
+    .pull-quote__text {
+      font-family: var(--ff-display);
+      font-size: var(--fs-xl);
+      font-style: italic;
+      line-height: var(--lh-snug);
+      color: var(--c-charcoal);
+      margin-bottom: var(--space-4);
+    }
+
+    .pull-quote__attribution {
+      font-size: var(--fs-caption);
+      font-weight: 600;
+      letter-spacing: var(--ls-wide);
+      text-transform: uppercase;
+      color: var(--c-muted);
+    }
+
+    /* Stat strip */
+    .feature__stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 2px solid var(--c-gold);
+      border-bottom: 1px solid var(--c-rule);
+    }
+
+    .feature__stat {
+      padding: var(--space-8) var(--space-6);
+      text-align: center;
+      border-right: 1px solid var(--c-rule);
+    }
+
+    .feature__stat:last-child {
+      border-right: none;
+    }
+
+    .feature__stat-number {
+      font-family: var(--ff-display);
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 900;
+      color: var(--c-gold);
+      line-height: 1;
+      margin-bottom: var(--space-2);
+    }
+
+    .feature__stat-label {
+      font-size: var(--fs-caption);
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--c-muted);
+    }
+
+    .feature__stat-desc {
+      font-size: var(--fs-small);
+      color: var(--c-mid);
+      margin-top: var(--space-1);
+      line-height: var(--lh-snug);
+    }
+
+    /* =============================================
+       DESTINATIONS STRIP
+    ============================================= */
+    .destinations {
+      background-color: var(--c-ink);
+      padding: var(--space-24) var(--col-gutter);
+    }
+
+    .destinations__inner {
+      max-width: var(--col-max);
+      margin: 0 auto;
+    }
+
+    .destinations__header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: var(--space-10);
+      flex-wrap: wrap;
+      gap: var(--space-4);
+    }
+
+    .destinations__title {
+      font-family: var(--ff-display);
+      font-size: clamp(1.75rem, 4vw, 3rem);
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .destinations__see-all {
+      font-size: var(--fs-caption);
+      font-weight: 600;
+      letter-spacing: var(--ls-wide);
+      text-transform: uppercase;
+      color: var(--c-gold-light);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      transition: gap var(--transition);
+    }
+
+    .destinations__see-all:hover {
+      gap: var(--space-4);
+    }
+
+    .destinations__grid {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 3px;
+    }
+
+    .dest-card {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .dest-card--featured {
+      grid-row: span 2;
+    }
+
+    .dest-card__img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+      display: block;
+    }
+
+    .dest-card--featured .dest-card__img {
+      height: 560px;
+    }
+
+    .dest-card:not(.dest-card--featured) .dest-card__img {
+      height: 276px;
+    }
+
+    .dest-card:hover .dest-card__img {
+      transform: scale(1.06);
+    }
+
+    .dest-card__overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(13,12,10,0.85) 0%, transparent 55%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: var(--space-6);
+    }
+
+    .dest-card__tag {
+      font-size: var(--fs-micro);
+      font-weight: 600;
+      letter-spacing: var(--ls-wider);
+      text-transform: uppercase;
+      color: var(--c-gold-light);
+      margin-bottom: var(--space-2);
+    }
+
+    .dest-card__name {
+      font-family: var(--ff-display);
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .dest-card--featured .dest-card__name {
+      font-size: var(--fs-3xl);
+    }
+
+    .dest-card:not(.dest-card--featured) .dest-card__name {
+      font-size: var(--fs-xl);
+    }
+
+    .dest-card__desc {
+      font-size: var(--fs-small);
+      color: rgba(255,255,255,0.65);
+      margin-top: var(--space-2);
+      line-height: var(--lh-snug);
+    }
+
+    /* =============================================
+       PHOTO ESSAY
+    ============================================= */
+    .photo-essay {
+      padding: var(--space-24) 0;
+      background-color: var(--c-paper);
+      overflow: hidden;
+    }
+
+    .photo-essay__header {
+      padding: 0 var(--col-gutter);
+      max-width: var(--col-max);
+      margin: 0 auto var(--space-12);
+    }
+
+    .photo-essay__title {
+      font-family: var(--ff-display);
+      font-size: clamp(1.75rem, 4vw, 3rem);
+      font-weight: 700;
+      color: var(--c-ink);
+      margin-bottom: var(--space-4);
+    }
+
+    .photo-essay__intro {
+      font-size: var(--fs-lead);
+      color: var(--c-mid);
+      max-width: 65ch;
+      line-height: var(--lh-loose);
+    }
+
+    /* Horizontal scroll strip */
+    .photo-essay__strip {
+      display: flex;
+      gap: 3px;
+      padding: 0 var(--col-gutter);
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .photo-essay__strip::-webkit-scrollbar {
+      display: none;
+    }
+
+    .essay-frame {
+      flex: 0 0 auto;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .essay-frame--portrait {
+      width: clamp(220px, 28vw, 380px);
+    }
+
+    .essay-frame--landscape {
+      width: clamp(300px, 40vw, 560px);
+    }
+
+    .essay-frame--square {
+      width: clamp(240px, 30vw, 400px);
+    }
+
+    .essay-frame img {
+      width: 100%;
+      height: 480px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .essay-frame:hover img {
+      transform: scale(1.04);
+    }
+
+    .essay-frame__caption {
+      padding: var(--space-4) 0;
+    }
+
+    .essay-frame__caption-number {
+      font-size: var(--fs-micro);
+      font-weight: 600;
+      color: var(--c-gold);
+      letter-spacing: var(--ls-wider);
+      text-transform: uppercase;
+    }
+
+    .essay-frame__caption-text {
+      font-size: var(--fs-caption);
+      color: var(--c-mid);
+      line-height: var(--lh-snug);
+      margin-top: var(--space-1);
+    }
+
+    /* Mosaic section beneath the strip */
+    .photo-essay__mosaic {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: 300px 300px;
+      gap: 3px;
+      margin-top: var(--space-12);
+    }
+
+    .mosaic-cell {
+      overflow: hidden;
+      position: relative;
+    }
+
+    .mosaic-cell--wide {
+      grid-column: span 2;
+    }
+
+    .mosaic-cell--tall {
+      grid-row: span 2;
+    }
+
+    .mosaic-cell img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .mosaic-cell:hover img {
+      transform: scale(1.05);
+    }
+
+    .mosaic-cell__label {
+      position: absolute;
+      bottom: var(--space-4);
+      left: var(--space-4);
+      background-color: rgba(13,12,10,0.7);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      color: rgba(255,255,255,0.9);
+      font-size: var(--fs-caption);
+      font-weight: 500;
+      padding: var(--space-2) var(--space-3);
+      letter-spacing: 0.03em;
+    }
+
+    /* =============================================
+       EXPERIENCES SECTION
+    ============================================= */
+    .experiences {
+      background-color: var(--c-paper-warm);
+      padding: var(--space-24) var(--col-gutter);
+    }
+
+    .experiences__inner {
+      max-width: var(--col-max);
+      margin: 0 auto;
+    }
+
+    .experiences__intro {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(2rem, 5vw, 6rem);
+      align-items: end;
+      margin-bottom: var(--space-16);
+    }
+
+    .experiences__title {
+      font-family: var(--ff-display);
+      font-size: clamp(2rem, 4.5vw, 3.5rem);
+      font-weight: 700;
+      line-height: var(--lh-tight);
+      color: var(--c-ink);
+    }
+
+    .experiences__body {
+      font-size: var(--fs-body);
+      line-height: var(--lh-loose);
+      color: var(--c-mid);
+    }
+
+    .experiences__grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-5);
+    }
+
+    .exp-card {
+      background-color: var(--c-cream);
+      padding: var(--space-8) var(--space-6);
+      border-top: 2px solid var(--c-rule);
+      transition: border-color var(--transition), transform var(--transition);
+    }
+
+    .exp-card:hover {
+      border-top-color: var(--c-gold);
+      transform: translateY(-3px);
+    }
+
+    .exp-card__icon {
+      font-size: 2rem;
+      margin-bottom: var(--space-5);
+      line-height: 1;
+    }
+
+    .exp-card__name {
+      font-family: var(--ff-display);
+      font-size: var(--fs-xl);
+      font-weight: 700;
+      color: var(--c-ink);
+      margin-bottom: var(--space-3);
+    }
+
+    .exp-card__desc {
+      font-size: var(--fs-small);
+      line-height: var(--lh-loose);
+      color: var(--c-mid);
+      margin-bottom: var(--space-5);
+    }
+
+    .exp-card__link {
+      font-size: var(--fs-caption);
+      font-weight: 600;
+      letter-spacing: var(--ls-wide);
+      text-transform: uppercase;
+      color: var(--c-gold);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      transition: gap var(--transition);
+    }
+
+    .exp-card__link:hover {
+      gap: var(--space-3);
+    }
+
+    /* =============================================
+       PLAN YOUR TRIP CTA
+    ============================================= */
+    .plan {
+      position: relative;
+      overflow: hidden;
+      background-color: var(--c-ink);
+      padding: var(--space-32) var(--col-gutter);
+    }
+
+    .plan__bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1628151797484-f861dd4a5090?w=1400&q=80&auto=format&fit=crop');
+      background-size: cover;
+      background-position: center;
+      opacity: 0.3;
+    }
+
+    .plan__inner {
+      position: relative;
+      z-index: 2;
+      max-width: var(--col-text);
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .plan__eyebrow {
+      font-size: var(--fs-micro);
+      font-weight: 600;
+      letter-spacing: var(--ls-wider);
+      text-transform: uppercase;
+      color: var(--c-gold-light);
+      margin-bottom: var(--space-6);
+    }
+
+    .plan__title {
+      font-family: var(--ff-display);
+      font-size: clamp(2.25rem, 5vw, 4.5rem);
+      font-weight: 900;
+      line-height: var(--lh-tight);
+      color: #fff;
+      margin-bottom: var(--space-6);
+    }
+
+    .plan__title em {
+      font-style: italic;
+      color: var(--c-gold-light);
+    }
+
+    .plan__body {
+      font-size: var(--fs-lead);
+      font-weight: 300;
+      line-height: var(--lh-loose);
+      color: rgba(255,255,255,0.7);
+      margin-bottom: var(--space-10);
+      max-width: 55ch;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .plan__cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background-color: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.08);
+      margin-bottom: var(--space-12);
+      text-align: left;
+    }
+
+    .plan__card {
+      background-color: rgba(255,255,255,0.04);
+      padding: var(--space-8) var(--space-6);
+      transition: background-color var(--transition);
+    }
+
+    .plan__card:hover {
+      background-color: rgba(255,255,255,0.08);
+    }
+
+    .plan__card-label {
+      font-size: var(--fs-micro);
+      font-weight: 600;
+      letter-spacing: var(--ls-wider);
+      text-transform: uppercase;
+      color: var(--c-gold-light);
+      margin-bottom: var(--space-3);
+    }
+
+    .plan__card-title {
+      font-family: var(--ff-display);
+      font-size: var(--fs-xl);
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: var(--space-3);
+    }
+
+    .plan__card-desc {
+      font-size: var(--fs-small);
+      color: rgba(255,255,255,0.5);
+      line-height: var(--lh-loose);
+    }
+
+    .plan__cta-group {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-4);
+      flex-wrap: wrap;
+    }
+
+    .plan__whatsapp {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-3);
+      background-color: #25d366;
+      color: #fff;
+      font-size: var(--fs-small);
+      font-weight: 600;
+      padding: 0.875rem 1.75rem;
+      border-radius: 2px;
+      transition: all var(--transition);
+    }
+
+    .plan__whatsapp:hover {
+      background-color: #1ebe5d;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(37,211,102,0.3);
+    }
+
+    .plan__whatsapp svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+
+    /* =============================================
+       FOOTER
+    ============================================= */
+    .footer {
+      background-color: #080706;
+      padding: var(--space-16) var(--col-gutter) var(--space-8);
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .footer__inner {
+      max-width: var(--col-max);
+      margin: 0 auto;
+    }
+
+    .footer__grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: clamp(2rem, 4vw, 4rem);
+      margin-bottom: var(--space-12);
+      padding-bottom: var(--space-12);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .footer__brand-name {
+      font-family: var(--ff-display);
+      font-size: var(--fs-2xl);
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: var(--space-2);
+    }
+
+    .footer__brand-sub {
+      font-family: var(--ff-georgian);
+      font-size: var(--fs-body);
+      color: var(--c-gold);
+      margin-bottom: var(--space-5);
+    }
+
+    .footer__tagline {
+      font-size: var(--fs-small);
+      color: rgba(255,255,255,0.45);
+      line-height: var(--lh-loose);
+      max-width: 28ch;
+      margin-bottom: var(--space-6);
+    }
+
+    .footer__contact-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      font-size: var(--fs-small);
+      color: rgba(255,255,255,0.6);
+      margin-bottom: var(--space-3);
+    }
+
+    .footer__contact-item svg {
+      width: 16px;
+      height: 16px;
+      fill: var(--c-gold);
+      flex-shrink: 0;
+    }
+
+    .footer__col-title {
+      font-size: var(--fs-caption);
+      font-weight: 600;
+      letter-spacing: var(--ls-wide);
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: var(--space-5);
+    }
+
+    .footer__links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+
+    .footer__links a {
+      font-size: var(--fs-small);
+      color: rgba(255,255,255,0.55);
+      transition: color var(--transition);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .footer__links a:hover {
+      color: var(--c-gold-light);
+    }
+
+    .footer__bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--space-4);
+    }
+
+    .footer__copy {
+      font-size: var(--fs-caption);
+      color: rgba(255,255,255,0.25);
+    }
+
+    .footer__bottom-links {
+      display: flex;
+      gap: var(--space-5);
+    }
+
+    .footer__bottom-links a {
+      font-size: var(--fs-caption);
+      color: rgba(255,255,255,0.25);
+      transition: color var(--transition);
+    }
+
+    .footer__bottom-links a:hover {
+      color: rgba(255,255,255,0.5);
+    }
+
+    .footer__georgian-script {
+      font-family: var(--ff-georgian);
+      font-size: var(--fs-caption);
+      color: rgba(255,255,255,0.2);
+    }
+
+    /* =============================================
+       FLOATING WHATSAPP
+    ============================================= */
+    .floating-wa {
+      position: fixed;
+      bottom: var(--space-6);
+      right: var(--space-6);
+      z-index: 200;
+      width: 56px;
+      height: 56px;
+      background-color: #25d366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 16px rgba(37,211,102,0.4);
+      transition: transform var(--transition), box-shadow var(--transition);
+      cursor: pointer;
+    }
+
+    .floating-wa:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 28px rgba(37,211,102,0.5);
+    }
+
+    .floating-wa svg {
+      width: 30px;
+      height: 30px;
+      fill: #fff;
+    }
+
+    /* =============================================
+       RESPONSIVE — TABLET (≤ 1024px)
+    ============================================= */
+    @media (max-width: 1024px) {
+      .nav__links {
+        display: none;
+      }
+
+      .nav__hamburger {
+        display: flex;
+      }
+
+      .nav__inner {
+        grid-template-columns: auto 1fr auto;
+      }
+
+      .feature__header {
+        grid-template-columns: 1fr;
+      }
+
+      .feature__number {
+        font-size: 6rem;
+      }
+
+      .feature__body {
+        grid-template-columns: 1fr;
+      }
+
+      .feature__stats {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .destinations__grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .dest-card--featured {
+        grid-column: span 2;
+        grid-row: span 1;
+      }
+
+      .dest-card--featured .dest-card__img {
+        height: 400px;
+      }
+
+      .experiences__intro {
+        grid-template-columns: 1fr;
+      }
+
+      .experiences__grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .footer__grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .photo-essay__mosaic {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+      }
+
+      .mosaic-cell--wide,
+      .mosaic-cell--tall {
+        grid-column: span 1;
+        grid-row: span 1;
+      }
+
+      .plan__cards {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* =============================================
+       RESPONSIVE — MOBILE (≤ 640px)
+    ============================================= */
+    @media (max-width: 640px) {
+      :root {
+        --col-gutter: 1.25rem;
+      }
+
+      .nav__inner {
+        grid-template-columns: 1fr auto;
+      }
+
+      .nav__brand {
+        text-align: left;
+      }
+
+      .nav__actions .nav__cta {
+        display: none;
+      }
+
+      .hero__content {
+        padding-bottom: var(--space-12);
+      }
+
+      .hero__actions {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .intro-band__inner {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .intro-band__divider {
+        display: none;
+      }
+
+      .intro-band__georgian {
+        text-align: center;
+      }
+
+      .feature {
+        padding: var(--space-16) var(--col-gutter);
+      }
+
+      .feature__stats {
+        grid-template-columns: 1fr;
+      }
+
+      .feature__stat {
+        border-right: none;
+        border-bottom: 1px solid var(--c-rule);
+      }
+
+      .destinations__grid {
+        grid-template-columns: 1fr;
+      }
+
+      .dest-card--featured {
+        grid-column: span 1;
+      }
+
+      .dest-card--featured .dest-card__img,
+      .dest-card:not(.dest-card--featured) .dest-card__img {
+        height: 280px;
+      }
+
+      .experiences__grid {
+        grid-template-columns: 1fr;
+      }
+
+      .photo-essay__mosaic {
+        display: none;
+      }
+
+      .plan {
+        padding: var(--space-20) var(--col-gutter);
+      }
+
+      .footer__grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer__bottom {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    /* =============================================
+       SCROLL-TRIGGERED ANIMATIONS
+    ============================================= */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .fade-up--delay-1 { transition-delay: 0.1s; }
+    .fade-up--delay-2 { transition-delay: 0.2s; }
+    .fade-up--delay-3 { transition-delay: 0.3s; }
+    .fade-up--delay-4 { transition-delay: 0.4s; }
+  </style>
+</head>
+
+<body>
+
+  <!-- =============================================
+       NAVIGATION
+  ============================================= -->
+  <nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav__inner">
+      <!-- Left links (desktop) -->
+      <ul class="nav__links" role="list">
+        <li><a href="#destinations">Destinations</a></li>
+        <li><a href="#wine">Georgian Wine</a></li>
+        <li><a href="#experiences">Experiences</a></li>
+      </ul>
+
+      <!-- Brand / logo -->
+      <div class="nav__brand">
+        <span class="nav__brand-name">Visit Georgia</span>
+        <span class="nav__brand-sub">საქართველო</span>
+      </div>
+
+      <!-- Right actions (desktop) -->
+      <div class="nav__actions">
+        <a href="#plan" class="nav__cta btn btn--gold">Book a Tour</a>
+        <button class="nav__hamburger" id="hamburger" aria-label="Open navigation menu" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile nav overlay -->
+  <div class="nav__mobile" id="mobileNav" role="dialog" aria-label="Mobile navigation">
+    <a href="#destinations" onclick="closeMobile()">Destinations</a>
+    <a href="#wine" onclick="closeMobile()">Georgian Wine</a>
+    <a href="#experiences" onclick="closeMobile()">Experiences</a>
+    <a href="#photo-essay" onclick="closeMobile()">Photo Essay</a>
+    <a href="#plan" onclick="closeMobile()">Plan Your Trip</a>
+    <hr class="rule" style="margin-top:1rem;">
+    <a href="https://wa.me/995514048822" target="_blank" rel="noopener" style="color:var(--c-gold-light);">WhatsApp Rati Tours</a>
+  </div>
+
+  <!-- =============================================
+       HERO — MAGAZINE COVER
+  ============================================= -->
+  <section class="hero" aria-label="Magazine hero">
+    <div class="hero__bg" id="heroBg"></div>
+
+    <div class="hero__top-bar" aria-hidden="true">
+      <span class="hero__issue-label">The Caucasus Edit &nbsp;&bull;&nbsp; Issue 12 &nbsp;&bull;&nbsp; 2026</span>
+    </div>
+
+    <div class="hero__content">
+      <div class="hero__eyebrow">
+        <span class="hero__eyebrow-line"></span>
+        <span class="hero__eyebrow-text">Cover Feature</span>
+      </div>
+
+      <h1 class="hero__headline">
+        Where the<br>
+        <em>World</em><br>
+        Was Born
+      </h1>
+
+      <p class="hero__deck">
+        Eight thousand years of wine, polyphonic song carried on mountain air,
+        and a capital city that rewrites the rules of Europe. Georgia is not
+        a destination — it is a revelation.
+      </p>
+
+      <div class="hero__actions">
+        <a href="#wine" class="btn btn--gold">Read the Feature</a>
+        <a href="#plan" class="btn btn--outline-white">Plan Your Journey</a>
+      </div>
+    </div>
+
+    <div class="hero__scroll-cue" aria-hidden="true">
+      <span>Scroll</span>
+      <div class="hero__scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       INTRO BAND
+  ============================================= -->
+  <div class="intro-band" role="complementary" aria-label="Georgian identity">
+    <div class="intro-band__inner">
+      <p class="intro-band__text">
+        A crossroads between East and West, the South Caucasus nation of Georgia
+        has been forging its own path for millennia — in food, faith, language,
+        and, above all, wine.
+      </p>
+      <div class="intro-band__divider" aria-hidden="true"></div>
+      <div class="intro-band__georgian" lang="ka" aria-label="Georgia in Georgian script">
+        საქართველო
+      </div>
+    </div>
+  </div>
+
+  <!-- =============================================
+       FEATURE ARTICLE — GEORGIAN WINE
+  ============================================= -->
+  <article class="feature" id="wine" aria-labelledby="feature-title">
+    <div class="feature__inner">
+
+      <!-- Header: meta column + title + image -->
+      <div class="feature__header">
+
+        <div class="feature__meta fade-up">
+          <p class="feature__category">Long Read &nbsp;/&nbsp; Culture &amp; Gastronomy</p>
+
+          <div class="feature__number" aria-hidden="true">01</div>
+
+          <ul class="feature__meta-list" role="list">
+            <li class="feature__meta-item">
+              <span class="feature__meta-key">Region</span>
+              <span class="feature__meta-val">Kakheti, Eastern Georgia</span>
+            </li>
+            <li class="feature__meta-item">
+              <span class="feature__meta-key">Heritage</span>
+              <span class="feature__meta-val">UNESCO Intangible Cultural Heritage</span>
+            </li>
+            <li class="feature__meta-item">
+              <span class="feature__meta-key">Vessel</span>
+              <span class="feature__meta-val">Qvevri — clay amphora, buried in earth</span>
+            </li>
+            <li class="feature__meta-item">
+              <span class="feature__meta-key">Oldest vintage</span>
+              <span class="feature__meta-val">c. 6000 BC</span>
+            </li>
+            <li class="feature__meta-item">
+              <span class="feature__meta-key">Native varieties</span>
+              <span class="feature__meta-val">500+ grape cultivars</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="feature__title-block fade-up fade-up--delay-1">
+          <h2 class="feature__title" id="feature-title">
+            The <em>Oldest Wine</em><br>
+            in the World Poured<br>
+            Here First
+          </h2>
+          <p class="feature__standfirst">
+            Long before France had a chateau and Italy had a vineyard, the people
+            of the South Caucasus were fermenting Rkatsiteli grapes in terracotta
+            vessels buried underground. What they created was not simply wine —
+            it was civilisation.
+          </p>
+          <img
+            src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=85&auto=format&fit=crop"
+            alt="Traditional Georgian qvevri clay wine vessels in Kakheti"
+            class="feature__hero-img"
+            loading="lazy"
+          />
+        </div>
+      </div>
+
+      <!-- Body: two-column copy + pull quote -->
+      <div class="feature__body fade-up">
+        <div class="feature__copy">
+          <p>
+            In the village of Sighnaghi, perched above the Alazani plain in the Kakheti
+            region, the rhythm of life has not changed much in three thousand years.
+            Come harvest season — known as <em>Rtveli</em> — the entire community
+            descends on the vineyards. Grapes are trodden by foot. The must, skins,
+            seeds, and stems are shovelled into great clay amphorae called qvevri,
+            sealed with beeswax, and buried in the cool earth of a cellar called a
+            <em>marani</em>. There the wine sleeps through winter, fermenting with
+            wild yeasts in a process that predates written language.
+          </p>
+          <p>
+            The result is unlike anything produced by modern oenology. Amber wines —
+            known to the outside world as "orange wines" — emerge from the qvevri
+            with a golden hue, tannins usually reserved for red wine, and a
+            complexity that has intoxicated drinkers from Tbilisi to Tokyo. The
+            method was awarded UNESCO Intangible Cultural Heritage status in 2013,
+            confirming what Georgians have always known: this is not agriculture.
+            It is heritage carried in the blood.
+          </p>
+          <p>
+            Today, Kakheti accounts for more than 70 percent of Georgia's wine output
+            and draws a new generation of travellers who swap the Loire Valley for
+            the Alazani, and the Barossa for the Kartli. Boutique guesthouses and
+            family-run wineries offer immersive experiences — from grape picking
+            to qvevri sealing — that no conventional wine tour can replicate.
+          </p>
+        </div>
+
+        <div>
+          <div class="pull-quote fade-up fade-up--delay-2">
+            <span class="pull-quote__mark" aria-hidden="true">&ldquo;</span>
+            <p class="pull-quote__text">
+              Wine is not a product for us. It is a prayer. Every qvevri buried
+              in the earth is a conversation between the living and the dead.
+            </p>
+            <p class="pull-quote__attribution">
+              Giorgi Dakishvili &nbsp;&mdash;&nbsp; Third-generation vintner, Telavi
+            </p>
+          </div>
+
+          <p style="margin-top:var(--space-8);font-size:var(--fs-small);line-height:var(--lh-loose);color:var(--c-mid);">
+            The region's hospitality tradition — <em>Tamada</em>, the art of the
+            toast-master at a feast — is equally profound. The <em>Supra</em>, a
+            ceremonial Georgian feast, is a performance of memory, belonging, and
+            abundance. Dishes arrive without end: churchkhela (walnut-and-grape
+            confections), khinkali dumplings heavy with broth, pkhali herb salads,
+            and whole suckling pigs glazed with pomegranate. The Tamada rises,
+            proposes a toast to those absent, and the qvevri wine flows into
+            horn-shaped drinking vessels. You do not simply eat at a Supra.
+            You participate in something ancient.
+          </p>
+        </div>
+      </div>
+
+      <!-- Stat strip -->
+      <div class="feature__stats fade-up" role="list" aria-label="Key wine statistics">
+        <div class="feature__stat" role="listitem">
+          <div class="feature__stat-number">8,000</div>
+          <div class="feature__stat-label">Years of Winemaking</div>
+          <div class="feature__stat-desc">Earliest evidence from Gadachrili Gora, c. 6000 BC</div>
+        </div>
+        <div class="feature__stat" role="listitem">
+          <div class="feature__stat-number">525</div>
+          <div class="feature__stat-label">Native Grape Varieties</div>
+          <div class="feature__stat-desc">More indigenous cultivars than any country on earth</div>
+        </div>
+        <div class="feature__stat" role="listitem">
+          <div class="feature__stat-number">100%</div>
+          <div class="feature__stat-label">Natural Process</div>
+          <div class="feature__stat-desc">Qvevri method: no additives, no filtering, no compromise</div>
+        </div>
+      </div>
+
+    </div>
+  </article>
+
+  <!-- =============================================
+       DESTINATIONS STRIP
+  ============================================= -->
+  <section class="destinations" id="destinations" aria-labelledby="dest-heading">
+    <div class="destinations__inner">
+
+      <div class="destinations__header fade-up">
+        <div>
+          <p class="section-label" style="color:rgba(255,255,255,0.35);margin-bottom:var(--space-2);">Where to Go</p>
+          <h2 class="destinations__title" id="dest-heading">Five Defining<br>Georgian Landscapes</h2>
+        </div>
+        <a href="#plan" class="destinations__see-all" aria-label="View all destinations">
+          All destinations &nbsp;&rarr;
+        </a>
+      </div>
+
+      <div class="destinations__grid fade-up fade-up--delay-1">
+
+        <!-- Featured: Tbilisi -->
+        <div class="dest-card dest-card--featured">
+          <img
+            src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=900&q=85&auto=format&fit=crop"
+            alt="Tbilisi old town and Metekhi Church overlooking the Mtkvari river"
+            class="dest-card__img"
+            loading="lazy"
+          />
+          <div class="dest-card__overlay">
+            <p class="dest-card__tag">Capital City</p>
+            <h3 class="dest-card__name">Tbilisi</h3>
+            <p class="dest-card__desc">
+              A city where sulphur baths bubble beneath medieval alleys,
+              where art nouveau balconies overhang with carved wood,
+              and where a thriving underground electronic scene pulses
+              until morning. Europe's most underrated capital.
+            </p>
+          </div>
+        </div>
+
+        <!-- Kazbegi -->
+        <div class="dest-card">
+          <img
+            src="https://images.unsplash.com/photo-1565008576549-57569a49371d?w=700&q=85&auto=format&fit=crop"
+            alt="Gergeti Trinity Church above the village of Kazbegi with Mount Kazbek"
+            class="dest-card__img"
+            loading="lazy"
+          />
+          <div class="dest-card__overlay">
+            <p class="dest-card__tag">Mountains</p>
+            <h3 class="dest-card__name">Kazbegi</h3>
+            <p class="dest-card__desc">14th-century church at 2,170 m</p>
+          </div>
+        </div>
+
+        <!-- Gudauri -->
+        <div class="dest-card">
+          <img
+            src="https://images.unsplash.com/photo-1605540436563-5bca919ae766?w=700&q=85&auto=format&fit=crop"
+            alt="Gudauri ski resort slopes in the Greater Caucasus mountains"
+            class="dest-card__img"
+            loading="lazy"
+          />
+          <div class="dest-card__overlay">
+            <p class="dest-card__tag">Alpine</p>
+            <h3 class="dest-card__name">Gudauri</h3>
+            <p class="dest-card__desc">World-class skiing, uncrowded pistes</p>
+          </div>
+        </div>
+
+        <!-- Batumi -->
+        <div class="dest-card">
+          <img
+            src="https://images.unsplash.com/photo-1628151797484-f861dd4a5090?w=700&q=85&auto=format&fit=crop"
+            alt="Batumi boulevard at dusk along the Black Sea coast"
+            class="dest-card__img"
+            loading="lazy"
+          />
+          <div class="dest-card__overlay">
+            <p class="dest-card__tag">Black Sea</p>
+            <h3 class="dest-card__name">Batumi</h3>
+            <p class="dest-card__desc">Palm-lined boulevards meet bold architecture</p>
+          </div>
+        </div>
+
+        <!-- Kakheti -->
+        <div class="dest-card">
+          <img
+            src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&q=85&auto=format&fit=crop"
+            alt="Vineyard rows in Kakheti wine region at sunset"
+            class="dest-card__img"
+            loading="lazy"
+          />
+          <div class="dest-card__overlay">
+            <p class="dest-card__tag">Wine Country</p>
+            <h3 class="dest-card__name">Kakheti</h3>
+            <p class="dest-card__desc">The cradle of Georgian viticulture</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       PHOTO ESSAY
+  ============================================= -->
+  <section class="photo-essay" id="photo-essay" aria-labelledby="essay-heading">
+
+    <div class="photo-essay__header fade-up">
+      <p class="section-label" style="margin-bottom:var(--space-3);">Photo Essay</p>
+      <h2 class="photo-essay__title" id="essay-heading">
+        Life at the Crossroads
+      </h2>
+      <p class="photo-essay__intro">
+        From the cobalt domes of Tbilisi's Anchiskhati Basilica to the snow-dusted
+        passes of the Military Highway, every frame of Georgia rewards the curious eye.
+        Photographer Nino Kvaratskhelia spent four seasons traversing the country for this essay.
+      </p>
+    </div>
+
+    <!-- Horizontal scroll filmstrip -->
+    <div class="photo-essay__strip" role="list" aria-label="Photo essay filmstrip">
+
+      <figure class="essay-frame essay-frame--portrait" role="listitem">
+        <img
+          src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=500&q=85&auto=format&fit=crop&crop=center"
+          alt="Metekhi Church silhouette at golden hour, Tbilisi"
+          loading="lazy"
+        />
+        <figcaption class="essay-frame__caption">
+          <span class="essay-frame__caption-number">01 / Tbilisi</span>
+          <p class="essay-frame__caption-text">Metekhi Church at golden hour, above the Mtkvari river gorge</p>
+        </figcaption>
+      </figure>
+
+      <figure class="essay-frame essay-frame--landscape" role="listitem">
+        <img
+          src="https://images.unsplash.com/photo-1565008576549-57569a49371d?w=700&q=85&auto=format&fit=crop"
+          alt="Gergeti Trinity Church with Mount Kazbek behind in snow"
+          loading="lazy"
+        />
+        <figcaption class="essay-frame__caption">
+          <span class="essay-frame__caption-number">02 / Kazbegi</span>
+          <p class="essay-frame__caption-text">Gergeti Trinity Church rises above cloud level at 2,170 metres</p>
+        </figcaption>
+      </figure>
+
+      <figure class="essay-frame essay-frame--square" role="listitem">
+        <img
+          src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=85&auto=format&fit=crop"
+          alt="Amber wine poured from a clay qvevri in Kakheti"
+          loading="lazy"
+        />
+        <figcaption class="essay-frame__caption">
+          <span class="essay-frame__caption-number">03 / Kakheti</span>
+          <p class="essay-frame__caption-text">Amber wine poured direct from a qvevri in a Sighnaghi cellar</p>
+        </figcaption>
+      </figure>
+
+      <figure class="essay-frame essay-frame--portrait" role="listitem">
+        <img
+          src="https://images.unsplash.com/photo-1628151797484-f861dd4a5090?w=500&q=85&auto=format&fit=crop&crop=center"
+          alt="Batumi seafront boulevard and Alphabet Tower at dusk"
+          loading="lazy"
+        />
+        <figcaption class="essay-frame__caption">
+          <span class="essay-frame__caption-number">04 / Batumi</span>
+          <p class="essay-frame__caption-text">Batumi's Alphabet Tower frames the Black Sea horizon at dusk</p>
+        </figcaption>
+      </figure>
+
+      <figure class="essay-frame essay-frame--landscape" role="listitem">
+        <img
+          src="https://images.unsplash.com/photo-1605540436563-5bca919ae766?w=700&q=85&auto=format&fit=crop"
+          alt="Gudauri mountain piste with Caucasus peaks in background"
+          loading="lazy"
+        />
+        <figcaption class="essay-frame__caption">
+          <span class="essay-frame__caption-number">05 / Gudauri</span>
+          <p class="essay-frame__caption-text">First tracks on Gudauri's north-facing powder fields, February</p>
+        </figcaption>
+      </figure>
+
+    </div>
+
+    <!-- Mosaic grid -->
+    <div class="photo-essay__mosaic container" role="presentation">
+      <div class="mosaic-cell mosaic-cell--tall">
+        <img
+          src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=600&q=80&auto=format&fit=crop"
+          alt="Tbilisi old town balconies at dusk"
+          loading="lazy"
+        />
+        <span class="mosaic-cell__label">Tbilisi Old Town</span>
+      </div>
+      <div class="mosaic-cell">
+        <img
+          src="https://images.unsplash.com/photo-1565008576549-57569a49371d?w=600&q=80&auto=format&fit=crop"
+          alt="Kazbegi valley from above"
+          loading="lazy"
+        />
+        <span class="mosaic-cell__label">Kazbegi Valley</span>
+      </div>
+      <div class="mosaic-cell">
+        <img
+          src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80&auto=format&fit=crop"
+          alt="Kakheti harvest season"
+          loading="lazy"
+        />
+        <span class="mosaic-cell__label">Kakheti Harvest</span>
+      </div>
+      <div class="mosaic-cell mosaic-cell--wide">
+        <img
+          src="https://images.unsplash.com/photo-1628151797484-f861dd4a5090?w=900&q=80&auto=format&fit=crop"
+          alt="Batumi Black Sea at sunset"
+          loading="lazy"
+        />
+        <span class="mosaic-cell__label">Batumi, Black Sea</span>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- =============================================
+       EXPERIENCES
+  ============================================= -->
+  <section class="experiences" id="experiences" aria-labelledby="exp-heading">
+    <div class="experiences__inner">
+
+      <div class="experiences__intro fade-up">
+        <h2 class="experiences__title" id="exp-heading">
+          Four Experiences<br>
+          That Define Georgia
+        </h2>
+        <div>
+          <p class="experiences__body">
+            Georgia resists simple categorisation. It is simultaneously a mountain
+            kingdom, a wine cradle, a living church-art museum, and one of the
+            world's great culinary cultures. Here are the four encounters that
+            every traveller takes home.
+          </p>
+        </div>
+      </div>
+
+      <div class="experiences__grid">
+
+        <div class="exp-card fade-up fade-up--delay-1" role="article" aria-label="Mountain experience">
+          <div class="exp-card__icon" aria-hidden="true">&#9968;</div>
+          <h3 class="exp-card__name">Mountain Kingdom</h3>
+          <p class="exp-card__desc">
+            The Greater Caucasus holds peaks higher than the Alps. Drive the Georgian
+            Military Highway to Kazbegi, where the 14th-century Gergeti Trinity Church
+            sits above the clouds. In winter, Gudauri offers world-class heliskiing
+            without the crowds of the Alps.
+          </p>
+          <a href="#plan" class="exp-card__link">
+            Plan a mountain trip &nbsp;&rarr;
+          </a>
+        </div>
+
+        <div class="exp-card fade-up fade-up--delay-2" role="article" aria-label="Wine experience">
+          <div class="exp-card__icon" aria-hidden="true">&#127863;</div>
+          <h3 class="exp-card__name">Ancient Wine</h3>
+          <p class="exp-card__desc">
+            Join a Rtveli grape harvest in Kakheti. Tread grapes by foot, seal a
+            qvevri with beeswax, attend a Supra feast presided over by a Tamada.
+            Georgia's wine culture is not a tourist attraction — it is an invitation
+            into the country's living soul.
+          </p>
+          <a href="#plan" class="exp-card__link">
+            Explore wine country &nbsp;&rarr;
+          </a>
+        </div>
+
+        <div class="exp-card fade-up fade-up--delay-3" role="article" aria-label="Culture experience">
+          <div class="exp-card__icon" aria-hidden="true">&#127928;</div>
+          <h3 class="exp-card__name">Living Culture</h3>
+          <p class="exp-card__desc">
+            Georgian polyphonic singing — also UNESCO-listed — fills churches and
+            town squares with a haunting three-part harmony that exists nowhere else
+            on earth. Attend a performance of the Rustavi Choir, visit cave city
+            Uplistsikhe, or explore Tbilisi's National Museum.
+          </p>
+          <a href="#plan" class="exp-card__link">
+            Discover Georgian culture &nbsp;&rarr;
+          </a>
+        </div>
+
+        <div class="exp-card fade-up fade-up--delay-4" role="article" aria-label="Food experience">
+          <div class="exp-card__icon" aria-hidden="true">&#127858;</div>
+          <h3 class="exp-card__name">Extraordinary Food</h3>
+          <p class="exp-card__desc">
+            Khinkali dumplings, khachapuri cheese bread, churchkhela grape-and-walnut
+            confections, walnut-stuffed badrijani aubergine — Georgian cuisine is
+            intensely regional, absurdly fresh, and deeply generous. No visitor
+            leaves hungry. Most leave unable to stop thinking about it.
+          </p>
+          <a href="#plan" class="exp-card__link">
+            Food itinerary &nbsp;&rarr;
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       PLAN YOUR TRIP CTA
+  ============================================= -->
+  <section class="plan" id="plan" aria-labelledby="plan-heading">
+    <div class="plan__bg" aria-hidden="true"></div>
+
+    <div class="plan__inner">
+      <p class="plan__eyebrow">Rati Tours &nbsp;&bull;&nbsp; Private Transfers &amp; Guided Journeys</p>
+
+      <h2 class="plan__title" id="plan-heading">
+        Your Georgia Journey<br>
+        Begins with a<br>
+        <em>Single Message</em>
+      </h2>
+
+      <p class="plan__body">
+        Private airport pickups from Tbilisi, Kutaisi, and Batumi. Bespoke multi-day
+        tours through Kakheti, Kazbegi, and beyond. Expert English-speaking guides.
+        Comfortable, modern vehicles. No hidden costs.
+      </p>
+
+      <div class="plan__cards fade-up">
+        <div class="plan__card">
+          <p class="plan__card-label">Service 01</p>
+          <h3 class="plan__card-title">Airport Transfers</h3>
+          <p class="plan__card-desc">
+            Meet-and-greet arrivals at Tbilisi International, Kutaisi, and Batumi
+            airports. Fixed prices, no meters.
+          </p>
+        </div>
+        <div class="plan__card">
+          <p class="plan__card-label">Service 02</p>
+          <h3 class="plan__card-title">Private Day Tours</h3>
+          <p class="plan__card-desc">
+            Kazbegi, Kakheti wine country, Mtskheta, Vardzia caves — curated
+            single-day itineraries from Tbilisi.
+          </p>
+        </div>
+        <div class="plan__card">
+          <p class="plan__card-label">Service 03</p>
+          <h3 class="plan__card-title">Multi-Day Journeys</h3>
+          <p class="plan__card-desc">
+            Bespoke 3–14 day itineraries combining mountains, wine country, Black
+            Sea coast, and ancient monasteries.
+          </p>
+        </div>
+      </div>
+
+      <div class="plan__cta-group fade-up fade-up--delay-1">
+        <a
+          href="https://wa.me/995514048822?text=Hello%2C%20I%27d%20like%20to%20plan%20a%20trip%20to%20Georgia"
+          class="plan__whatsapp"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Contact Rati Tours on WhatsApp"
+        >
+          <!-- WhatsApp SVG -->
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          </svg>
+          WhatsApp Rati Tours
+        </a>
+
+        <a href="#destinations" class="btn btn--outline-white">
+          Browse Destinations
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       FOOTER
+  ============================================= -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer__inner">
+
+      <div class="footer__grid">
+
+        <!-- Brand col -->
+        <div>
+          <div class="footer__brand-name">Visit Georgia</div>
+          <div class="footer__brand-sub" lang="ka">საქართველო</div>
+          <p class="footer__tagline">
+            An editorial guide to the world's oldest wine country —
+            a land where mountains touch the sky and every feast is a ceremony.
+          </p>
+
+          <div class="footer__contact-item">
+            <!-- WhatsApp icon -->
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+            <a href="https://wa.me/995514048822" target="_blank" rel="noopener">+995 514 048 822</a>
+          </div>
+
+          <div class="footer__contact-item">
+            <!-- Location icon -->
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+            </svg>
+            <span>Tbilisi, Georgia &nbsp;&bull;&nbsp; Rati Tours</span>
+          </div>
+        </div>
+
+        <!-- Destinations col -->
+        <div>
+          <p class="footer__col-title">Destinations</p>
+          <ul class="footer__links" role="list">
+            <li><a href="#destinations">Tbilisi — Capital City</a></li>
+            <li><a href="#destinations">Kazbegi — Mountains</a></li>
+            <li><a href="#destinations">Gudauri — Skiing</a></li>
+            <li><a href="#destinations">Batumi — Black Sea</a></li>
+            <li><a href="#destinations">Kakheti — Wine Country</a></li>
+          </ul>
+        </div>
+
+        <!-- Services col -->
+        <div>
+          <p class="footer__col-title">Services</p>
+          <ul class="footer__links" role="list">
+            <li><a href="#plan">Airport Transfers</a></li>
+            <li><a href="#plan">Private Day Tours</a></li>
+            <li><a href="#plan">Multi-Day Journeys</a></li>
+            <li><a href="#plan">Wine Country Tours</a></li>
+            <li><a href="#plan">Mountain Expeditions</a></li>
+          </ul>
+        </div>
+
+        <!-- Editorial col -->
+        <div>
+          <p class="footer__col-title">The Edit</p>
+          <ul class="footer__links" role="list">
+            <li><a href="#wine">Georgian Wine Guide</a></li>
+            <li><a href="#photo-essay">Photo Essay</a></li>
+            <li><a href="#experiences">Experiences</a></li>
+            <li><a href="#destinations">Destination Guide</a></li>
+            <li>
+              <a href="https://wa.me/995514048822" target="_blank" rel="noopener">
+                Contact Rati Tours
+              </a>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="footer__bottom">
+        <p class="footer__copy">
+          &copy; 2026 Visit Georgia &nbsp;&bull;&nbsp; Rati Tours. All rights reserved.
+        </p>
+        <p class="footer__georgian-script" lang="ka" aria-label="Georgia in Georgian script">
+          საქართველო
+        </p>
+        <div class="footer__bottom-links">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="https://wa.me/995514048822" target="_blank" rel="noopener">Contact</a>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- =============================================
+       FLOATING WHATSAPP
+  ============================================= -->
+  <a
+    href="https://wa.me/995514048822?text=Hello%2C%20I%27d%20like%20to%20know%20more%20about%20tours%20in%20Georgia"
+    class="floating-wa"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Chat with Rati Tours on WhatsApp"
+  >
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </a>
+
+  <!-- =============================================
+       JAVASCRIPT
+  ============================================= -->
+  <script>
+    'use strict';
+
+    /* --- Navigation scroll state --- */
+    const nav = document.getElementById('nav');
+    let lastScroll = 0;
+
+    window.addEventListener('scroll', () => {
+      const current = window.scrollY;
+      if (current > 80) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+      lastScroll = current;
+    }, { passive: true });
+
+    /* --- Hamburger toggle --- */
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+
+    hamburger.addEventListener('click', () => {
+      const isOpen = mobileNav.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', String(isOpen));
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+
+    function closeMobile() {
+      mobileNav.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+
+    /* --- Scroll-triggered fade-up animations --- */
+    const fadeEls = document.querySelectorAll('.fade-up');
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+    );
+
+    fadeEls.forEach((el) => observer.observe(el));
+
+    /* --- Hero parallax (subtle) --- */
+    const heroBg = document.getElementById('heroBg');
+
+    if (window.matchMedia('(prefers-reduced-motion: no-preference)').matches) {
+      window.addEventListener('scroll', () => {
+        const offset = window.scrollY * 0.25;
+        heroBg.style.transform = `scale(1.04) translateY(${offset}px)`;
+      }, { passive: true });
+    }
+
+    /* --- Hero image entrance scale --- */
+    window.addEventListener('load', () => {
+      heroBg.style.transform = 'scale(1)';
+      heroBg.style.transition = 'transform 1.8s cubic-bezier(0.16, 1, 0.3, 1)';
+    });
+  </script>
+
+</body>
+</html>

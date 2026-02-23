@@ -1,0 +1,1690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Visit Georgia — Discover the Caucasus</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,800;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ===========================
+       DESIGN TOKENS
+    =========================== */
+    :root {
+      --bg:           #f7f5f2;
+      --bg-warm:      #f0ece5;
+      --bg-card:      #ffffff;
+      --text-primary: #1a1714;
+      --text-muted:   #6b635a;
+      --text-light:   #a89f95;
+      --accent:       #c4704a;        /* warm terracotta */
+      --accent-light: #e8c4ad;
+      --accent-pale:  #f5e8de;
+      --border:       #e2dbd3;
+      --border-dark:  #c9bfb3;
+      --white:        #ffffff;
+
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-body:    'Inter', system-ui, sans-serif;
+
+      --radius-sm:  4px;
+      --radius-md:  8px;
+      --radius-lg:  16px;
+      --radius-xl:  24px;
+
+      --shadow-sm:  0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+      --shadow-md:  0 4px 16px rgba(0,0,0,.08);
+      --shadow-lg:  0 16px 48px rgba(0,0,0,.10);
+
+      --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-slow: 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* ===========================
+       RESET & BASE
+    =========================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text-primary);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    img { display: block; max-width: 100%; height: auto; }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ===========================
+       UTILITY CLASSES
+    =========================== */
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    .sr-only {
+      position: absolute; width: 1px; height: 1px;
+      padding: 0; margin: -1px; overflow: hidden;
+      clip: rect(0,0,0,0); border: 0;
+    }
+
+    .display-font { font-family: var(--font-display); }
+    .italic { font-style: italic; }
+
+    /* ===========================
+       NAVIGATION
+    =========================== */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(247, 245, 242, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      transition: all var(--transition);
+    }
+
+    .nav__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+    }
+
+    .nav__logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav__logo-mark {
+      width: 32px;
+      height: 32px;
+      background: var(--text-primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .nav__logo-mark svg {
+      width: 16px;
+      height: 16px;
+      fill: var(--accent);
+    }
+
+    .nav__logo-text {
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-primary);
+    }
+
+    .nav__links {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav__links a {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      transition: color var(--transition);
+      position: relative;
+    }
+
+    .nav__links a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px; left: 0; right: 0;
+      height: 1px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform var(--transition);
+    }
+
+    .nav__links a:hover { color: var(--text-primary); }
+    .nav__links a:hover::after { transform: scaleX(1); }
+
+    .nav__cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 22px;
+      background: var(--text-primary);
+      color: var(--white);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border-radius: var(--radius-sm);
+      transition: all var(--transition);
+    }
+
+    .nav__cta:hover {
+      background: var(--accent);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+    }
+
+    /* Mobile menu toggle */
+    .nav__toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .nav__toggle span {
+      display: block;
+      width: 24px;
+      height: 1.5px;
+      background: var(--text-primary);
+      transition: all var(--transition);
+    }
+
+    /* Mobile overlay nav */
+    .nav__mobile {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 99;
+      background: var(--bg);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+    }
+
+    .nav__mobile.is-open { display: flex; }
+
+    .nav__mobile a {
+      font-family: var(--font-display);
+      font-size: 42px;
+      font-weight: 600;
+      color: var(--text-primary);
+      transition: color var(--transition);
+    }
+
+    .nav__mobile a:hover { color: var(--accent); }
+
+    /* ===========================
+       HERO SECTION
+    =========================== */
+    .hero {
+      padding-top: 72px; /* nav height */
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 0;
+    }
+
+    .hero__content {
+      padding: 80px 60px 80px 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .hero__eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+
+    .hero__eyebrow-line {
+      width: 40px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .hero__eyebrow-text {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .hero__headline {
+      font-family: var(--font-display);
+      font-size: clamp(44px, 5.5vw, 76px);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+      margin-bottom: 24px;
+    }
+
+    .hero__headline em {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--accent);
+    }
+
+    .hero__subtext {
+      font-size: 17px;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--text-muted);
+      max-width: 440px;
+      margin-bottom: 48px;
+    }
+
+    .hero__actions {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 32px;
+      background: var(--text-primary);
+      color: var(--white);
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      border-radius: var(--radius-sm);
+      transition: all var(--transition);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(196, 112, 74, 0.32);
+    }
+
+    .btn-primary svg {
+      width: 16px; height: 16px;
+      transition: transform var(--transition);
+    }
+
+    .btn-primary:hover svg { transform: translateX(4px); }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-muted);
+      transition: color var(--transition);
+    }
+
+    .btn-ghost:hover { color: var(--text-primary); }
+
+    .hero__image-wrap {
+      position: relative;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .hero__image-wrap::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, var(--bg) 0%, transparent 18%);
+      z-index: 2;
+    }
+
+    .hero__image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transform: scale(1.04);
+      transition: transform 8s ease;
+    }
+
+    .hero__image-wrap:hover .hero__image { transform: scale(1); }
+
+    .hero__image-caption {
+      position: absolute;
+      bottom: 40px;
+      right: 32px;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+    }
+
+    .hero__image-caption-text {
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+    }
+
+    .hero__image-caption-line {
+      width: 1px;
+      height: 48px;
+      background: rgba(255,255,255,0.4);
+    }
+
+    .hero__scroll-hint {
+      position: absolute;
+      bottom: 40px;
+      left: 0;
+      z-index: 3;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 60px;
+      animation: floatY 2.5s ease-in-out infinite;
+    }
+
+    @keyframes floatY {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(6px); }
+    }
+
+    .hero__scroll-hint-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .hero__scroll-hint-text {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    /* ===========================
+       DISCOVER SECTION
+    =========================== */
+    .discover {
+      padding: 120px 0;
+      background: var(--white);
+    }
+
+    .discover__inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 100px;
+      align-items: center;
+    }
+
+    .discover__label {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .discover__label-text {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .discover__headline {
+      font-family: var(--font-display);
+      font-size: clamp(34px, 3.5vw, 52px);
+      font-weight: 700;
+      line-height: 1.12;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+    }
+
+    .discover__headline em {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--accent);
+    }
+
+    .discover__body {
+      font-size: 16px;
+      line-height: 1.8;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .discover__body + .discover__body { margin-top: -8px; }
+
+    .discover__stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 48px;
+    }
+
+    .discover__stat {
+      padding: 24px;
+      background: var(--bg-warm);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+    }
+
+    .discover__stat-num {
+      font-family: var(--font-display);
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--text-primary);
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .discover__stat-num span {
+      color: var(--accent);
+    }
+
+    .discover__stat-label {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    .discover__visual {
+      position: relative;
+    }
+
+    .discover__img-main {
+      width: 100%;
+      height: 520px;
+      object-fit: cover;
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .discover__img-accent {
+      position: absolute;
+      bottom: -32px;
+      left: -32px;
+      width: 200px;
+      height: 220px;
+      object-fit: cover;
+      border-radius: var(--radius-lg);
+      border: 6px solid var(--white);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .discover__badge {
+      position: absolute;
+      top: 32px;
+      right: -24px;
+      background: var(--text-primary);
+      color: var(--white);
+      padding: 16px 20px;
+      border-radius: var(--radius-md);
+      text-align: center;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .discover__badge-num {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 800;
+      line-height: 1;
+      color: var(--accent);
+    }
+
+    .discover__badge-text {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-top: 4px;
+      opacity: 0.7;
+    }
+
+    /* ===========================
+       GALLERY GRID
+    =========================== */
+    .gallery {
+      padding: 120px 0;
+      background: var(--bg);
+    }
+
+    .gallery__header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 56px;
+      gap: 32px;
+    }
+
+    .gallery__headline {
+      font-family: var(--font-display);
+      font-size: clamp(30px, 3vw, 44px);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      max-width: 400px;
+    }
+
+    .gallery__headline em {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--accent);
+    }
+
+    .gallery__intro {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      max-width: 360px;
+    }
+
+    /* Masonry-style grid */
+    .gallery__grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-template-rows: auto;
+      gap: 16px;
+    }
+
+    .gallery__item {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius-lg);
+      background: var(--bg-warm);
+      cursor: pointer;
+    }
+
+    .gallery__item--1 { grid-column: span 5; grid-row: span 2; }
+    .gallery__item--2 { grid-column: span 4; }
+    .gallery__item--3 { grid-column: span 3; }
+    .gallery__item--4 { grid-column: span 7; }
+    .gallery__item--5 { grid-column: span 3; }
+    .gallery__item--6 { grid-column: span 2; }
+
+    .gallery__item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      min-height: 220px;
+      transition: transform var(--transition-slow);
+    }
+
+    .gallery__item:hover img { transform: scale(1.06); }
+
+    .gallery__item-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 55%);
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+
+    .gallery__item:hover .gallery__item-overlay { opacity: 1; }
+
+    .gallery__item-label {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      right: 20px;
+      color: var(--white);
+      opacity: 0;
+      transform: translateY(8px);
+      transition: all var(--transition);
+    }
+
+    .gallery__item:hover .gallery__item-label {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .gallery__item-label h3 {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .gallery__item-label p {
+      font-size: 12px;
+      opacity: 0.75;
+      font-weight: 400;
+    }
+
+    /* Location tag on non-hovered state */
+    .gallery__item-tag {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      padding: 5px 12px;
+      background: rgba(247, 245, 242, 0.92);
+      backdrop-filter: blur(6px);
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: var(--text-primary);
+      text-transform: uppercase;
+      transition: opacity var(--transition);
+    }
+
+    .gallery__item:hover .gallery__item-tag { opacity: 0; }
+
+    /* ===========================
+       EXPERIENCES ROW
+    =========================== */
+    .experiences {
+      padding: 80px 0 120px;
+      background: var(--bg);
+    }
+
+    .experiences__row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      border: 1px solid var(--border-dark);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    .experience-card {
+      padding: 48px 40px;
+      background: var(--white);
+      position: relative;
+      transition: background var(--transition);
+    }
+
+    .experience-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform var(--transition);
+    }
+
+    .experience-card:hover { background: var(--bg-warm); }
+    .experience-card:hover::before { transform: scaleX(1); }
+
+    .experience-card__icon {
+      width: 48px; height: 48px;
+      margin-bottom: 24px;
+      color: var(--accent);
+    }
+
+    .experience-card__title {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+    }
+
+    .experience-card__body {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    .experience-card__link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 24px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--accent);
+      transition: gap var(--transition);
+    }
+
+    .experience-card:hover .experience-card__link { gap: 10px; }
+
+    /* ===========================
+       CTA SECTION
+    =========================== */
+    .cta {
+      padding: 120px 0;
+      background: var(--text-primary);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta::before {
+      content: '';
+      position: absolute;
+      top: -40%;
+      right: -10%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(196, 112, 74, 0.12) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .cta::after {
+      content: '';
+      position: absolute;
+      bottom: -30%;
+      left: -5%;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(196, 112, 74, 0.08) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .cta__inner {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 80px;
+    }
+
+    .cta__eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .cta__headline {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 4vw, 58px);
+      font-weight: 800;
+      line-height: 1.06;
+      color: var(--white);
+      letter-spacing: -0.025em;
+      margin-bottom: 16px;
+    }
+
+    .cta__subtext {
+      font-size: 16px;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.7;
+      max-width: 460px;
+    }
+
+    .cta__actions {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      align-items: flex-end;
+      flex-shrink: 0;
+    }
+
+    .btn-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 18px 36px;
+      background: var(--accent);
+      color: var(--white);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      border-radius: var(--radius-sm);
+      transition: all var(--transition);
+      white-space: nowrap;
+    }
+
+    .btn-cta:hover {
+      background: #d4845a;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(196, 112, 74, 0.4);
+    }
+
+    .btn-outline-white {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 18px 36px;
+      border: 1px solid rgba(255,255,255,0.2);
+      color: rgba(255,255,255,0.8);
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      border-radius: var(--radius-sm);
+      transition: all var(--transition);
+      white-space: nowrap;
+    }
+
+    .btn-outline-white:hover {
+      border-color: rgba(255,255,255,0.5);
+      color: var(--white);
+      background: rgba(255,255,255,0.05);
+    }
+
+    /* ===========================
+       FOOTER
+    =========================== */
+    .footer {
+      background: var(--white);
+      border-top: 1px solid var(--border);
+      padding: 72px 0 40px;
+    }
+
+    .footer__grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 56px;
+    }
+
+    .footer__brand-name {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+    }
+
+    .footer__brand-tagline {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 15px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .footer__brand-desc {
+      font-size: 13px;
+      color: var(--text-light);
+      line-height: 1.7;
+      max-width: 280px;
+    }
+
+    .footer__col-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-primary);
+      margin-bottom: 20px;
+    }
+
+    .footer__links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .footer__links a {
+      font-size: 14px;
+      color: var(--text-muted);
+      transition: color var(--transition);
+    }
+
+    .footer__links a:hover { color: var(--accent); }
+
+    .footer__contact-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .footer__contact-icon {
+      width: 16px; height: 16px;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .footer__contact-text {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .footer__social {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .footer__social-link {
+      width: 36px; height: 36px;
+      border: 1px solid var(--border-dark);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      transition: all var(--transition);
+    }
+
+    .footer__social-link:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-pale);
+    }
+
+    .footer__social-link svg {
+      width: 15px; height: 15px;
+      fill: currentColor;
+    }
+
+    .footer__bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .footer__copy {
+      font-size: 13px;
+      color: var(--text-light);
+    }
+
+    .footer__bottom-links {
+      display: flex;
+      gap: 24px;
+    }
+
+    .footer__bottom-links a {
+      font-size: 13px;
+      color: var(--text-light);
+      transition: color var(--transition);
+    }
+
+    .footer__bottom-links a:hover { color: var(--accent); }
+
+    /* ===========================
+       ANIMATE ON SCROLL
+    =========================== */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .fade-up.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .fade-up--delay-1 { transition-delay: 0.1s; }
+    .fade-up--delay-2 { transition-delay: 0.2s; }
+    .fade-up--delay-3 { transition-delay: 0.3s; }
+    .fade-up--delay-4 { transition-delay: 0.4s; }
+
+    /* ===========================
+       RESPONSIVE
+    =========================== */
+    @media (max-width: 1024px) {
+      .container { padding: 0 24px; }
+
+      .hero {
+        grid-template-columns: 1fr;
+        min-height: auto;
+      }
+
+      .hero__content {
+        padding: 60px 0 40px;
+        order: 2;
+      }
+
+      .hero__image-wrap {
+        height: 55vw;
+        min-height: 320px;
+        order: 1;
+      }
+
+      .hero__image-wrap::before {
+        background: linear-gradient(to bottom, transparent 70%, var(--bg) 100%);
+      }
+
+      .hero__scroll-hint { display: none; }
+
+      .discover__inner {
+        grid-template-columns: 1fr;
+        gap: 56px;
+      }
+
+      .discover__visual {
+        order: -1;
+      }
+
+      .discover__badge { right: 8px; }
+
+      .gallery__item--1 { grid-column: span 7; }
+      .gallery__item--2 { grid-column: span 5; }
+      .gallery__item--3 { grid-column: span 12; }
+      .gallery__item--4 { grid-column: span 6; }
+      .gallery__item--5 { grid-column: span 6; }
+      .gallery__item--6 { grid-column: span 12; }
+
+      .experiences__row { grid-template-columns: 1fr; }
+
+      .cta__inner {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .cta__actions { align-items: flex-start; }
+
+      .footer__grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .container { padding: 0 20px; }
+
+      .nav__links, .nav__cta { display: none; }
+      .nav__toggle { display: flex; }
+
+      .hero__image-wrap { height: 70vw; }
+
+      .discover { padding: 80px 0; }
+      .gallery { padding: 80px 0; }
+      .experiences { padding: 40px 0 80px; }
+      .cta { padding: 80px 0; }
+
+      .gallery__header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .gallery__grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+
+      .gallery__item--1 { grid-column: span 2; }
+      .gallery__item--2 { grid-column: span 1; }
+      .gallery__item--3 { grid-column: span 1; }
+      .gallery__item--4 { grid-column: span 2; }
+      .gallery__item--5 { grid-column: span 1; }
+      .gallery__item--6 { grid-column: span 1; }
+
+      .footer__grid { grid-template-columns: 1fr; gap: 32px; }
+
+      .footer__bottom {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ============================
+       NAVIGATION
+  ============================ -->
+  <header>
+    <nav class="nav" role="navigation" aria-label="Main navigation">
+      <div class="container">
+        <div class="nav__inner">
+
+          <!-- Logo -->
+          <a href="/" class="nav__logo" aria-label="Visit Georgia — Home">
+            <div class="nav__logo-mark">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+              </svg>
+            </div>
+            <span class="nav__logo-text">Rati Tours</span>
+          </a>
+
+          <!-- Desktop links -->
+          <ul class="nav__links" role="list">
+            <li><a href="/">Home</a></li>
+            <li><a href="#discover">Discover</a></li>
+            <li><a href="#gallery">Destinations</a></li>
+            <li><a href="#experiences">Experiences</a></li>
+            <li><a href="#contact">Transfers</a></li>
+          </ul>
+
+          <!-- CTA -->
+          <a href="https://wa.me/995514048822" class="nav__cta" target="_blank" rel="noopener">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+            </svg>
+            Book Now
+          </a>
+
+          <!-- Mobile toggle -->
+          <button class="nav__toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Mobile Nav -->
+    <div class="nav__mobile" id="mobileNav" role="dialog" aria-modal="true" aria-label="Mobile navigation">
+      <a href="/" onclick="closeMobileNav()">Home</a>
+      <a href="#discover" onclick="closeMobileNav()">Discover</a>
+      <a href="#gallery" onclick="closeMobileNav()">Destinations</a>
+      <a href="#experiences" onclick="closeMobileNav()">Experiences</a>
+      <a href="#contact" onclick="closeMobileNav()">Transfers</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============================
+         HERO
+    ============================ -->
+    <section class="hero" aria-label="Hero">
+      <div class="hero__content container" style="padding-left: 40px; padding-right: 0;">
+        <div class="hero__eyebrow fade-up">
+          <span class="hero__eyebrow-line" aria-hidden="true"></span>
+          <span class="hero__eyebrow-text">Georgia, South Caucasus</span>
+        </div>
+
+        <h1 class="hero__headline fade-up fade-up--delay-1">
+          Where mountains<br>
+          <em>whisper</em> ancient<br>
+          stories.
+        </h1>
+
+        <p class="hero__subtext fade-up fade-up--delay-2">
+          A land where millennia of culture meet wild Caucasian peaks.
+          Private transfers, guided tours, and unforgettable journeys
+          crafted by locals who know every hidden valley.
+        </p>
+
+        <div class="hero__actions fade-up fade-up--delay-3">
+          <a href="#discover" class="btn-primary">
+            Explore Georgia
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M3 8h10M9 4l4 4-4 4"/>
+            </svg>
+          </a>
+          <a href="https://wa.me/995514048822" class="btn-ghost" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="color: #25D366;">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+            </svg>
+            Chat on WhatsApp
+          </a>
+        </div>
+      </div>
+
+      <div class="hero__image-wrap">
+        <img
+          class="hero__image"
+          src="https://images.unsplash.com/photo-1565008576549-57569a49371d?w=1400&auto=format&fit=crop&q=85"
+          alt="Georgian mountain landscape with ancient church tower"
+          loading="eager"
+          fetchpriority="high"
+        />
+        <div class="hero__image-caption" aria-hidden="true">
+          <span class="hero__image-caption-text">Kazbegi, Greater Caucasus</span>
+          <span class="hero__image-caption-line"></span>
+        </div>
+      </div>
+
+      <div class="hero__scroll-hint" aria-hidden="true">
+        <span class="hero__scroll-hint-dot"></span>
+        <span class="hero__scroll-hint-text">Scroll to discover</span>
+      </div>
+    </section>
+
+    <!-- ============================
+         DISCOVER
+    ============================ -->
+    <section class="discover" id="discover" aria-labelledby="discover-heading">
+      <div class="container">
+        <div class="discover__inner">
+
+          <!-- Text column -->
+          <div>
+            <div class="discover__label fade-up">
+              <span class="hero__eyebrow-line" style="background: var(--accent);" aria-hidden="true"></span>
+              <span class="discover__label-text">About Georgia</span>
+            </div>
+
+            <h2 class="discover__headline fade-up fade-up--delay-1" id="discover-heading">
+              8,000 years of wine,<br>
+              <em>culture</em> and warm hearts.
+            </h2>
+
+            <p class="discover__body fade-up fade-up--delay-2">
+              Georgia is often called the cradle of wine — its ancient qvevri clay-pot winemaking
+              tradition is a UNESCO Intangible Cultural Heritage. But wine is just the beginning.
+              Here, medieval fortresses crown every ridge, polyphonic choirs echo through stone churches,
+              and the table, the <em>supra</em>, is a sacred ritual of friendship.
+            </p>
+            <p class="discover__body fade-up fade-up--delay-2">
+              From the snow-capped peaks of Kazbegi and the alpine meadows of Mestia, to the
+              Black Sea warmth of Batumi and the vine-striped valleys of Kakheti — Georgia
+              compresses an entire continent of landscapes into a country smaller than Ireland.
+            </p>
+
+            <div class="discover__stats fade-up fade-up--delay-3">
+              <div class="discover__stat">
+                <div class="discover__stat-num">8<span>k</span></div>
+                <div class="discover__stat-label">Years of wine history</div>
+              </div>
+              <div class="discover__stat">
+                <div class="discover__stat-num">7</div>
+                <div class="discover__stat-label">UNESCO World Heritage Sites</div>
+              </div>
+              <div class="discover__stat">
+                <div class="discover__stat-num">5<span>+</span></div>
+                <div class="discover__stat-label">Distinct climate zones</div>
+              </div>
+              <div class="discover__stat">
+                <div class="discover__stat-num">500<span>+</span></div>
+                <div class="discover__stat-label">Indigenous grape varieties</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Visual column -->
+          <div class="discover__visual fade-up fade-up--delay-2">
+            <img
+              class="discover__img-main"
+              src="https://images.unsplash.com/photo-1590845947698-8924d7409b56?w=900&auto=format&fit=crop&q=85"
+              alt="Traditional Georgian winery in Kakheti region"
+              loading="lazy"
+            />
+            <img
+              class="discover__img-accent"
+              src="https://images.unsplash.com/photo-1601581987809-a874a81309c9?w=500&auto=format&fit=crop&q=85"
+              alt="Khachapuri and traditional Georgian food spread"
+              loading="lazy"
+            />
+            <div class="discover__badge" aria-hidden="true">
+              <div class="discover__badge-num">5&#9733;</div>
+              <div class="discover__badge-text">Rated service</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================
+         GALLERY
+    ============================ -->
+    <section class="gallery" id="gallery" aria-labelledby="gallery-heading">
+      <div class="container">
+
+        <div class="gallery__header">
+          <h2 class="gallery__headline fade-up" id="gallery-heading">
+            Seven wonders,<br><em>one country.</em>
+          </h2>
+          <p class="gallery__intro fade-up fade-up--delay-1">
+            Each destination in Georgia offers something completely different.
+            Pick your pace — wild mountains, golden valleys, or seaside escapes.
+          </p>
+        </div>
+
+        <div class="gallery__grid" role="list">
+
+          <figure class="gallery__item gallery__item--1 fade-up" role="listitem">
+            <img
+              src="https://images.unsplash.com/photo-1548243338-23f97603f3c6?w=900&auto=format&fit=crop&q=80"
+              alt="Gergeti Trinity Church above clouds in Kazbegi"
+              loading="lazy"
+            />
+            <span class="gallery__item-tag">Kazbegi</span>
+            <div class="gallery__item-overlay" aria-hidden="true"></div>
+            <figcaption class="gallery__item-label">
+              <h3>Kazbegi</h3>
+              <p>Greater Caucasus &bull; 5,047m peaks</p>
+            </figcaption>
+          </figure>
+
+          <figure class="gallery__item gallery__item--2 fade-up fade-up--delay-1" role="listitem">
+            <img
+              src="https://images.unsplash.com/photo-1555881400-74d7acaacd8b?w=700&auto=format&fit=crop&q=80"
+              alt="Tbilisi old town with colourful balconies"
+              loading="lazy"
+            />
+            <span class="gallery__item-tag">Tbilisi</span>
+            <div class="gallery__item-overlay" aria-hidden="true"></div>
+            <figcaption class="gallery__item-label">
+              <h3>Tbilisi</h3>
+              <p>Capital &bull; 1,500 years of history</p>
+            </figcaption>
+          </figure>
+
+          <figure class="gallery__item gallery__item--3 fade-up fade-up--delay-2" role="listitem">
+            <img
+              src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=500&auto=format&fit=crop&q=80"
+              alt="Gudauri ski slopes in winter"
+              loading="lazy"
+            />
+            <span class="gallery__item-tag">Gudauri</span>
+            <div class="gallery__item-overlay" aria-hidden="true"></div>
+            <figcaption class="gallery__item-label">
+              <h3>Gudauri</h3>
+              <p>Ski resort &bull; 2,200 m altitude</p>
+            </figcaption>
+          </figure>
+
+          <figure class="gallery__item gallery__item--4 fade-up fade-up--delay-1" role="listitem">
+            <img
+              src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=1000&auto=format&fit=crop&q=80"
+              alt="Kakheti vineyard rows in autumn light"
+              loading="lazy"
+            />
+            <span class="gallery__item-tag">Kakheti</span>
+            <div class="gallery__item-overlay" aria-hidden="true"></div>
+            <figcaption class="gallery__item-label">
+              <h3>Kakheti</h3>
+              <p>Wine country &bull; 500+ grape varieties</p>
+            </figcaption>
+          </figure>
+
+          <figure class="gallery__item gallery__item--5 fade-up fade-up--delay-2" role="listitem">
+            <img
+              src="https://images.unsplash.com/photo-1566438480900-0609be27a4be?w=500&auto=format&fit=crop&q=80"
+              alt="Batumi beach and modern skyline"
+              loading="lazy"
+            />
+            <span class="gallery__item-tag">Batumi</span>
+            <div class="gallery__item-overlay" aria-hidden="true"></div>
+            <figcaption class="gallery__item-label">
+              <h3>Batumi</h3>
+              <p>Black Sea coast &bull; subtropical climate</p>
+            </figcaption>
+          </figure>
+
+          <figure class="gallery__item gallery__item--6 fade-up fade-up--delay-3" role="listitem">
+            <img
+              src="https://images.unsplash.com/photo-1551632436-cbf8dd35adfa?w=400&auto=format&fit=crop&q=80"
+              alt="Mestia towers in Svaneti under mountain peaks"
+              loading="lazy"
+            />
+            <span class="gallery__item-tag">Mestia</span>
+            <div class="gallery__item-overlay" aria-hidden="true"></div>
+            <figcaption class="gallery__item-label">
+              <h3>Mestia</h3>
+              <p>Svaneti highlands &bull; Medieval towers</p>
+            </figcaption>
+          </figure>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================
+         EXPERIENCES
+    ============================ -->
+    <section class="experiences" id="experiences" aria-labelledby="exp-heading">
+      <div class="container">
+        <div style="text-align: center; margin-bottom: 56px;">
+          <div class="discover__label fade-up" style="justify-content: center;">
+            <span class="hero__eyebrow-line" aria-hidden="true"></span>
+            <span class="discover__label-text">What We Offer</span>
+            <span class="hero__eyebrow-line" aria-hidden="true"></span>
+          </div>
+          <h2 class="discover__headline fade-up fade-up--delay-1" id="exp-heading" style="text-align: center;">
+            Every journey, <em>perfectly arranged.</em>
+          </h2>
+        </div>
+
+        <div class="experiences__row fade-up fade-up--delay-1">
+
+          <article class="experience-card">
+            <svg class="experience-card__icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+              <circle cx="24" cy="20" r="8"/>
+              <path d="M12 44c0-6.627 5.373-12 12-12s12 5.373 12 12"/>
+              <path d="M4 16l6-6M44 16l-6-6M4 32l6 6M44 32l-6 6"/>
+            </svg>
+            <h3 class="experience-card__title">Private Transfers</h3>
+            <p class="experience-card__body">
+              Door-to-door comfort from Tbilisi International Airport or any city.
+              Professional English-speaking drivers in premium vehicles.
+              Available 24/7 — airport runs, city hops, multi-day road trips.
+            </p>
+            <a href="https://wa.me/995514048822" class="experience-card__link" target="_blank" rel="noopener">
+              Book a transfer
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+            </a>
+          </article>
+
+          <article class="experience-card">
+            <svg class="experience-card__icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+              <path d="M24 6L8 18v24h10V30h12v12h10V18L24 6z"/>
+              <rect x="16" y="30" width="16" height="12" rx="1"/>
+            </svg>
+            <h3 class="experience-card__title">Guided Tours</h3>
+            <p class="experience-card__body">
+              Full-day and multi-day guided experiences to Kazbegi, Kakheti wine country,
+              Borjomi, Mtskheta, and beyond. Small groups or fully private — your pace,
+              your itinerary.
+            </p>
+            <a href="https://wa.me/995514048822" class="experience-card__link" target="_blank" rel="noopener">
+              Plan a tour
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+            </a>
+          </article>
+
+          <article class="experience-card">
+            <svg class="experience-card__icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+              <path d="M6 12h36M12 12V8a2 2 0 012-2h20a2 2 0 012 2v4M6 12l4 28h28l4-28"/>
+              <circle cx="24" cy="28" r="6"/>
+            </svg>
+            <h3 class="experience-card__title">Wine &amp; Culture</h3>
+            <p class="experience-card__body">
+              Immerse yourself in the world's oldest wine culture. Visit family wineries,
+              taste amber wine from qvevri, share a supra feast, and learn the Kartuli
+              polyphonic song tradition.
+            </p>
+            <a href="https://wa.me/995514048822" class="experience-card__link" target="_blank" rel="noopener">
+              Discover more
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+            </a>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================
+         CTA
+    ============================ -->
+    <section class="cta" id="contact" aria-labelledby="cta-heading">
+      <div class="container">
+        <div class="cta__inner">
+          <div>
+            <p class="cta__eyebrow">Start Your Journey</p>
+            <h2 class="cta__headline" id="cta-heading">
+              Georgia is waiting.<br>
+              Let's plan your trip.
+            </h2>
+            <p class="cta__subtext">
+              Reach us on WhatsApp for a free consultation. We'll craft a personalised
+              itinerary — from a simple airport pickup to a 10-day Caucasus odyssey.
+            </p>
+          </div>
+
+          <div class="cta__actions">
+            <a href="https://wa.me/995514048822" class="btn-cta" target="_blank" rel="noopener">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+              </svg>
+              Message on WhatsApp
+            </a>
+            <a href="https://www.instagram.com/ratitours_georgia" class="btn-outline-white" target="_blank" rel="noopener">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+              </svg>
+              Follow on Instagram
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============================
+       FOOTER
+  ============================ -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+
+        <!-- Brand -->
+        <div>
+          <p class="footer__brand-name">Rati Tours</p>
+          <p class="footer__brand-tagline">"Georgia awaits you."</p>
+          <p class="footer__brand-desc">
+            Professional transfer and tour operator based in Tbilisi, Georgia.
+            English, Hebrew, and Russian speaking team. Licensed, insured, and
+            passionate about our homeland.
+          </p>
+          <div class="footer__social" aria-label="Social media links">
+            <a href="https://www.instagram.com/ratitours_georgia" class="footer__social-link" target="_blank" rel="noopener" aria-label="Instagram">
+              <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/share/1ZoCnMnvGk/" class="footer__social-link" target="_blank" rel="noopener" aria-label="Facebook">
+              <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </a>
+            <a href="https://youtube.com/@ratitours" class="footer__social-link" target="_blank" rel="noopener" aria-label="YouTube">
+              <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Destinations -->
+        <div>
+          <h3 class="footer__col-title">Destinations</h3>
+          <ul class="footer__links">
+            <li><a href="#">Tbilisi</a></li>
+            <li><a href="#">Kazbegi</a></li>
+            <li><a href="#">Gudauri</a></li>
+            <li><a href="#">Kakheti</a></li>
+            <li><a href="#">Batumi</a></li>
+            <li><a href="#">Mestia</a></li>
+            <li><a href="#">Borjomi</a></li>
+          </ul>
+        </div>
+
+        <!-- Services -->
+        <div>
+          <h3 class="footer__col-title">Services</h3>
+          <ul class="footer__links">
+            <li><a href="#">Airport Transfers</a></li>
+            <li><a href="#">City Tours</a></li>
+            <li><a href="#">Wine Tours</a></li>
+            <li><a href="#">Mountain Trips</a></li>
+            <li><a href="#">Custom Itineraries</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact -->
+        <div>
+          <h3 class="footer__col-title">Contact</h3>
+          <div class="footer__contact-item">
+            <svg class="footer__contact-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+            </svg>
+            <a href="https://wa.me/995514048822" class="footer__contact-text" target="_blank" rel="noopener">+995 514 048 822</a>
+          </div>
+          <div class="footer__contact-item">
+            <svg class="footer__contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+            </svg>
+            <span class="footer__contact-text">Tbilisi, Georgia</span>
+          </div>
+          <div class="footer__contact-item" style="margin-top: 8px;">
+            <svg class="footer__contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
+            </svg>
+            <span class="footer__contact-text">Available 24 / 7</span>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="footer__bottom">
+        <p class="footer__copy">&copy; 2025 Rati Tours. All rights reserved.</p>
+        <nav class="footer__bottom-links" aria-label="Legal links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================
+       JAVASCRIPT
+  ============================ -->
+  <script>
+    // Mobile nav
+    const navToggle  = document.getElementById('navToggle');
+    const mobileNav  = document.getElementById('mobileNav');
+
+    function openMobileNav() {
+      mobileNav.classList.add('is-open');
+      navToggle.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMobileNav() {
+      mobileNav.classList.remove('is-open');
+      navToggle.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+
+    navToggle.addEventListener('click', () => {
+      const isOpen = mobileNav.classList.contains('is-open');
+      isOpen ? closeMobileNav() : openMobileNav();
+    });
+
+    // Intersection Observer — fade-up animations
+    const fadeEls = document.querySelectorAll('.fade-up');
+
+    const fadeObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          fadeObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    fadeEls.forEach(el => fadeObserver.observe(el));
+
+    // Trigger hero animations immediately
+    document.querySelectorAll('.hero .fade-up').forEach(el => {
+      setTimeout(() => el.classList.add('is-visible'), 100);
+    });
+  </script>
+
+</body>
+</html>

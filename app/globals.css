@@ -1,0 +1,292 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Inter:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Noto+Serif+Georgian:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: #0a0a0a;
+  color: white;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: rgba(251, 191, 36, 0.3);
+  color: white;
+}
+
+/* Noise texture overlay */
+.noise::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, #fff 0%, #fbbf24 50%, #f97316 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Text stroke effect */
+.text-stroke {
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.3);
+  -webkit-text-fill-color: transparent;
+}
+
+/* Glass effect */
+.glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Mesh gradient background */
+.mesh-gradient {
+  background: 
+    radial-gradient(at 40% 20%, rgba(251, 191, 36, 0.12) 0px, transparent 50%),
+    radial-gradient(at 80% 0%, rgba(249, 115, 22, 0.08) 0px, transparent 50%),
+    radial-gradient(at 0% 50%, rgba(168, 85, 247, 0.06) 0px, transparent 50%),
+    radial-gradient(at 80% 50%, rgba(14, 165, 233, 0.06) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(249, 115, 22, 0.1) 0px, transparent 50%);
+}
+
+/* Scroll indicator animation */
+@keyframes scrollBounce {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(10px);
+    opacity: 0.5;
+  }
+}
+
+.scroll-indicator {
+  animation: scrollBounce 2s ease-in-out infinite;
+}
+
+/* Image zoom on hover */
+.img-zoom {
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.img-zoom:hover {
+  transform: scale(1.05);
+}
+
+/* Smooth parallax */
+.parallax-slow {
+  will-change: transform;
+}
+
+/* RTL Support */
+[dir="rtl"] {
+  text-align: right;
+}
+
+[dir="rtl"] .flex-row {
+  flex-direction: row-reverse;
+}
+
+/* =============================================
+   CINEMATIC DARK THEME UTILITIES
+   ============================================= */
+
+/* Enhanced cinematic film grain */
+.noise-grain::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.028;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: overlay;
+}
+
+/* Vignette effect for images */
+.vignette::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 40%, rgba(5, 5, 5, 0.7) 100%);
+  pointer-events: none;
+}
+
+/* Strong vignette */
+.vignette-strong::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 20%, rgba(5, 5, 5, 0.85) 100%);
+  pointer-events: none;
+}
+
+/* Gold text glow */
+.gold-glow {
+  text-shadow: 0 0 40px rgba(201, 168, 76, 0.4);
+}
+
+/* Gold box glow */
+.gold-box-glow {
+  box-shadow: 0 8px 32px rgba(201, 168, 76, 0.25);
+}
+
+/* Cinematic border */
+.cinema-border {
+  border: 2px solid rgba(201, 168, 76, 0.3);
+}
+
+.cinema-border:hover {
+  border-color: rgba(201, 168, 76, 0.6);
+}
+
+/* =============================================
+   LUXURY ELEGANT THEME UTILITIES
+   ============================================= */
+
+/* Elegant link underline animation */
+.elegant-link {
+  position: relative;
+}
+
+.elegant-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.elegant-link:hover::after {
+  transform: scaleX(1);
+}
+
+/* Luxury image filter */
+.luxury-image {
+  filter: saturate(0.9) contrast(0.95) brightness(1.02);
+}
+
+/* Cream glass effect */
+.cream-glass {
+  background: rgba(250, 248, 243, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(184, 146, 58, 0.12);
+}
+
+/* Ornamental divider */
+.ornamental-divider {
+  width: 60px;
+  height: 1px;
+  background: #b8923a;
+}
+
+/* =============================================
+   ADVENTURE BOLD THEME UTILITIES
+   ============================================= */
+
+/* Glowing gold button */
+.glow-button {
+  transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glow-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(251, 191, 36, 0.35);
+}
+
+/* Diagonal section clip */
+.diagonal-clip {
+  clip-path: polygon(0 5%, 100% 0, 100% 95%, 0 100%);
+}
+
+/* Stats counter style */
+.stat-large {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 700;
+  line-height: 0.9;
+}
+
+/* Badge style */
+.adventure-badge {
+  display: inline-flex;
+  padding: 0.25rem 0.75rem;
+  background: #fbbf24;
+  color: #080808;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+}
+
+/* =============================================
+   SHARED ANIMATION UTILITIES
+   ============================================= */
+
+/* Cinematic easing */
+.ease-cinematic {
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Elegant easing */
+.ease-elegant {
+  transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Ken Burns animation on images */
+.ken-burns {
+  animation: kenBurnsAnim 20s ease-in-out infinite alternate;
+}
+
+@keyframes kenBurnsAnim {
+  0% { transform: scale(1) translate(0, 0); }
+  100% { transform: scale(1.1) translate(-2%, -1%); }
+}
+
+/* Fade in down animation */
+@keyframes fadeInDownAnim {
+  0% { opacity: 0; transform: translateY(-20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in-down {
+  animation: fadeInDownAnim 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Reveal up animation */
+@keyframes revealUpAnim {
+  0% { opacity: 0; transform: translateY(60px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.animate-reveal-up {
+  animation: revealUpAnim 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
