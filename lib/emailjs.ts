@@ -1,0 +1,83 @@
+/**
+ * EmailJS Configuration and Service
+ *
+ * Setup Instructions:
+ * 1. Create an account at https://www.emailjs.com/
+ * 2. Create an Email Service and get your SERVICE_ID
+ * 3. Create an Email Template with these variables:
+ *    - {{from_name}}
+ *    - {{from_email}}
+ *    - {{from_phone}}
+ *    - {{pickup_location}}
+ *    - {{dropoff_location}}
+ *    - {{pickup_date}}
+ *    - {{pickup_time}}
+ *    - {{num_passengers}}
+ *    - {{vehicle_type}}
+ *    - {{estimated_price}}
+ *    - {{flight_number}}
+ *    - {{special_requests}}
+ * 4. Get your PUBLIC_KEY from Account > API Keys
+ * 5. Replace the placeholder values below
+ */
+
+import emailjs from 'emailjs-com'
+
+// Replace these with your actual EmailJS credentials
+export const EMAILJS_CONFIG = {
+  SERVICE_ID: 'YOUR_SERVICE_ID',
+  TEMPLATE_ID: 'YOUR_TEMPLATE_ID',
+  PUBLIC_KEY: 'YOUR_PUBLIC_KEY',
+}
+
+// Email recipient
+export const RECIPIENT_EMAIL = 'gingi2603@gmail.com'
+
+export interface BookingEmailData {
+  from_name: string
+  from_email: string
+  from_phone: string
+  pickup_location: string
+  dropoff_location: string
+  pickup_date: string
+  pickup_time: string
+  num_passengers: string
+  vehicle_type: string
+  estimated_price: string
+  flight_number: string
+  special_requests: string
+}
+
+/**
+ * Send booking details via EmailJS
+ */
+export async function sendBookingEmail(data: BookingEmailData): Promise<void> {
+  try {
+    const response = await emailjs.send(
+      EMAILJS_CONFIG.SERVICE_ID,
+      EMAILJS_CONFIG.TEMPLATE_ID,
+      {
+        ...data,
+        to_email: RECIPIENT_EMAIL,
+      },
+      EMAILJS_CONFIG.PUBLIC_KEY
+    )
+
+    if (response.status !== 200) {
+      throw new Error(`EmailJS returned status ${response.status}`)
+    }
+
+    console.log('Email sent successfully:', response)
+  } catch (error) {
+    console.error('Failed to send email:', error)
+    throw error
+  }
+}
+
+/**
+ * Initialize EmailJS (optional, but recommended)
+ * Call this once in your app initialization
+ */
+export function initEmailJS() {
+  emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY)
+}
