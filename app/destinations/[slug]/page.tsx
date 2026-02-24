@@ -1,15 +1,22 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
-import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { motion, useScroll, useTransform, useInView, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import FloatingWhatsApp from '@/components/FloatingWhatsApp';
 import BackToTop from '@/components/BackToTop';
+import Lightbox from '@/components/Lightbox';
 
 // Types
+interface GalleryCaptions {
+    en: string[];
+    he: string[];
+    ru: string[];
+}
+
 interface Destination {
     slug: string;
     name: string;
@@ -20,6 +27,7 @@ interface Destination {
     bestTime: string;
     howToGetThere: string;
     gallery: string[];
+    galleryCaptions: GalleryCaptions;
     transferPrice: number;
 }
 
@@ -55,7 +63,14 @@ const destinationsData: Record<string, any> = {
                 'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=800&q=80',
                 'https://images.unsplash.com/photo-1555881675-4e9e1f8e3e6f?auto=format&fit=crop&w=800&q=80',
                 'https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80',
             ],
+            galleryCaptions: {
+                en: ['Tbilisi Old Town panorama', 'Colorful balconies of Abanotubani', 'Narikala Fortress at sunset', 'The Bridge of Peace at night', 'Sulfur baths district', 'Rustaveli Avenue', 'Holy Trinity Cathedral', 'Dry Bridge flea market'],
+                he: ['פנורמה של העיר העתיקה בטביליסי', 'מרפסות צבעוניות באבנותובני', 'מבצר נריקלה בשקיעה', 'גשר השלום בלילה', 'רובע מרחצאות הגופרית', 'שדרות רוסטבלי', 'קתדרלת השילוש הקדוש', 'שוק הפשפשים בגשר היבש'],
+                ru: ['Панорама Старого Тбилиси', 'Красочные балконы Абанотубани', 'Крепость Нарикала на закате', 'Мост Мира ночью', 'Район серных бань', 'Проспект Руставели', 'Собор Святой Троицы', 'Блошиный рынок на Сухом мосту'],
+            },
             transferPrice: 0,
         },
         kazbegi: {
@@ -84,10 +99,17 @@ const destinationsData: Record<string, any> = {
                 'https://images.unsplash.com/photo-1584646098378-0874589d76b1?auto=format&fit=crop&w=800&q=80',
                 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80',
                 'https://images.unsplash.com/photo-1454496522488-7a8e488e8606?auto=format&fit=crop&w=800&q=80',
-                'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80',
                 'https://images.unsplash.com/photo-1519904981063-b0cf448d479e?auto=format&fit=crop&w=800&q=80',
                 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1483664852095-d6cc6870702d?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&q=80',
             ],
+            galleryCaptions: {
+                en: ['Gergeti Trinity Church', 'Mount Kazbek summit', 'Alpine meadows of Kazbegi', 'Truso Valley trail', 'Caucasus mountain peaks', 'Gveleti Waterfall', 'Juta Valley in summer', 'Georgian Military Highway views'],
+                he: ['כנסיית גרגטי השילוש', 'פסגת הר קזבק', 'אחו אלפיני בקזבגי', 'שביל עמק טרוסו', 'פסגות הרי הקווקז', 'מפל גוולטי', 'עמק ג׳וטה בקיץ', 'נוף מכביש צבאי גאורגי'],
+                ru: ['Церковь Гергети', 'Вершина горы Казбек', 'Альпийские луга Казбеги', 'Тропа долины Трусо', 'Вершины Кавказских гор', 'Водопад Гвелети', 'Долина Джута летом', 'Виды Военно-Грузинской дороги'],
+            },
             transferPrice: 80,
         },
         gudauri: {
@@ -119,7 +141,14 @@ const destinationsData: Record<string, any> = {
                 'https://images.unsplash.com/photo-1551582045-6ec9c11d8697?auto=format&fit=crop&w=800&q=80',
                 'https://images.unsplash.com/photo-1483664852095-d6cc6870702d?auto=format&fit=crop&w=800&q=80',
                 'https://images.unsplash.com/photo-1418290232843-5d7a0bd93f7d?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&w=800&q=80',
             ],
+            galleryCaptions: {
+                en: ['Gudauri ski slopes', 'Caucasus peaks above the resort', 'Fresh powder on the runs', 'Snowboarder in deep snow', 'Pine forests and mountains', 'Winter sunrise over Gudauri', 'Panoramic mountain views', 'Off-piste terrain'],
+                he: ['מדרונות סקי בגודאורי', 'פסגות הקווקז מעל האתר', 'שלג טרי על המסלולים', 'סנובורד בשלג עמוק', 'יערות אורנים והרים', 'זריחת חורף מעל גודאורי', 'נוף הרים פנורמי', 'שטח מחוץ למסלול'],
+                ru: ['Горнолыжные склоны Гудаури', 'Кавказские вершины над курортом', 'Свежий снег на трассах', 'Сноубордист в глубоком снегу', 'Сосновые леса и горы', 'Зимний рассвет над Гудаури', 'Панорамные горные виды', 'Внетрассовый рельеф'],
+            },
             transferPrice: 60,
         },
         batumi: {
@@ -151,7 +180,14 @@ const destinationsData: Record<string, any> = {
                 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80',
                 'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=800&q=80',
                 'https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1519904981063-b0cf448d479e?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80',
             ],
+            galleryCaptions: {
+                en: ['Batumi seafront skyline', 'Alphabet Tower at dusk', 'Batumi Boulevard promenade', 'Botanical Garden panorama', 'Ali and Nino statue', 'Old Town architecture', 'Black Sea sunset', 'Piazza Square at night'],
+                he: ['קו הרקיע של חוף באטומי', 'מגדל האלפבית בין הערביים', 'טיילת שדרות באטומי', 'פנורמה של הגן הבוטני', 'פסל עלי וניקו', 'אדריכלות העיר העתיקה', 'שקיעה בים השחור', 'כיכר פיאצה בלילה'],
+                ru: ['Набережная Батуми', 'Башня Алфавита в сумерках', 'Бульвар Батуми', 'Панорама Ботанического сада', 'Статуя Али и Нино', 'Архитектура Старого города', 'Закат на Чёрном море', 'Площадь Пьяцца ночью'],
+            },
             transferPrice: 150,
         },
         kakheti: {
@@ -183,7 +219,14 @@ const destinationsData: Record<string, any> = {
                 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80',
                 'https://images.unsplash.com/photo-1547481887-a26e2cacb37e?auto=format&fit=crop&w=800&q=80',
                 'https://images.unsplash.com/photo-1560493676-04071c5f467b?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1504279577054-acfeccf8fc52?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80',
             ],
+            galleryCaptions: {
+                en: ['Kakheti vineyard landscape', 'Traditional qvevri winemaking', 'Alazani Valley at sunrise', 'Mountain vineyards', 'Sighnaghi — City of Love', 'Wine cellar tasting', 'Gremi Fortress complex', 'Tsinandali Estate gardens'],
+                he: ['נוף כרמי קאחטי', 'ייצור יין מסורתי בקווברי', 'עמק אלזני בזריחה', 'כרמים בהרים', 'סיגנאגי — עיר האהבה', 'טעימות במרתף יין', 'מבצר גרמי', 'גני אחוזת צינאנדלי'],
+                ru: ['Виноградники Кахетии', 'Традиционное виноделие в квеври', 'Алазанская долина на рассвете', 'Горные виноградники', 'Сигнахи — Город любви', 'Дегустация в винном погребе', 'Крепость Греми', 'Сады усадьбы Цинандали'],
+            },
             transferPrice: 70,
         },
         borjomi: {
@@ -215,7 +258,14 @@ const destinationsData: Record<string, any> = {
                 'https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&w=800&q=80',
                 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&q=80',
                 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1418290232843-5d7a0bd93f7d?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&fit=crop&w=800&q=80',
             ],
+            galleryCaptions: {
+                en: ['Borjomi Central Park', 'Forest trails in the gorge', 'Mountain scenery around Borjomi', 'Borjomi-Kharagauli National Park', 'River valley views', 'Misty morning in the forest', 'Likani Palace grounds', 'Green Monastery path'],
+                he: ['הפארק המרכזי של בורג׳ומי', 'שבילי יער בקניון', 'נוף הרים סביב בורג׳ומי', 'הפארק הלאומי בורג׳ומי-חרגאולי', 'נוף עמק הנהר', 'בוקר ערפילי ביער', 'שטחי ארמון ליקאני', 'שביל המנזר הירוק'],
+                ru: ['Центральный парк Боржоми', 'Лесные тропы в ущелье', 'Горные пейзажи вокруг Боржоми', 'Национальный парк Боржоми-Харагаули', 'Виды на речную долину', 'Туманное утро в лесу', 'Территория дворца Ликани', 'Тропа к Зелёному монастырю'],
+            },
             transferPrice: 90,
         },
         mestia: {
@@ -244,10 +294,17 @@ const destinationsData: Record<string, any> = {
                 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80',
                 'https://images.unsplash.com/photo-1454496522488-7a8e488e8606?auto=format&fit=crop&w=800&q=80',
                 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800&q=80',
-                'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80',
                 'https://images.unsplash.com/photo-1519904981063-b0cf448d479e?auto=format&fit=crop&w=800&q=80',
                 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1483664852095-d6cc6870702d?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&fit=crop&w=800&q=80',
             ],
+            galleryCaptions: {
+                en: ['Mestia and Svan towers', 'Snow-capped Caucasus peaks', 'Mountain ridges of Svaneti', 'Chalaadi Glacier trail', 'Green valleys of Upper Svaneti', 'Misty mountain morning', 'Ancient stone towers', 'Ushguli village panorama'],
+                he: ['מסטיה ומגדלי סוואן', 'פסגות קווקז מושלגות', 'רכסי הרים בסוואנטי', 'שביל קרחון צ׳אלאדי', 'עמקים ירוקים בסוואנטי העליונה', 'בוקר הררי ערפילי', 'מגדלי אבן עתיקים', 'פנורמת כפר אושגולי'],
+                ru: ['Местиа и Сванские башни', 'Заснеженные вершины Кавказа', 'Горные хребты Сванетии', 'Тропа к леднику Чалаади', 'Зелёные долины Верхней Сванетии', 'Туманное горное утро', 'Древние каменные башни', 'Панорама села Ушгули'],
+            },
             transferPrice: 200,
         },
         bakuriani: {
@@ -279,8 +336,249 @@ const destinationsData: Record<string, any> = {
                 'https://images.unsplash.com/photo-1483664852095-d6cc6870702d?auto=format&fit=crop&w=800&q=80',
                 'https://images.unsplash.com/photo-1418290232843-5d7a0bd93f7d?auto=format&fit=crop&w=800&q=80',
                 'https://images.unsplash.com/photo-1454496522488-7a8e488e8606?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1519904981063-b0cf448d479e?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&w=800&q=80',
             ],
+            galleryCaptions: {
+                en: ['Bakuriani mountain panorama', 'Snowy ski slopes', 'Alpine peaks above resort', 'Pine forest trails', 'Winter sunrise over mountains', 'Snow-covered peaks', 'Didveli ski area', 'Forest and meadows in summer'],
+                he: ['פנורמת הרי באקוריאני', 'מדרונות סקי מושלגים', 'פסגות אלפיניות מעל האתר', 'שבילי יער אורנים', 'זריחת חורף מעל ההרים', 'פסגות מכוסות שלג', 'אזור סקי דידוולי', 'יער ואחו בקיץ'],
+                ru: ['Горная панорама Бакуриани', 'Заснеженные склоны', 'Альпийские вершины над курортом', 'Тропы в сосновом лесу', 'Зимний рассвет над горами', 'Заснеженные вершины', 'Горнолыжная зона Дидвели', 'Лес и луга летом'],
+            },
             transferPrice: 100,
+        },
+        kutaisi: {
+            slug: 'kutaisi',
+            name: 'Kutaisi',
+            tagline: 'Gateway to western wonders',
+            heroImage: 'https://images.unsplash.com/photo-1504893524553-b855bce32c67?auto=format&fit=crop&w=2000&q=80',
+            overview: [
+                'Kutaisi, Georgia\'s second-largest city and ancient capital of the Colchis Kingdom, is a cultural treasure trove in western Georgia. This city, intimately linked to the legend of the Golden Fleece, has served as a seat of power for Georgian kings for over three millennia.',
+                'The Bagrati Cathedral, a UNESCO World Heritage masterpiece built in the 11th century, crowns the city from Ukimerioni Hill. Nearby, the Gelati Monastery complex — founded by King David the Builder in 1106 — is one of the finest examples of medieval Georgian architecture and was once the most important intellectual center in the Caucasus.',
+                'Today Kutaisi serves as a gateway to some of Georgia\'s most spectacular natural wonders. The otherworldly Prometheus Cave, the turquoise waters of Martvili and Okatse Canyons, and the thundering Kinchkha Waterfall are all within easy reach, making this city the perfect base for exploring western Georgia.',
+            ],
+            attractions: [
+                'Bagrati Cathedral - 11th-century UNESCO World Heritage cathedral',
+                'Gelati Monastery - Medieval academy founded by King David the Builder',
+                'Prometheus Cave - Underground wonderland of stalactites and lakes',
+                'Okatse Canyon - Dramatic gorge with suspended walkway',
+                'Sataplia Nature Reserve - Dinosaur footprints and glass-floor cave',
+                'Kinchkha Waterfall - Georgia\'s tallest waterfall at 100 meters',
+                'Kutaisi Market - Vibrant bazaar with local produce and spices',
+                'White Bridge - Iconic bridge over the Rioni River',
+            ],
+            bestTime: 'April to October for best weather. Spring (April-May) is ideal for canyon visits with full water flow. Summer is warm and perfect for cave exploration. Autumn offers beautiful colors in surrounding forests. Winters are mild but rainy.',
+            howToGetThere: 'Kutaisi has its own international airport with budget airline connections. By road, it\'s 230km west of Tbilisi (3-4 hours). Rati Tours offers day trips from Tbilisi combining Kutaisi\'s monasteries with natural wonders like Prometheus Cave and Martvili Canyon.',
+            gallery: [
+                'https://images.unsplash.com/photo-1504893524553-b855bce32c67?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1433838552652-f9a46b332c40?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1445796886651-d31682cc5a40?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1527489377706-5bf97e608852?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1498855926480-d98e83099315?auto=format&fit=crop&w=800&q=80',
+            ],
+            galleryCaptions: {
+                en: ['River canyon near Kutaisi', 'Gelati Monastery frescoes', 'Okatse Canyon walkway', 'Martvili Canyon boat ride', 'Prometheus Cave formations', 'Kinchkha Waterfall', 'Kutaisi old town market', 'Bagrati Cathedral at sunset'],
+                he: ['קניון הנהר ליד קוטאיסי', 'פרסקאות מנזר גלאטי', 'מעבר קניון אוקאצה', 'שיט בקניון מרטווילי', 'תצורות מערת פרומתאוס', 'מפל קינצ\'חה', 'שוק העיר העתיקה של קוטאיסי', 'קתדרלת באגראטי בשקיעה'],
+                ru: ['Речной каньон у Кутаиси', 'Фрески монастыря Гелати', 'Подвесная тропа каньона Окаце', 'Прогулка на лодке по каньону Мартвили', 'Формации пещеры Прометея', 'Водопад Кинчха', 'Рынок старого города Кутаиси', 'Собор Баграти на закате'],
+            },
+            transferPrice: 100,
+        },
+        mtskheta: {
+            slug: 'mtskheta',
+            name: 'Mtskheta',
+            tagline: 'Sacred heart of Georgia',
+            heroImage: 'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=2000&q=80',
+            overview: [
+                'Mtskheta, Georgia\'s ancient capital and spiritual center, is one of the oldest continuously inhabited cities in the world. Located at the confluence of the Mtkvari and Aragvi rivers just 20 kilometers from Tbilisi, this sacred city has been the seat of the Georgian Orthodox Church since the 4th century.',
+                'The Jvari Monastery, perched on a clifftop overlooking the confluence of the two rivers, is one of the finest examples of early Georgian church architecture. Built in the 6th century, this UNESCO World Heritage site inspired Mikhail Lermontov\'s famous poem "The Novice" and offers breathtaking panoramic views.',
+                'Svetitskhoveli Cathedral, the principal church of the Georgian Orthodox Church, stands at the heart of Mtskheta. According to tradition, the cathedral was built over the burial place of Christ\'s robe, making it one of the most sacred places in Georgia. The entire city is a living museum of Georgian Christianity and culture.',
+            ],
+            attractions: [
+                'Jvari Monastery - 6th-century monastery with panoramic river views',
+                'Svetitskhoveli Cathedral - Principal Georgian Orthodox cathedral',
+                'Samtavro Monastery - Ancient nunnery with royal tombs',
+                'Confluence of Rivers - Meeting point of Mtkvari and Aragvi',
+                'Bebris Tsikhe - Medieval fortress ruins with city views',
+                'Armazi Ruins - Ancient Iberian capital archaeological site',
+                'Shiomghvime Monastery - 6th-century cave monastery nearby',
+                'Mtskheta Old Town - Charming streets with craft shops',
+            ],
+            bestTime: 'Year-round destination thanks to proximity to Tbilisi. Spring (April-June) and autumn (September-October) offer the most pleasant weather. Summer is warm but manageable. Winter provides a serene atmosphere for visiting the churches.',
+            howToGetThere: 'Just 20km north of Tbilisi (20-30 minutes by car). Rati Tours includes Mtskheta on many day-trip itineraries, often combining it with Jvari Monastery and a drive along the Georgian Military Highway to Kazbegi.',
+            gallery: [
+                'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1596422846543-75c6fc197f07?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1565008576549-57569a49371d?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1555881675-4e9e1f8e3e6f?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1598970434795-0c54fe7c0648?auto=format&fit=crop&w=800&q=80',
+            ],
+            galleryCaptions: {
+                en: ['Jvari Monastery above river confluence', 'Svetitskhoveli Cathedral interior', 'Ancient stone carvings', 'Mtskheta aerial panorama', 'Samtavro Monastery courtyard', 'Old Town cobblestone streets', 'River confluence from Jvari', 'Cathedral at golden hour'],
+                he: ['מנזר ג\'וארי מעל מפגש הנהרות', 'פנים קתדרלת סווטיצחובלי', 'גילופי אבן עתיקים', 'פנורמה אווירית של מצחטה', 'חצר מנזר סמטברו', 'רחובות מרוצפים בעיר העתיקה', 'מפגש הנהרות מג\'וארי', 'הקתדרלה בשעת הזהב'],
+                ru: ['Монастырь Джвари над слиянием рек', 'Интерьер собора Светицховели', 'Древние каменные резьбы', 'Воздушная панорама Мцхеты', 'Двор монастыря Самтавро', 'Мощёные улочки Старого города', 'Слияние рек с Джвари', 'Собор в золотой час'],
+            },
+            transferPrice: 25,
+        },
+        vardzia: {
+            slug: 'vardzia',
+            name: 'Vardzia',
+            tagline: 'City carved in stone',
+            heroImage: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=2000&q=80',
+            overview: [
+                'Vardzia is a stunning cave monastery complex carved into the sheer cliffs of Erusheti Mountain in southern Georgia. Built by Queen Tamar in the 12th century, this remarkable site once housed up to 50,000 people and served as a fortress-monastery protecting Georgia\'s southern border.',
+                'The complex originally consisted of over 6,000 apartments, a church, a throne room, and an elaborate irrigation system, all hewn from the solid rock face. A devastating earthquake in 1283 exposed many of the caves, revealing the extraordinary scale of this underground city to the outside world.',
+                'Today visitors can explore hundreds of rooms connected by tunnels and stairways carved into the cliff. The Church of the Dormition at the heart of the complex preserves exquisite 12th-century frescoes, including a rare portrait of Queen Tamar herself. The site\'s dramatic setting above the Mtkvari River valley makes it one of Georgia\'s most awe-inspiring destinations.',
+            ],
+            attractions: [
+                'Cave Monastery Complex - Over 600 rooms carved into cliff face',
+                'Church of the Dormition - 12th-century frescoes of Queen Tamar',
+                'Khertvisi Fortress - One of the oldest fortresses in Georgia',
+                'Rabati Castle - Restored medieval castle in Akhaltsikhe',
+                'Underground Tunnels - Network of passages connecting chambers',
+                'Mtkvari River Valley - Dramatic gorge scenery below the caves',
+                'Bell Tower Cave - Carved bell tower with valley views',
+                'Vanis Kvabebi - Nearby cave monastery with ancient frescoes',
+            ],
+            bestTime: 'April to October for best visiting conditions. Spring (May-June) and autumn (September-October) offer mild temperatures ideal for exploring the caves. Summer can be hot in the valley. The site is open year-round but winter access may be limited.',
+            howToGetThere: 'Located 300km south of Tbilisi near the Turkish border (4-5 hours by car). Rati Tours offers full-day or overnight trips to Vardzia, typically combined with Rabati Castle in Akhaltsikhe and Borjomi. The scenic drive through southern Georgia is part of the experience.',
+            gallery: [
+                'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1445796886651-d31682cc5a40?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1504893524553-b855bce32c67?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1498855926480-d98e83099315?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1527489377706-5bf97e608852?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1433838552652-f9a46b332c40?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?auto=format&fit=crop&w=800&q=80',
+            ],
+            galleryCaptions: {
+                en: ['Vardzia cave city panorama', 'Cliff-face cave chambers', 'River valley below the caves', 'Ancient carved interiors', 'Khertvisi Fortress', 'Rock-cut monastery passages', 'Southern Georgia landscape', 'Church of the Dormition frescoes'],
+                he: ['פנורמת עיר המערות וארדזיה', 'חדרי מערות בקיר הצוק', 'עמק הנהר מתחת למערות', 'פנים חצובים עתיקים', 'מבצר חרטוויסי', 'מעברי מנזר חצובים בסלע', 'נוף דרום גאורגיה', 'פרסקאות כנסיית הדורמיציון'],
+                ru: ['Панорама пещерного города Вардзиа', 'Пещерные камеры в скале', 'Речная долина под пещерами', 'Древние высеченные интерьеры', 'Крепость Хертвиси', 'Высеченные в скале монастырские проходы', 'Пейзаж южной Грузии', 'Фрески церкви Успения'],
+            },
+            transferPrice: 120,
+        },
+        'davit-gareja': {
+            slug: 'davit-gareja',
+            name: 'Davit Gareja',
+            tagline: 'Desert monastery on the edge of the world',
+            heroImage: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=2000&q=80',
+            overview: [
+                'The Davit Gareja monastery complex is one of Georgia\'s most extraordinary and otherworldly destinations. Stretching across 25 kilometers of semi-arid hillside along the Azerbaijan border, this remarkable complex was founded in the 6th century by one of the Thirteen Assyrian Fathers, Saint David Garejeli.',
+                'The landscape here is unlike anywhere else in Georgia — rolling steppe hills, dramatic rock formations, and an almost lunar terrain that bursts into colorful wildflowers in spring. The main Lavra monastery, built into the hillside, serves as the starting point for exploring this vast spiritual complex.',
+                'A short hike over the ridge leads to the Udabno caves, where stunning 10th-13th century frescoes adorn rock-hewn chambers overlooking the vast Azerbaijani steppe. The combination of ancient art, spiritual atmosphere, and surreal desert landscape makes Davit Gareja one of Georgia\'s most unforgettable experiences.',
+            ],
+            attractions: [
+                'Lavra Monastery - Main monastery complex founded in 6th century',
+                'Udabno Caves - Rock-cut chapels with stunning medieval frescoes',
+                'Semi-Desert Landscape - Unique steppe terrain with spring wildflowers',
+                'Ridge Hike - Scenic trail connecting Lavra to Udabno',
+                'Azerbaijan Border Views - Panoramic views over the endless steppe',
+                'Ancient Frescoes - 10th-13th century religious paintings',
+                'Monk Cells - Carved chambers where monks lived for centuries',
+                'Rainbow Mountains - Colorful striped hillsides in the area',
+            ],
+            bestTime: 'Spring (April-May) is magical with wildflowers covering the steppe. Autumn (September-October) offers pleasant temperatures. Avoid summer (June-August) when temperatures exceed 40°C. Winter is cold and windy but peaceful.',
+            howToGetThere: 'Located 60km southeast of Tbilisi (1.5-2 hours by car), with the last stretch on unpaved road requiring a vehicle with good clearance. Rati Tours provides 4WD transfers and guided visits, often combined with stops at Sighnaghi or Bodbe Monastery in Kakheti.',
+            gallery: [
+                'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1445796886651-d31682cc5a40?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1433838552652-f9a46b332c40?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1504893524553-b855bce32c67?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1498855926480-d98e83099315?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1527489377706-5bf97e608852?auto=format&fit=crop&w=800&q=80',
+            ],
+            galleryCaptions: {
+                en: ['Steppe landscape at Davit Gareja', 'Panoramic view from the ridge', 'Desert canyon formations', 'Semi-arid hillside terrain', 'Ancient cave monastery entrance', 'Dramatic rock formations', 'Sunset over the steppe', 'Monastery carved into hillside'],
+                he: ['נוף הערבה בדוד גארג\'ה', 'נוף פנורמי מהרכס', 'תצורות קניון מדברי', 'שטח גבעות חצי-צחיח', 'כניסת מנזר מערות עתיק', 'תצורות סלע דרמטיות', 'שקיעה מעל הערבה', 'מנזר חצוב בגבעה'],
+                ru: ['Степной пейзаж Давид Гареджи', 'Панорамный вид с хребта', 'Каньонные формации пустыни', 'Полупустынный холмистый рельеф', 'Вход в древний пещерный монастырь', 'Драматические скальные формации', 'Закат над степью', 'Монастырь, высеченный в склоне'],
+            },
+            transferPrice: 60,
+        },
+        'martvili-canyon': {
+            slug: 'martvili-canyon',
+            name: 'Martvili Canyon',
+            tagline: 'Emerald canyon of Samegrelo',
+            heroImage: 'https://images.unsplash.com/photo-1504893524553-b855bce32c67?auto=format&fit=crop&w=2000&q=80',
+            overview: [
+                'Martvili Canyon is a natural masterpiece in western Georgia\'s Samegrelo region, where the Abasha River has carved a stunning gorge through limestone over millions of years. The canyon\'s emerald-green waters, draped in lush vegetation, create an almost prehistoric atmosphere that has earned it the nickname "Georgia\'s little Amazon."',
+                'The canyon experience is divided into two sections. The upper canyon offers a magical boat ride through a narrow gorge with 40-meter-high walls covered in hanging moss and ferns, passing beneath natural rock bridges and past small waterfalls. The lower canyon features a walking trail along the river with swimming spots and larger cascades.',
+                'Once a private bathing spot for the Dadiani princes of Samegrelo, Martvili Canyon has been developed as a natural attraction while preserving its pristine beauty. The surrounding area is rich in history and nature, with the nearby Martvili Monastery, ancient forests, and traditional Megrelian villages adding cultural depth to the visit.',
+            ],
+            attractions: [
+                'Upper Canyon Boat Ride - Glide through emerald gorge on wooden boats',
+                'Lower Canyon Trail - Walking path with waterfalls and swimming spots',
+                'Natural Rock Bridges - Dramatic limestone formations overhead',
+                'Martvili Monastery - 7th-century monastery complex nearby',
+                'Dadiani Swimming Pool - Historic natural pool of Megrelian princes',
+                'Hanging Gardens - Moss and fern-covered canyon walls',
+                'Cascading Waterfalls - Multiple falls along the canyon trail',
+                'Forest Canopy Walk - Lush subtropical forest surrounding the canyon',
+            ],
+            bestTime: 'May to October for canyon visits. Summer (June-August) is perfect for swimming in the lower canyon. Spring offers the most dramatic water flow after snowmelt. Boat rides operate weather permitting. The canyon is less crowded on weekdays.',
+            howToGetThere: 'Located 260km from Tbilisi in the Samegrelo region (4-5 hours by car). Rati Tours offers day trips from Kutaisi or multi-day western Georgia tours combining Martvili Canyon with Prometheus Cave, Okatse Canyon, and the Zugdidi Dadiani Palace.',
+            gallery: [
+                'https://images.unsplash.com/photo-1504893524553-b855bce32c67?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1433838552652-f9a46b332c40?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1527489377706-5bf97e608852?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&w=800&q=80',
+            ],
+            galleryCaptions: {
+                en: ['Emerald waters of Martvili Canyon', 'Boat ride through the gorge', 'Canyon waterfall and pool', 'Lush forest canopy above', 'Moss-covered canyon walls', 'Natural rock bridge formation', 'Turquoise river bends', 'Forest trail to lower canyon'],
+                he: ['המים האזמרגדיים של קניון מרטווילי', 'שיט בסירה דרך הגורג\'', 'מפל ובריכה בקניון', 'חופת יער עבותה מעל', 'קירות קניון מכוסי אזוב', 'תצורת גשר סלע טבעי', 'פיתולי נהר טורקיז', 'שביל יער לקניון התחתון'],
+                ru: ['Изумрудные воды каньона Мартвили', 'Прогулка на лодке по ущелью', 'Водопад и бассейн каньона', 'Пышный лесной полог', 'Покрытые мхом стены каньона', 'Природный скальный мост', 'Бирюзовые изгибы реки', 'Лесная тропа к нижнему каньону'],
+            },
+            transferPrice: 130,
+        },
+        zugdidi: {
+            slug: 'zugdidi',
+            name: 'Zugdidi',
+            tagline: 'Royal city of Samegrelo',
+            heroImage: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=2000&q=80',
+            overview: [
+                'Zugdidi, the capital of the historic Samegrelo region, is a culturally rich city that served as the seat of the powerful Dadiani dynasty for centuries. The city blends aristocratic heritage with the warm hospitality and distinctive cuisine of the Megrelian people, known throughout Georgia for their flavorful, spicy dishes.',
+                'The crown jewel of Zugdidi is the Dadiani Palace, a stunning 19th-century residence that now houses one of Georgia\'s most important museums. The palace contains an extraordinary collection including one of Napoleon Bonaparte\'s three death masks — a relic brought to Georgia through the Dadiani family\'s marriage connections to the Bonaparte dynasty.',
+                'Surrounded by lush botanical gardens planted with rare species from around the world, Zugdidi serves as the perfect gateway to the Samegrelo region\'s natural attractions. From here, visitors can explore Martvili Canyon, venture to Mestia and Svaneti, or discover the subtropical beauty of western Georgia\'s lowlands.',
+            ],
+            attractions: [
+                'Dadiani Palace Museum - 19th-century royal residence with Napoleon\'s death mask',
+                'Zugdidi Botanical Garden - Historic gardens with rare plant species',
+                'Enguri Dam - One of the world\'s highest arch dams (271m)',
+                'Megrelian Cuisine - Famous for elarji, kupati, and gebzhalia',
+                'Anaklia Beach - Black Sea resort town nearby',
+                'Nokalakevi Fortress - Ancient Colchis-era archaeological site',
+                'Rukhi Castle - 17th-century fortress ruins',
+                'Gateway to Svaneti - Starting point for the road to Mestia',
+            ],
+            bestTime: 'April to October for pleasant weather. Summer (June-August) is warm and ideal for combining with beach visits to Anaklia. Spring and autumn offer mild conditions for palace and garden visits. Winter is mild but rainy in this subtropical region.',
+            howToGetThere: 'Located 320km from Tbilisi (5-6 hours by car) in western Georgia. Rati Tours includes Zugdidi on multi-day western Georgia itineraries and as a stopover en route to Svaneti. The journey passes through scenic landscapes and can include stops at Kutaisi attractions.',
+            gallery: [
+                'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1504893524553-b855bce32c67?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1498855926480-d98e83099315?auto=format&fit=crop&w=800&q=80',
+            ],
+            galleryCaptions: {
+                en: ['Dadiani Palace facade', 'Palace museum interior', 'Botanical garden pathways', 'Misty morning in Samegrelo', 'Lush forests of western Georgia', 'Enguri River valley', 'Traditional Megrelian architecture', 'Sunset over Zugdidi'],
+                he: ['חזית ארמון דדיאני', 'פנים מוזיאון הארמון', 'שבילי הגן הבוטני', 'בוקר ערפילי בסמגרלו', 'יערות עבותים של מערב גאורגיה', 'עמק נהר אנגורי', 'אדריכלות מגרלית מסורתית', 'שקיעה מעל זוגדידי'],
+                ru: ['Фасад дворца Дадиани', 'Интерьер дворца-музея', 'Тропинки ботанического сада', 'Туманное утро в Самегрело', 'Пышные леса Западной Грузии', 'Долина реки Ингури', 'Традиционная мегрельская архитектура', 'Закат над Зугдиди'],
+            },
+            transferPrice: 120,
         },
     },
     // Hebrew translations would go here (abbreviated for space)
@@ -550,10 +848,58 @@ function ContentSection({ destination, common, isRTL }: any) {
     );
 }
 
+// Gallery image with blur-up loading
+function GalleryImage({ src, alt, onClick, span2 }: { src: string; alt: string; onClick: () => void; span2?: boolean }) {
+    const [loaded, setLoaded] = useState(false);
+
+    return (
+        <motion.div
+            variants={fadeUp}
+            className={`relative aspect-[4/3] overflow-hidden rounded-xl group cursor-pointer ${span2 ? 'sm:col-span-2 sm:aspect-[8/3] lg:aspect-[8/3]' : ''}`}
+            onClick={onClick}
+        >
+            <div className="absolute inset-0 bg-gradient-to-br from-stone-900 to-stone-800" />
+            <Image
+                src={src}
+                alt={alt}
+                fill
+                sizes={span2 ? '(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 66vw' : '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'}
+                className={`object-cover transition-all duration-700 group-hover:scale-110 ${loaded ? 'blur-0 opacity-100' : 'blur-sm opacity-0'}`}
+                onLoad={() => setLoaded(true)}
+            />
+            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
+            {/* Zoom icon */}
+            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div className="bg-black/50 rounded-full p-3">
+                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                    </svg>
+                </div>
+            </div>
+        </motion.div>
+    );
+}
+
 // Photo Gallery
-function PhotoGallery({ destination, common, isRTL }: any) {
+function PhotoGallery({ destination, common, isRTL, lang }: { destination: Destination; common: any; isRTL: boolean; lang: 'en' | 'he' | 'ru' }) {
     const ref = useRef(null);
     const isInView = useInView(ref, { once: true, margin: '-100px' });
+    const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+
+    const captions = destination.galleryCaptions?.[lang] || destination.galleryCaptions?.en || [];
+
+    const lightboxImages = destination.gallery.map((src: string, i: number) => ({
+        src,
+        caption: captions[i] || '',
+    }));
+
+    const handlePrev = useCallback(() => {
+        setSelectedIndex((prev) => (prev !== null ? (prev - 1 + destination.gallery.length) % destination.gallery.length : null));
+    }, [destination.gallery.length]);
+
+    const handleNext = useCallback(() => {
+        setSelectedIndex((prev) => (prev !== null ? (prev + 1) % destination.gallery.length : null));
+    }, [destination.gallery.length]);
 
     return (
         <section ref={ref} className="relative py-16 md:py-24 bg-stone-950">
@@ -574,24 +920,27 @@ function PhotoGallery({ destination, common, isRTL }: any) {
                     className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
                 >
                     {destination.gallery.map((image: string, index: number) => (
-                        <motion.div
+                        <GalleryImage
                             key={index}
-                            variants={fadeUp}
-                            className="relative aspect-[4/3] overflow-hidden rounded-xl group cursor-pointer"
-                        >
-                            <div className="absolute inset-0 bg-gradient-to-br from-stone-900 to-stone-800" />
-                            <Image
-                                src={image}
-                                alt={`${destination.name} ${index + 1}`}
-                                fill
-                                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                                className="object-cover transition-transform duration-700 group-hover:scale-110"
-                            />
-                            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
-                        </motion.div>
+                            src={image}
+                            alt={captions[index] || `${destination.name} ${index + 1}`}
+                            onClick={() => setSelectedIndex(index)}
+                            span2={index === 0}
+                        />
                     ))}
                 </motion.div>
             </div>
+
+            {selectedIndex !== null && (
+                <Lightbox
+                    images={lightboxImages}
+                    currentIndex={selectedIndex}
+                    onClose={() => setSelectedIndex(null)}
+                    onPrev={handlePrev}
+                    onNext={handleNext}
+                    counter={`${selectedIndex + 1} / ${destination.gallery.length}`}
+                />
+            )}
         </section>
     );
 }
@@ -641,7 +990,7 @@ export default function DestinationPage({ params }: { params: Promise<{ slug: st
             <ContentSection destination={destination} common={common} isRTL={isRTL} />
 
             {/* Photo Gallery */}
-            <PhotoGallery destination={destination} common={common} isRTL={isRTL} />
+            <PhotoGallery destination={destination} common={common} isRTL={isRTL} lang={lang} />
 
             {/* Footer */}
             <Footer lang={lang} />

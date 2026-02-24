@@ -466,7 +466,7 @@ export default function BookingForm({ lang }: BookingFormProps) {
   const openWhatsApp = () => {
     const message = generateWhatsAppMessage()
     const whatsappUrl = `https://wa.me/995514048822?text=${encodeURIComponent(message)}`
-    window.open(whatsappUrl, '_blank')
+    window.open(whatsappUrl, '_blank', 'noopener,noreferrer')
   }
 
   // Handle form submission
@@ -611,6 +611,8 @@ export default function BookingForm({ lang }: BookingFormProps) {
                   value={formData.fullName}
                   onChange={handleChange}
                   placeholder={t.fullNamePlaceholder}
+                  maxLength={100}
+                  autoComplete="name"
                   className={`w-full bg-espresso/5 dark:bg-white/5 border ${errors.fullName ? 'border-red-500' : 'border-espresso/10 dark:border-white/10'} rounded-xl px-4 py-3 text-espresso dark:text-white focus:outline-none focus:border-terracotta/50 dark:focus:border-amber-400/50 transition-colors`}
                 />
                 {errors.fullName && <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>}
@@ -626,6 +628,8 @@ export default function BookingForm({ lang }: BookingFormProps) {
                   value={formData.email}
                   onChange={handleChange}
                   placeholder={t.emailPlaceholder}
+                  maxLength={254}
+                  autoComplete="email"
                   className={`w-full bg-espresso/5 dark:bg-white/5 border ${errors.email ? 'border-red-500' : 'border-espresso/10 dark:border-white/10'} rounded-xl px-4 py-3 text-espresso dark:text-white focus:outline-none focus:border-terracotta/50 dark:focus:border-amber-400/50 transition-colors`}
                 />
                 {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
@@ -641,6 +645,8 @@ export default function BookingForm({ lang }: BookingFormProps) {
                   value={formData.phone}
                   onChange={handleChange}
                   placeholder={t.phonePlaceholder}
+                  maxLength={20}
+                  autoComplete="tel"
                   className={`w-full bg-espresso/5 dark:bg-white/5 border ${errors.phone ? 'border-red-500' : 'border-espresso/10 dark:border-white/10'} rounded-xl px-4 py-3 text-espresso dark:text-white focus:outline-none focus:border-terracotta/50 dark:focus:border-amber-400/50 transition-colors`}
                 />
                 {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
@@ -803,6 +809,7 @@ export default function BookingForm({ lang }: BookingFormProps) {
                   value={formData.flightNumber}
                   onChange={handleChange}
                   placeholder={t.flightNumberPlaceholder}
+                  maxLength={10}
                   className="w-full bg-espresso/5 dark:bg-white/5 border border-espresso/10 dark:border-white/10 rounded-xl px-4 py-3 text-espresso dark:text-white focus:outline-none focus:border-terracotta/50 dark:focus:border-amber-400/50 transition-colors"
                 />
               </div>
@@ -817,6 +824,7 @@ export default function BookingForm({ lang }: BookingFormProps) {
                   onChange={handleChange}
                   placeholder={t.specialRequestsPlaceholder}
                   rows={4}
+                  maxLength={500}
                   className="w-full bg-espresso/5 dark:bg-white/5 border border-espresso/10 dark:border-white/10 rounded-xl px-4 py-3 text-espresso dark:text-white focus:outline-none focus:border-terracotta/50 dark:focus:border-amber-400/50 transition-colors resize-none"
                 />
               </div>

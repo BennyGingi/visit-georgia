@@ -65,6 +65,42 @@ const translations = {
                 tagline: 'Year-round mountain resort',
                 description: 'Charming resort town offering skiing in winter, hiking in summer, and fresh mountain air year-round at 1,700 meters elevation.',
             },
+            {
+                slug: 'kutaisi',
+                name: 'Kutaisi',
+                tagline: 'Gateway to western wonders',
+                description: 'Ancient capital of Colchis with UNESCO monasteries, the otherworldly Prometheus Cave, and dramatic canyons of western Georgia.',
+            },
+            {
+                slug: 'mtskheta',
+                name: 'Mtskheta',
+                tagline: 'Sacred heart of Georgia',
+                description: 'Georgia\'s spiritual capital where the iconic Jvari Monastery overlooks the confluence of two rivers and Svetitskhoveli Cathedral guards a sacred relic.',
+            },
+            {
+                slug: 'vardzia',
+                name: 'Vardzia',
+                tagline: 'City carved in stone',
+                description: 'A breathtaking 12th-century cave monastery of over 600 rooms carved into a sheer cliff face by Queen Tamar, with stunning medieval frescoes.',
+            },
+            {
+                slug: 'davit-gareja',
+                name: 'Davit Gareja',
+                tagline: 'Desert monastery on the edge of the world',
+                description: 'Surreal semi-desert landscape on the Azerbaijan border, where 6th-century cave monasteries hide stunning frescoes in the steppe hills.',
+            },
+            {
+                slug: 'martvili-canyon',
+                name: 'Martvili Canyon',
+                tagline: 'Emerald canyon of Samegrelo',
+                description: 'Emerald-green waters wind through a limestone gorge draped in moss and ferns, explored by boat through Georgia\'s own little Amazon.',
+            },
+            {
+                slug: 'zugdidi',
+                name: 'Zugdidi',
+                tagline: 'Royal city of Samegrelo',
+                description: 'Seat of the Dadiani dynasty with a palace housing Napoleon\'s death mask, lush botanical gardens, and gateway to Svaneti and western Georgia.',
+            },
         ],
         readMore: 'Read More',
         sectionLabel: 'Destinations',
@@ -126,6 +162,42 @@ const translations = {
                 name: 'באקוריאני',
                 tagline: 'אתר נופש הררי כל השנה',
                 description: 'עיירת נופש מקסימה המציעה סקי בחורף, טיולים בקיץ ואוויר הרים צח כל השנה בגובה 1,700 מטר.',
+            },
+            {
+                slug: 'kutaisi',
+                name: 'קוטאיסי',
+                tagline: 'שער לפלאי המערב',
+                description: 'בירת קולחיס העתיקה עם מנזרים של אונסק"ו, מערת פרומתאוס העולמית וקניונים דרמטיים במערב גאורגיה.',
+            },
+            {
+                slug: 'mtskheta',
+                name: 'מצחטה',
+                tagline: 'הלב הקדוש של גאורגיה',
+                description: 'הבירה הרוחנית של גאורגיה שבה מנזר ג\'וארי האיקוני משקיף על מפגש שני נהרות וקתדרלת סווטיצחובלי שומרת על קדשים.',
+            },
+            {
+                slug: 'vardzia',
+                name: 'וארדזיה',
+                tagline: 'עיר חצובה באבן',
+                description: 'מנזר מערות מרהיב מהמאה ה-12 עם למעלה מ-600 חדרים חצובים בצוק תלול על ידי המלכה תמר, עם פרסקאות מימי הביניים.',
+            },
+            {
+                slug: 'davit-gareja',
+                name: 'דוד גארג\'ה',
+                tagline: 'מנזר מדברי בקצה העולם',
+                description: 'נוף חצי-מדברי סוריאליסטי על גבול אזרבייג\'ן, שם מנזרי מערות מהמאה ה-6 מסתירים פרסקאות מדהימות בגבעות הערבה.',
+            },
+            {
+                slug: 'martvili-canyon',
+                name: 'קניון מרטווילי',
+                tagline: 'הקניון האזמרגדי של סמגרלו',
+                description: 'מים ירוקי-אזמרגד מתפתלים דרך גורג\' גירני עטוף בטחב ושרכים, נחקר בסירה דרך האמזונס הקטן של גאורגיה.',
+            },
+            {
+                slug: 'zugdidi',
+                name: 'זוגדידי',
+                tagline: 'העיר המלכותית של סמגרלו',
+                description: 'מושב שושלת דדיאני עם ארמון המכיל מסכת מוות של נפוליאון, גנים בוטניים עבותים ושער לסוואנטי ומערב גאורגיה.',
             },
         ],
         readMore: 'קרא עוד',
@@ -189,6 +261,42 @@ const translations = {
                 tagline: 'Круглогодичный горный курорт',
                 description: 'Очаровательный курортный город, предлагающий катание на лыжах зимой, пешие прогулки летом и свежий горный воздух круглый год на высоте 1700 метров.',
             },
+            {
+                slug: 'kutaisi',
+                name: 'Кутаиси',
+                tagline: 'Ворота в западные чудеса',
+                description: 'Древняя столица Колхиды с монастырями ЮНЕСКО, потусторонней пещерой Прометея и драматическими каньонами Западной Грузии.',
+            },
+            {
+                slug: 'mtskheta',
+                name: 'Мцхета',
+                tagline: 'Священное сердце Грузии',
+                description: 'Духовная столица Грузии, где монастырь Джвари возвышается над слиянием двух рек, а собор Светицховели хранит священную реликвию.',
+            },
+            {
+                slug: 'vardzia',
+                name: 'Вардзиа',
+                tagline: 'Город, высеченный в камне',
+                description: 'Потрясающий пещерный монастырь XII века с более чем 600 комнатами, высеченными в отвесной скале царицей Тамарой, с великолепными фресками.',
+            },
+            {
+                slug: 'davit-gareja',
+                name: 'Давид Гареджи',
+                tagline: 'Пустынный монастырь на краю света',
+                description: 'Сюрреалистический полупустынный ландшафт на границе с Азербайджаном, где пещерные монастыри VI века скрывают потрясающие фрески в степных холмах.',
+            },
+            {
+                slug: 'martvili-canyon',
+                name: 'Каньон Мартвили',
+                tagline: 'Изумрудный каньон Самегрело',
+                description: 'Изумрудные воды извиваются через известняковое ущелье, покрытое мхом и папоротником, которое исследуют на лодке по маленькой Амазонке Грузии.',
+            },
+            {
+                slug: 'zugdidi',
+                name: 'Зугдиди',
+                tagline: 'Королевский город Самегрело',
+                description: 'Резиденция династии Дадиани с дворцом, хранящим посмертную маску Наполеона, пышными ботаническими садами и воротами в Сванетию.',
+            },
         ],
         readMore: 'Читать далее',
         sectionLabel: 'Направления',
@@ -200,7 +308,7 @@ const translations = {
 };
 
 // Unsplash images for each destination
-const destinationImages = {
+const destinationImages: Record<string, string> = {
     tbilisi: 'https://images.unsplash.com/photo-1565008576549-57569a49371d?auto=format&fit=crop&w=800&q=80',
     kazbegi: 'https://images.unsplash.com/photo-1584646098378-0874589d76b1?auto=format&fit=crop&w=800&q=80',
     gudauri: 'https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&fit=crop&w=800&q=80',
@@ -209,6 +317,12 @@ const destinationImages = {
     borjomi: 'https://images.unsplash.com/photo-1511593358241-7eea1f3c84e5?auto=format&fit=crop&w=800&q=80',
     mestia: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80',
     bakuriani: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800&q=80',
+    kutaisi: 'https://images.unsplash.com/photo-1504893524553-b855bce32c67?auto=format&fit=crop&w=800&q=80',
+    mtskheta: 'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=800&q=80',
+    vardzia: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80',
+    'davit-gareja': 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&q=80',
+    'martvili-canyon': 'https://images.unsplash.com/photo-1504893524553-b855bce32c67?auto=format&fit=crop&w=800&q=80',
+    zugdidi: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80',
 };
 
 // Animation variants
@@ -386,13 +500,13 @@ export default function DestinationsPage() {
                         initial="hidden"
                         animate="visible"
                         variants={stagger}
-                        className="grid grid-cols-1 sm:grid-cols-2 gap-8 md:gap-10"
+                        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10"
                     >
                         {t.destinations.map((destination: any, index: number) => (
                             <DestinationCard
                                 key={destination.slug}
                                 destination={destination}
-                                image={destinationImages[destination.slug as keyof typeof destinationImages]}
+                                image={destinationImages[destination.slug]}
                                 readMore={t.readMore}
                                 index={index}
                                 isRTL={isRTL}
