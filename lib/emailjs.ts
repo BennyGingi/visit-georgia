@@ -23,15 +23,15 @@
 
 import emailjs from 'emailjs-com'
 
-// Replace these with your actual EmailJS credentials
+// EmailJS credentials loaded from environment variables (NEXT_PUBLIC_ prefix for client-side access)
 export const EMAILJS_CONFIG = {
-  SERVICE_ID: 'YOUR_SERVICE_ID',
-  TEMPLATE_ID: 'YOUR_TEMPLATE_ID',
-  PUBLIC_KEY: 'YOUR_PUBLIC_KEY',
+  SERVICE_ID: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || '',
+  TEMPLATE_ID: process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || '',
+  PUBLIC_KEY: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || '',
 }
 
 // Email recipient
-export const RECIPIENT_EMAIL = 'gingi2603@gmail.com'
+export const RECIPIENT_EMAIL = process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'gingi2603@gmail.com'
 
 export interface BookingEmailData {
   from_name: string
@@ -53,9 +53,9 @@ export interface BookingEmailData {
  */
 export function isEmailJSConfigured(): boolean {
   return (
-    EMAILJS_CONFIG.SERVICE_ID !== 'YOUR_SERVICE_ID' &&
-    EMAILJS_CONFIG.TEMPLATE_ID !== 'YOUR_TEMPLATE_ID' &&
-    EMAILJS_CONFIG.PUBLIC_KEY !== 'YOUR_PUBLIC_KEY'
+    !!EMAILJS_CONFIG.SERVICE_ID &&
+    !!EMAILJS_CONFIG.TEMPLATE_ID &&
+    !!EMAILJS_CONFIG.PUBLIC_KEY
   )
 }
 
