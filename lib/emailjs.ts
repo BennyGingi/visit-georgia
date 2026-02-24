@@ -49,9 +49,25 @@ export interface BookingEmailData {
 }
 
 /**
+ * Check if EmailJS is properly configured with real credentials
+ */
+export function isEmailJSConfigured(): boolean {
+  return (
+    EMAILJS_CONFIG.SERVICE_ID !== 'YOUR_SERVICE_ID' &&
+    EMAILJS_CONFIG.TEMPLATE_ID !== 'YOUR_TEMPLATE_ID' &&
+    EMAILJS_CONFIG.PUBLIC_KEY !== 'YOUR_PUBLIC_KEY'
+  )
+}
+
+/**
  * Send booking details via EmailJS
  */
 export async function sendBookingEmail(data: BookingEmailData): Promise<void> {
+  if (!isEmailJSConfigured()) {
+    console.error('EmailJS is not configured. Please replace placeholder values in lib/emailjs.ts with your actual EmailJS credentials.')
+    throw new Error('Email service is not configured. Please contact us via WhatsApp instead.')
+  }
+
   try {
     const response = await emailjs.send(
       EMAILJS_CONFIG.SERVICE_ID,
@@ -67,7 +83,7 @@ export async function sendBookingEmail(data: BookingEmailData): Promise<void> {
       throw new Error(`EmailJS returned status ${response.status}`)
     }
 
-    console.log('Email sent successfully:', response)
+    // Email sent successfully
   } catch (error) {
     console.error('Failed to send email:', error)
     throw error

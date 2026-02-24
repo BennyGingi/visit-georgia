@@ -6,6 +6,24 @@ interface PricingTableProps {
   lang: string
 }
 
+const locationNames: Record<string, Record<string, string>> = {
+  en: {
+    'Tbilisi Airport': 'Tbilisi Airport', 'Tbilisi City': 'Tbilisi City', 'Tbilisi': 'Tbilisi',
+    'Gudauri': 'Gudauri', 'Kazbegi': 'Kazbegi', 'Batumi': 'Batumi',
+    'Kutaisi': 'Kutaisi', 'Kakheti': 'Kakheti', 'Borjomi': 'Borjomi', 'Mestia': 'Mestia',
+  },
+  he: {
+    'Tbilisi Airport': 'שדה התעופה טביליסי', 'Tbilisi City': 'טביליסי עיר', 'Tbilisi': 'טביליסי',
+    'Gudauri': 'גודאורי', 'Kazbegi': 'קזבגי', 'Batumi': 'באטומי',
+    'Kutaisi': 'קוטאיסי', 'Kakheti': 'קאחטי', 'Borjomi': "בורג'ומי", 'Mestia': 'מסטיה',
+  },
+  ru: {
+    'Tbilisi Airport': 'Аэропорт Тбилиси', 'Tbilisi City': 'Тбилиси город', 'Tbilisi': 'Тбилиси',
+    'Gudauri': 'Гудаури', 'Kazbegi': 'Казбеги', 'Batumi': 'Батуми',
+    'Kutaisi': 'Кутаиси', 'Kakheti': 'Кахетия', 'Borjomi': 'Боржоми', 'Mestia': 'Местия',
+  },
+}
+
 const pricingData = [
   { from: 'Tbilisi Airport', to: 'Tbilisi City', sedan: 25, minivan: 35, sprinter: 50, time: '25 min' },
   { from: 'Tbilisi', to: 'Gudauri', sedan: 85, minivan: 115, sprinter: 175, time: '2h' },
@@ -122,9 +140,9 @@ export default function PricingTable({ lang }: PricingTableProps) {
                   className="border-t border-espresso/5 dark:border-white/5 hover:bg-espresso/5 dark:hover:bg-white/5 transition-colors"
                 >
                   <td className="px-6 py-4">
-                    <span className="text-espresso dark:text-white font-medium transition-colors duration-300">{route.from}</span>
-                    <span className="text-espresso/40 dark:text-white/40 mx-2 transition-colors duration-300">→</span>
-                    <span className="text-espresso dark:text-white font-medium transition-colors duration-300">{route.to}</span>
+                    <span className="text-espresso dark:text-white font-medium transition-colors duration-300">{(locationNames[lang] || locationNames.en)[route.from] || route.from}</span>
+                    <span className="text-espresso/40 dark:text-white/40 mx-2 transition-colors duration-300">{isRTL ? '←' : '→'}</span>
+                    <span className="text-espresso dark:text-white font-medium transition-colors duration-300">{(locationNames[lang] || locationNames.en)[route.to] || route.to}</span>
                   </td>
                   <td className="text-center px-4 py-4">
                     <span className="text-terracotta dark:text-amber-400 font-semibold transition-colors duration-300">€{route.sedan}</span>
@@ -157,9 +175,9 @@ export default function PricingTable({ lang }: PricingTableProps) {
             >
               <div className="flex items-center justify-between mb-4">
                 <div>
-                  <span className="text-espresso dark:text-white font-medium transition-colors duration-300">{route.from}</span>
-                  <span className="text-espresso/40 dark:text-white/40 mx-2 transition-colors duration-300">→</span>
-                  <span className="text-espresso dark:text-white font-medium transition-colors duration-300">{route.to}</span>
+                  <span className="text-espresso dark:text-white font-medium transition-colors duration-300">{(locationNames[lang] || locationNames.en)[route.from] || route.from}</span>
+                  <span className="text-espresso/40 dark:text-white/40 mx-2 transition-colors duration-300">{isRTL ? '←' : '→'}</span>
+                  <span className="text-espresso dark:text-white font-medium transition-colors duration-300">{(locationNames[lang] || locationNames.en)[route.to] || route.to}</span>
                 </div>
                 <span className="text-espresso/50 dark:text-white/50 text-sm transition-colors duration-300">{route.time}</span>
               </div>

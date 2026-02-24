@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import Image from 'next/image'
 
 interface TransferHeroProps {
   lang: string
@@ -53,10 +54,13 @@ export default function TransferHero({ lang }: TransferHeroProps) {
         transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
       >
         <div className="absolute inset-0 bg-ivory dark:bg-black transition-colors duration-500" />
-        <img
+        <Image
           src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=2000&q=80"
           alt="Road through Georgia"
-          className="absolute inset-0 w-full h-full object-cover"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-ivory/70 via-ivory/50 to-ivory dark:from-black/70 dark:via-black/50 dark:to-black transition-colors duration-500" />
         {/* Gold accent gradient */}

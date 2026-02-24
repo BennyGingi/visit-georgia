@@ -94,7 +94,7 @@ export default function TrustBadges({ lang }: TrustBadgesProps) {
                             variants={fadeUp}
                             className="flex items-center gap-2 px-4 py-2 bg-espresso/5 dark:bg-white/5 border border-espresso/10 dark:border-white/10 rounded-full backdrop-blur-sm transition-colors duration-300"
                         >
-                            <span className="text-terracotta dark:text-amber-400 transition-colors duration-300">
+                            <span aria-hidden="true" className="text-terracotta dark:text-amber-400 transition-colors duration-300">
                                 {icons[badge.icon as keyof typeof icons]}
                             </span>
                             <span className="text-espresso/80 dark:text-white/80 text-sm font-medium whitespace-nowrap transition-colors duration-300">

@@ -20,7 +20,7 @@ const translations = {
         whatsapp: 'WhatsApp',
         email: 'Email',
         followUs: 'Follow Us',
-        copyright: '© 2025 Rati Tours. All rights reserved.',
+        copyright: `© ${new Date().getFullYear()} Rati Tours. All rights reserved.`,
     },
     he: {
         tagline: 'גאורגיה מחכה לך',
@@ -33,7 +33,7 @@ const translations = {
         whatsapp: 'וואטסאפ',
         email: 'אימייל',
         followUs: 'עקבו אחרינו',
-        copyright: '© 2025 Rati Tours. כל הזכויות שמורות.',
+        copyright: `© ${new Date().getFullYear()} Rati Tours. כל הזכויות שמורות.`,
     },
     ru: {
         tagline: 'Грузия ждёт вас',
@@ -46,7 +46,7 @@ const translations = {
         whatsapp: 'WhatsApp',
         email: 'Email',
         followUs: 'Подписывайтесь',
-        copyright: '© 2025 Rati Tours. Все права защищены.',
+        copyright: `© ${new Date().getFullYear()} Rati Tours. Все права защищены.`,
     },
 };
 

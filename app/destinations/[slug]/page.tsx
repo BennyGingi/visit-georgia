@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import Image from 'next/image';
 import Link from 'next/link';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
@@ -350,7 +351,7 @@ const stagger = {
 };
 
 // Hero Section with Parallax
-function HeroSection({ destination, isRTL }: { destination: Destination; isRTL: boolean }) {
+function HeroSection({ destination, isRTL, lang }: { destination: Destination; isRTL: boolean; lang: 'en' | 'he' | 'ru' }) {
     const ref = useRef(null);
     const { scrollYProgress } = useScroll({
         target: ref,
@@ -365,10 +366,13 @@ function HeroSection({ destination, isRTL }: { destination: Destination; isRTL: 
             {/* Parallax Background */}
             <motion.div className="absolute inset-0" style={{ y }}>
                 <div className="absolute inset-0 bg-gradient-to-br from-stone-900 to-stone-800" />
-                <img
+                <Image
                     src={destination.heroImage}
                     alt={destination.name}
-                    className="absolute inset-0 w-full h-full object-cover"
+                    fill
+                    priority
+                    sizes="100vw"
+                    className="object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/80" />
             </motion.div>
@@ -404,7 +408,7 @@ function HeroSection({ destination, isRTL }: { destination: Destination; isRTL: 
                         href="/transfers"
                         className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-amber-500 to-orange-600 text-white text-lg font-medium rounded-full shadow-xl shadow-amber-500/30 hover:shadow-amber-500/50 hover:scale-105 transition-all duration-300"
                     >
-                        {commonTranslations.en.bookTransfer}
+                        {commonTranslations[lang].bookTransfer}
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                         </svg>
@@ -576,10 +580,12 @@ function PhotoGallery({ destination, common, isRTL }: any) {
                             className="relative aspect-[4/3] overflow-hidden rounded-xl group cursor-pointer"
                         >
                             <div className="absolute inset-0 bg-gradient-to-br from-stone-900 to-stone-800" />
-                            <img
+                            <Image
                                 src={image}
                                 alt={`${destination.name} ${index + 1}`}
-                                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                fill
+                                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                                className="object-cover transition-transform duration-700 group-hover:scale-110"
                             />
                             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
                         </motion.div>
@@ -610,11 +616,17 @@ export default function DestinationPage({ params }: { params: Promise<{ slug: st
         document.documentElement.dir = isRTL ? 'rtl' : 'ltr';
     }, [isRTL]);
 
-    const destination = destinationsData[lang][slug];
+    const destination = destinationsData[lang]?.[slug] || destinationsData.en[slug];
     const common = commonTranslations[lang];
 
+    const notFoundText = {
+        en: 'Destination not found',
+        he: 'היעד לא נמצא',
+        ru: 'Направление не найдено',
+    };
+
     if (!destination) {
-        return <div>Destination not found</div>;
+        return <div>{notFoundText[lang]}</div>;
     }
 
     return (
@@ -623,7 +635,7 @@ export default function DestinationPage({ params }: { params: Promise<{ slug: st
             <Navigation lang={lang} setLang={setLang} />
 
             {/* Hero Section */}
-            <HeroSection destination={destination} isRTL={isRTL} />
+            <HeroSection destination={destination} isRTL={isRTL} lang={lang} />
 
             {/* Content Section */}
             <ContentSection destination={destination} common={common} isRTL={isRTL} />
@@ -635,7 +647,7 @@ export default function DestinationPage({ params }: { params: Promise<{ slug: st
             <Footer lang={lang} />
 
             {/* Floating Components */}
-            <FloatingWhatsApp />
+            <FloatingWhatsApp lang={lang} />
             <BackToTop />
         </main>
     );

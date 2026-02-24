@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import Link from 'next/link'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import FloatingWhatsApp from '@/components/FloatingWhatsApp'
@@ -30,6 +29,7 @@ const content = {
     ctaSub: "Send us a message and we'll confirm your transfer within minutes.",
     ctaBtn: 'Contact via WhatsApp',
     backHome: '← Back to Visit Georgia',
+    whyUs: 'Why Us',
   },
   he: {
     whyTitle: 'למה לבחור ב-Rati Tours?',
@@ -45,6 +45,7 @@ const content = {
     ctaSub: 'שלחו לנו הודעה ונאשר את ההסעה תוך דקות.',
     ctaBtn: 'צור קשר בוואטסאפ',
     backHome: '→ חזרה ל-Visit Georgia',
+    whyUs: 'למה אנחנו',
   },
   ru: {
     whyTitle: 'Почему Rati Tours?',
@@ -60,6 +61,7 @@ const content = {
     ctaSub: 'Напишите нам, и мы подтвердим трансфер в течение нескольких минут.',
     ctaBtn: 'Написать в WhatsApp',
     backHome: '← Вернуться на Visit Georgia',
+    whyUs: 'Почему мы',
   }
 }
 
@@ -86,7 +88,7 @@ function WhySection({ lang }: { lang: string }) {
           className="text-center mb-16"
         >
           <span className="text-terracotta dark:text-gold-400 text-xs font-bold tracking-[0.3em] uppercase mb-4 block transition-colors duration-300">
-            Why Us
+            {t.whyUs}
           </span>
           <h2 className="font-display text-espresso dark:text-white text-4xl md:text-5xl lg:text-6xl font-bold transition-colors duration-300">
             {t.whyTitle}
@@ -147,7 +149,7 @@ function CTASection({ lang }: { lang: string }) {
         <p className="text-espresso/50 dark:text-white/50 text-xl mb-10 transition-colors duration-300">{t.ctaSub}</p>
 
         <motion.a
-          href="https://wa.me/+995514048822"
+          href="https://wa.me/995514048822"
           target="_blank"
           rel="noopener noreferrer"
           whileHover={{ scale: 1.02, y: -2 }}
@@ -194,7 +196,7 @@ export default function TransfersPage() {
       <PricingTable lang={lang} />
       <CTASection lang={lang} />
       <Footer lang={lang} />
-      <FloatingWhatsApp />
+      <FloatingWhatsApp lang={lang} />
       <BackToTop />
     </main>
   )

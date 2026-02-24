@@ -48,8 +48,9 @@ export default function Navigation({ lang, setLang }: NavigationProps) {
     }, []);
 
     useEffect(() => {
-        // Update HTML dir attribute for RTL support
+        // Update HTML dir and lang attributes
         document.documentElement.setAttribute('dir', lang === 'he' ? 'rtl' : 'ltr');
+        document.documentElement.setAttribute('lang', lang);
     }, [lang]);
 
     useEffect(() => {

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { motion, useScroll, useTransform, useInView, AnimatePresence } from 'framer-motion'
+import { motion, useScroll, useTransform, useInView } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import Navigation from '@/components/Navigation'
@@ -35,7 +35,8 @@ const content = {
     hero: {
       pre: 'Discover',
       title: 'GEORGIA',
-      sub: 'Where mountains whisper and wine flows through centuries'
+      sub: 'Where mountains whisper and wine flows through centuries',
+      scroll: 'Scroll'
     },
     phrases: [
       { text: 'A land carved by mountains and time.', img: IMAGES.kazbegi },
@@ -65,14 +66,18 @@ const content = {
       title: 'Come and feel it.',
       sub: 'Georgia waits quietly. When you are ready.'
     },
-    footer: 'საქართველო მოგელით'
+    footer: 'საქართველო მოგელით',
+    immerse: 'Immerse Yourself',
+    experiencesTitle: 'Experiences',
+    destination: 'Destination',
   },
   he: {
     nav: ['גלה', 'מקומות', 'חוויה', 'מסע'],
     hero: {
       pre: 'גלה את',
       title: 'גאורגיה',
-      sub: 'היכן הרים לוחשים ויין זורם דרך מאות שנים'
+      sub: 'היכן הרים לוחשים ויין זורם דרך מאות שנים',
+      scroll: 'גלול'
     },
     phrases: [
       { text: 'ארץ שנחצבה בידי הרים וזמן.', img: IMAGES.kazbegi },
@@ -102,14 +107,18 @@ const content = {
       title: 'בוא להרגיש.',
       sub: 'גאורגיה מחכה בשקט. כשתהיה מוכן.'
     },
-    footer: 'საქართველო მოგელით'
+    footer: 'საქართველო მოგელით',
+    immerse: 'שקעו בחוויה',
+    experiencesTitle: 'חוויות',
+    destination: 'יעד',
   },
   ru: {
     nav: ['Открыть', 'Места', 'Опыт', 'Путешествие'],
     hero: {
       pre: 'Откройте',
       title: 'ГРУЗИЮ',
-      sub: 'Где горы шепчут, а вино течёт сквозь века'
+      sub: 'Где горы шепчут, а вино течёт сквозь века',
+      scroll: 'Прокрутить'
     },
     phrases: [
       { text: 'Земля, высеченная горами и временем.', img: IMAGES.kazbegi },
@@ -139,7 +148,10 @@ const content = {
       title: 'Приезжайте и почувствуйте.',
       sub: 'Грузия ждёт тихо. Когда вы будете готовы.'
     },
-    footer: 'საქართველო მოგელით'
+    footer: 'საქართველო მოგელით',
+    immerse: 'Погрузитесь',
+    experiencesTitle: 'Впечатления',
+    destination: 'Направление',
   }
 }
 
@@ -152,14 +164,6 @@ const fadeUp = {
     opacity: 1,
     y: 0,
     transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] }
-  }
-}
-
-const fadeIn = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { duration: 1, ease: "easeOut" }
   }
 }
 
@@ -177,11 +181,6 @@ const scaleUp = {
     transition: { duration: 1, ease: [0.16, 1, 0.3, 1] }
   }
 }
-
-// ============================================
-// COMPONENTS
-// ============================================
-
 
 // ============================================
 // COMPONENTS
@@ -207,10 +206,13 @@ function HeroSection({ t, isRTL }: any) {
         <div className="absolute inset-0 bg-gradient-to-br from-cream via-ivory to-cream dark:from-cinema-black dark:via-cinema-dark dark:to-cinema-black transition-colors duration-500" />
 
         {/* Actual Image with Ken Burns animation */}
-        <img
+        <Image
           src={IMAGES.hero}
           alt="Caucasus Mountains"
-          className="absolute inset-0 w-full h-full object-cover ken-burns"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover ken-burns"
         />
 
         {/* Cinematic overlays */}
@@ -261,7 +263,7 @@ function HeroSection({ t, isRTL }: any) {
           transition={{ delay: 2 }}
           className="absolute bottom-12 flex flex-col items-center gap-3"
         >
-          <span className="text-espresso/30 dark:text-white/30 text-xs tracking-[0.3em] uppercase font-light transition-colors duration-500">Scroll</span>
+          <span className="text-espresso/30 dark:text-white/30 text-xs tracking-[0.3em] uppercase font-light transition-colors duration-500">{t.hero.scroll}</span>
           <motion.div
             animate={{ y: [0, 10, 0] }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
@@ -302,10 +304,12 @@ function PhraseSection({ phrase, index }: { phrase: { text: string, img: string 
       {/* Background with Ken Burns */}
       <motion.div className="absolute inset-0" style={{ scale: imgScale }}>
         <div className="absolute inset-0 bg-ivory dark:bg-cinema-black transition-colors duration-500" />
-        <img
+        <Image
           src={phrase.img}
-          alt=""
-          className="absolute inset-0 w-full h-full object-cover"
+          alt={`Background image for: ${phrase.text}`}
+          fill
+          sizes="100vw"
+          className="object-cover"
         />
         {/* Cinematic overlay */}
         <div className="absolute inset-0 bg-ivory/65 dark:bg-cinema-black/65 transition-colors duration-500" />
@@ -344,7 +348,7 @@ function PhraseSection({ phrase, index }: { phrase: { text: string, img: string 
 }
 
 // Destination Section - Cinematic Dark Style
-function DestinationSection({ dest, index, isRTL }: any) {
+function DestinationSection({ dest, index, isRTL, destinationLabel }: any) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-20%" })
   const { scrollYProgress } = useScroll({
@@ -361,10 +365,12 @@ function DestinationSection({ dest, index, isRTL }: any) {
       {/* Background with cinematic treatment */}
       <motion.div className="absolute inset-0" style={{ scale: imgScale }}>
         <div className="absolute inset-0 bg-ivory dark:bg-cinema-black transition-colors duration-500" />
-        <img
+        <Image
           src={dest.img}
           alt={dest.name}
-          className="absolute inset-0 w-full h-full object-cover"
+          fill
+          sizes="100vw"
+          className="object-cover"
         />
         <div className="absolute inset-0 bg-ivory/55 dark:bg-cinema-black/55 transition-colors duration-500" />
         <div className={`absolute inset-0 bg-gradient-to-${isReverse ? 'l' : 'r'} from-ivory/90 via-ivory/50 to-transparent dark:from-cinema-black/90 dark:via-cinema-black/50 dark:to-transparent transition-colors duration-500`} />
@@ -391,7 +397,7 @@ function DestinationSection({ dest, index, isRTL }: any) {
             variants={fadeUp}
             className="text-terracotta/70 dark:text-gold-aged/70 text-xs tracking-[0.35em] uppercase block mb-6 font-light transition-colors duration-500"
           >
-            0{index + 1} — Destination
+            0{index + 1} — {destinationLabel}
           </motion.span>
 
           <motion.h2
@@ -430,14 +436,16 @@ function ExperienceCard({ exp, index }: any) {
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}
       variants={scaleUp}
-      className="relative group overflow-hidden aspect-[3/4] cursor-pointer border-2 border-stone/20 dark:border-gold-dim/20 hover:border-terracotta/50 dark:hover:border-gold-aged/50 transition-colors duration-500"
+      className="relative group overflow-hidden aspect-[3/4] border-2 border-stone/20 dark:border-gold-dim/20 hover:border-terracotta/50 dark:hover:border-gold-aged/50 transition-colors duration-500"
     >
       {/* Image */}
       <div className="absolute inset-0 bg-cream dark:bg-cinema-black transition-colors duration-500" />
-      <img
+      <Image
         src={exp.img}
         alt={exp.name}
-        className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+        fill
+        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+        className="object-cover transition-transform duration-1000 group-hover:scale-105"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-cream via-cream/50 to-transparent dark:from-cinema-black dark:via-cinema-black/50 dark:to-transparent transition-colors duration-500" />
 
@@ -486,13 +494,13 @@ function ExperiencesSection({ t, isRTL }: any) {
             variants={fadeUp}
             className="text-terracotta/70 dark:text-gold-aged/70 text-xs tracking-[0.35em] uppercase font-light transition-colors duration-500"
           >
-            Immerse Yourself
+            {t.immerse}
           </motion.span>
           <motion.h2
             variants={fadeUp}
             className="font-display text-espresso dark:text-white text-5xl md:text-7xl lg:text-8xl font-bold mt-4 transition-colors duration-500"
           >
-            Experiences
+            {t.experiencesTitle}
           </motion.h2>
           {/* Decorative line */}
           <motion.div
@@ -558,7 +566,7 @@ function ToursSection({ t, isRTL }: any) {
             {t.tours.viewPrices}
           </Link>
           <a
-            href="https://wa.me/+995514048822"
+            href="https://wa.me/995514048822"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 px-8 py-4 bg-green-600 text-white text-lg font-medium hover:bg-green-500 transition-all duration-300"
@@ -593,10 +601,12 @@ function CTASection({ t, isRTL }: any) {
       {/* Background with cinematic treatment */}
       <motion.div className="absolute inset-0" style={{ scale }}>
         <div className="absolute inset-0 bg-ivory dark:bg-cinema-black transition-colors duration-500" />
-        <img
+        <Image
           src={IMAGES.final}
           alt="Georgia landscape"
-          className="absolute inset-0 w-full h-full object-cover"
+          fill
+          sizes="100vw"
+          className="object-cover"
         />
         <div className="absolute inset-0 bg-ivory/60 dark:bg-cinema-black/60 transition-colors duration-500" />
         {/* Strong vignette for drama */}
@@ -684,7 +694,7 @@ export default function Home() {
 
       {/* Destinations */}
       {t.destinations.map((dest, i) => (
-        <DestinationSection key={i} dest={dest} index={i} isRTL={isRTL} />
+        <DestinationSection key={i} dest={dest} index={i} isRTL={isRTL} destinationLabel={t.destination} />
       ))}
 
       {/* Experiences */}
@@ -700,7 +710,7 @@ export default function Home() {
       <Footer lang={lang} />
 
       {/* Floating Components */}
-      <FloatingWhatsApp />
+      <FloatingWhatsApp lang={lang} />
       <BackToTop />
     </main>
   )

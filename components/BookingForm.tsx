@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import CurrencyToggle from './CurrencyToggle'
 import { Currency, convertPrice, formatPrice, getSavedCurrency, saveCurrency } from '@/lib/currency'
-import { sendBookingEmail } from '@/lib/emailjs'
+import { sendBookingEmail, isEmailJSConfigured } from '@/lib/emailjs'
 
 interface BookingFormProps {
   lang: string
@@ -90,6 +90,7 @@ const content = {
     successMessageBoth: 'We\'ve sent your booking via email and will redirect you to WhatsApp.',
     successButton: 'Open WhatsApp',
     closeButton: 'Close',
+    errorAlert: 'There was an error sending your booking. Please try again or contact us directly.',
   },
   he: {
     title: 'הזמן את ההסעה שלך',
@@ -163,6 +164,7 @@ const content = {
     successMessageBoth: 'שלחנו את ההזמנה באימייל ונעביר אותך לוואטסאפ.',
     successButton: 'פתח וואטסאפ',
     closeButton: 'סגור',
+    errorAlert: 'אירעה שגיאה בשליחת ההזמנה. אנא נסו שוב או צרו קשר ישירות.',
   },
   ru: {
     title: 'Забронировать трансфер',
@@ -236,6 +238,7 @@ const content = {
     successMessageBoth: 'Мы отправили бронирование по email и перенаправим вас в WhatsApp.',
     successButton: 'Открыть WhatsApp',
     closeButton: 'Закрыть',
+    errorAlert: 'Произошла ошибка при отправке бронирования. Пожалуйста, попробуйте ещё раз или свяжитесь с нами напрямую.',
   }
 }
 
@@ -498,7 +501,7 @@ export default function BookingForm({ lang }: BookingFormProps) {
       }
     } catch (error) {
       console.error('Error submitting booking:', error)
-      alert('There was an error sending your booking. Please try again or contact us directly.')
+      alert(t.errorAlert)
       setIsSubmitting(false)
     }
   }
@@ -849,13 +852,13 @@ export default function BookingForm({ lang }: BookingFormProps) {
               )}
             </motion.button>
 
-            {/* Email Button */}
+            {/* Email Button - disabled when EmailJS is not configured */}
             <motion.button
               type="button"
               onClick={() => handleSubmit('email')}
-              disabled={isSubmitting}
-              whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
-              whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
+              disabled={isSubmitting || !isEmailJSConfigured()}
+              whileHover={{ scale: (isSubmitting || !isEmailJSConfigured()) ? 1 : 1.02 }}
+              whileTap={{ scale: (isSubmitting || !isEmailJSConfigured()) ? 1 : 0.98 }}
               className="w-full flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white text-lg font-semibold rounded-full shadow-xl shadow-blue-500/20 hover:shadow-blue-500/40 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isSubmitting ? (
@@ -876,13 +879,13 @@ export default function BookingForm({ lang }: BookingFormProps) {
               )}
             </motion.button>
 
-            {/* Both Button */}
+            {/* Both Button - disabled when EmailJS is not configured */}
             <motion.button
               type="button"
               onClick={() => handleSubmit('both')}
-              disabled={isSubmitting}
-              whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
-              whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
+              disabled={isSubmitting || !isEmailJSConfigured()}
+              whileHover={{ scale: (isSubmitting || !isEmailJSConfigured()) ? 1 : 1.02 }}
+              whileTap={{ scale: (isSubmitting || !isEmailJSConfigured()) ? 1 : 0.98 }}
               className="w-full flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-purple-500 to-purple-600 text-white text-lg font-semibold rounded-full shadow-xl shadow-purple-500/20 hover:shadow-purple-500/40 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isSubmitting ? (

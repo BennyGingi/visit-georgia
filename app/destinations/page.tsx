@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
+import Image from 'next/image';
 import Link from 'next/link';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
@@ -66,6 +67,11 @@ const translations = {
             },
         ],
         readMore: 'Read More',
+        sectionLabel: 'Destinations',
+        curatedCollection: "Explore our curated collection of Georgia's finest destinations",
+        planJourney: 'Plan Your Journey',
+        craftExperience: 'Let us craft your perfect Georgian experience',
+        contactRati: 'Contact Rati Tours',
     },
     he: {
         hero: {
@@ -123,6 +129,11 @@ const translations = {
             },
         ],
         readMore: 'קרא עוד',
+        sectionLabel: 'יעדים',
+        curatedCollection: 'חקרו את האוסף שלנו של היעדים הטובים ביותר בגאורגיה',
+        planJourney: 'תכננו את המסע שלכם',
+        craftExperience: 'תנו לנו ליצור עבורכם את החוויה הגאורגית המושלמת',
+        contactRati: 'צרו קשר עם Rati Tours',
     },
     ru: {
         hero: {
@@ -180,6 +191,11 @@ const translations = {
             },
         ],
         readMore: 'Читать далее',
+        sectionLabel: 'Направления',
+        curatedCollection: 'Откройте нашу подборку лучших направлений Грузии',
+        planJourney: 'Спланируйте путешествие',
+        craftExperience: 'Позвольте нам создать ваш идеальный грузинский опыт',
+        contactRati: 'Связаться с Rati Tours',
     },
 };
 
@@ -235,7 +251,7 @@ function HeroSection({ t, isRTL }: any) {
                         className="flex items-center justify-center gap-4 mb-8"
                     >
                         <div className="w-12 h-px bg-terracotta/40 dark:bg-gold-400/40 transition-colors duration-300" />
-                        <span className="text-terracotta dark:text-gold-400 text-xs tracking-[0.3em] uppercase font-medium transition-colors duration-300">Destinations</span>
+                        <span className="text-terracotta dark:text-gold-400 text-xs tracking-[0.3em] uppercase font-medium transition-colors duration-300">{t.sectionLabel}</span>
                         <div className="w-12 h-px bg-terracotta/40 dark:bg-gold-400/40 transition-colors duration-300" />
                     </motion.div>
 
@@ -283,10 +299,12 @@ function DestinationCard({ destination, image, readMore, index, isRTL }: any) {
                 {/* Image with luxury filter */}
                 <div className="relative aspect-[4/3] overflow-hidden">
                     <div className="absolute inset-0 bg-linen dark:bg-cinema-dark transition-colors duration-300" />
-                    <img
+                    <Image
                         src={image}
                         alt={destination.name}
-                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 luxury-image"
+                        fill
+                        sizes="(max-width: 640px) 100vw, 50vw"
+                        className="object-cover transition-transform duration-700 group-hover:scale-105 luxury-image"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-espresso/60 dark:from-cinema-black/80 via-transparent to-transparent transition-colors duration-300" />
                 </div>
@@ -360,7 +378,7 @@ export default function DestinationsPage() {
                         className="text-center mb-12"
                     >
                         <p className="text-umber/50 dark:text-white/40 text-sm font-serif italic transition-colors duration-300">
-                            Explore our curated collection of Georgia's finest destinations
+                            {t.curatedCollection}
                         </p>
                     </motion.div>
 
@@ -388,10 +406,10 @@ export default function DestinationsPage() {
             <section className="py-20 bg-espresso dark:bg-cinema-dark transition-colors duration-500">
                 <div className="max-w-3xl mx-auto px-6 text-center">
                     <h2 className="font-display text-ivory dark:text-white text-3xl md:text-4xl font-bold mb-4 transition-colors duration-300">
-                        Plan Your Journey
+                        {t.planJourney}
                     </h2>
                     <p className="text-ivory/60 dark:text-white/60 text-lg font-serif italic mb-8 transition-colors duration-300">
-                        Let us craft your perfect Georgian experience
+                        {t.craftExperience}
                     </p>
                     <a
                         href="https://wa.me/995514048822"
@@ -399,7 +417,7 @@ export default function DestinationsPage() {
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-3 px-8 py-4 bg-terracotta dark:bg-gold-400 text-ivory dark:text-black text-lg font-medium hover:bg-terracotta/90 dark:hover:bg-gold-400/90 transition-colors"
                     >
-                        Contact Rati Tours
+                        {t.contactRati}
                     </a>
                 </div>
             </section>
@@ -408,7 +426,7 @@ export default function DestinationsPage() {
             <Footer lang={lang} />
 
             {/* Floating Components */}
-            <FloatingWhatsApp />
+            <FloatingWhatsApp lang={lang} />
             <BackToTop />
         </main>
     );
